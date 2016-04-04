@@ -1,10 +1,15 @@
+{% load staticfiles %}
 <!doctype html>
 <html>
   <head>
-    <title></title>
+    <title>Final Project</title>
+    <link rel="stylesheets" href="{%  static 'dist/css/app.css' %}">
   </head>
   <body>
     {% block content %}
+    
     {% endblock %}
+
+    <script src="{%  static 'dist/js/bundle.js' %}"></script>
   </body>
 </html>
