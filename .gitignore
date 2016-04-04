@@ -6,6 +6,5 @@ node_modules
 .tmp
 .sass-cache
 .DS_Store
-dist/
 .gear_vibesenv/
 static/admin/fonts/LICENSE.txt
