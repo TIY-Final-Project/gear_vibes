@@ -20,8 +20,8 @@ from gear_vibes_app import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index_view'),
+    url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
 ]
