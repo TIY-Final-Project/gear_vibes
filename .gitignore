@@ -9,3 +9,4 @@ node_modules
 .gear_vibesenv/
 static/admin/fonts/LICENSE.txt
 npm-debug.log
+*.pyc
