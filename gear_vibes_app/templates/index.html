@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Hello World</h1>
+  <div id="app">
+    
+  </div>
+
+  <script type="text/javascript">
+    var socialAuthUrls = {
+      'logout': "{% url 'auth:logout' %}?next={{ request.path }}",
+      'facebook': "{% url 'social:begin' 'facebook' %}?next={{ request.path }}",
+      'google': "{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}",
+      'twitter': "{% url 'social:begin' 'twitter' %}?next={{ request.path }}"
+    };
+  </script>
 {% endblock %}

@@ -5817,4 +5817,15 @@ button.close {
 img {
   max-width: 100%; }
 
+.login-form h1 {
+  color: green; }
+
+.or-border {
+  margin-top: 9px;
+  border: 1px solid #edeeee; }
+
+.or-txt {
+  font-weight: bold;
+  color: #aeaeae; }
+
 /*# sourceMappingURL=app.css.map */
