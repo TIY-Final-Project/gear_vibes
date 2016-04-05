@@ -2,11 +2,12 @@
 
 {% block content %}
   <div id="app">
-    
+  
   </div>
 
   <script type="text/javascript">
     var socialAuthUrls = {
+      'login': "{% url 'auth:login' %}?next={{ request.path }}",
       'logout': "{% url 'auth:logout' %}?next={{ request.path }}",
       'facebook': "{% url 'social:begin' 'facebook' %}?next={{ request.path }}",
       'google': "{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}",

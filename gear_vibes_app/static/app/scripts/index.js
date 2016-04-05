@@ -9,6 +9,10 @@ var ReactDOM = require('react-dom');
 
 // local
 var Interface = require('./components/interface.jsx');
+var UserModel = require('./models/user-model');
+
+var user = new UserModel();
+
 
 
 Backbone.history.start();

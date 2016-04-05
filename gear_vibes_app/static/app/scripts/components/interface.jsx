@@ -9,15 +9,23 @@ require('backbone-react-component');
 
 
 // local
-var LoginComponent = require('./login.jsx');
+var AccountComponent = require('./account.jsx');
 
 
 var Interface = React.createClass({
   mixins: [Backbone.React.Component.mixin],
+  login: function(e){
+    e.preventDefault();
+    
+  },
+  signUp: function(e){
+    e.preventDefault();
+
+  },
   render: function(){
     return (
 
-      <LoginComponent />
+      <AccountComponent login={this.login} signUp={this.signUp}/>
 
     )
   }
