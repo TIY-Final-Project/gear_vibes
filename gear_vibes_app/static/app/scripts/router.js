@@ -18,7 +18,7 @@ var Router = Backbone.Router.extend({
     'userdash/createreview': 'createreview'
   },
   home: function(){
-
+    this.current = 'home';
   },
   account: function(){
     this.current = 'account';

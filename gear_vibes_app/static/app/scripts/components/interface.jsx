@@ -45,8 +45,12 @@ var Interface = React.createClass({
     credentials.set("username", username);
     credentials.set("password", password);
     credentials.save().then(function(data){
+      console.log(data);
       if (data.success){
         user.set(data.user);
+        console.log('success');
+      }else{
+        console.log('failed');
       };
     });
 
@@ -60,7 +64,7 @@ var Interface = React.createClass({
     user.set("email", email);
     user.set("username", username);
     user.set("password", password);
-    user.save().then(fucntion(data){
+    user.save().then(function(data){
       if (data.success){
         user.set(data.user);
       };
@@ -68,14 +72,24 @@ var Interface = React.createClass({
     console.log(user);
   },
   render: function(){
+    var currentRoute;
+    var routing = this.props.router;
+    if (routing.current == 'home'){
+      currentRoute = <div>homepage</div>
+    } else if (routing.current == 'account'){
+      currentRoute = <AccountComponent
+                        login={this.login}
+                        signUp={this.signUp}
+                        router={this.props.router}
+                      />
+    } else {
+      currentRoute = <div>nothing here</div>
+    }
+
     return (
-
-      <AccountComponent
-        login={this.login}
-        signUp={this.signUp}
-        page={this.state.router.current}
-      />
-
+      <div>
+        {currentRoute}
+      </div>
     )
   }
 });
