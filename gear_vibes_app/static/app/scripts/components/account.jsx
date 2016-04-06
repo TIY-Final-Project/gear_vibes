@@ -22,18 +22,18 @@ var AccontComponent = React.createClass({
       email: '',
       username: '',
       password: ''
-    };  
+    };
   },
   render: function(){
     return (
-      <div className="container-fluid">
+      <div>
         <div className="row">
           <div className="login-form-container col-xs-4 col-xs-offset-4">
             <h2 className="text-center">Gear-Vibes</h2>
 
             <form onSubmit={this.props.login} className="login-form">
-              <Input type="username" placeholder="Username" valueLink={this.linkState('username')}/>
-              <Input type="password" placeholder="Password" valueLink={this.linkState('password')}/>
+              <Input type="username" placeholder="Username" id="login-username" valueLink={this.linkState('username')}/>
+              <Input type="password" placeholder="Password" id="login-password" valueLink={this.linkState('password')}/>
               <ButtonInput type="submit" value="Login"/>
             </form>
 
@@ -57,7 +57,7 @@ var AccontComponent = React.createClass({
             <div className="account-link-container row">
               <p className="text-center">
                 <span>Don&#39;t have and account?</span>
-                <a>Sign Up</a>
+                <a> Sign Up</a>
               </p>
             </div>
 
@@ -86,22 +86,23 @@ var AccontComponent = React.createClass({
             <h2 className="text-center">Gear-Vibes</h2>
 
             <form onSubmit={this.props.signUp} className="signup-form">
-              <Input type="email" placeholder="Email" valueLink={this.linkState('email')}/>
-              <Input type="username" placeholder="Username" valueLink={this.linkState('username')}/>
-              <Input type="password" placeholder="Password" valueLink={this.linkState('password')}/>
+              <Input type="email" placeholder="Email" id="signup-email" valueLink={this.linkState('email')}/>
+              <Input type="username" placeholder="Username" id="signup-username" valueLink={this.linkState('username')}/>
+              <Input type="password" placeholder="Password" id="signup-password" valueLink={this.linkState('password')}/>
               <ButtonInput type="submit" value="Sign up"/>
             </form>
 
             <div className="login-link-container row">
               <p className="text-center">
                 <span>Already have an account?</span>
-                <a>Log in</a>
+                <a> Log in</a>
               </p>
             </div>
 
           </div>
         </div>
-      </div>
+      </div>  
+
     )
   }
 });

@@ -9,9 +9,10 @@ var ReactDOM = require('react-dom');
 
 // local
 var Interface = require('./components/interface.jsx');
-var UserModel = require('./models/user-model');
+var userModel = require('./models/user-model');
+var router = require('./router');
 
-var user = new UserModel();
+var user = new userModel.UserModel();
 
 
 
@@ -19,6 +20,6 @@ Backbone.history.start();
 
 
 ReactDOM.render(
-  React.createElement(Interface),
+  React.createElement(Interface, {user: user, router: router}),
   document.getElementById('app')
 );

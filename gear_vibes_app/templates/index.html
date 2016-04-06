@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div id="app">
-  
+  <div id="app" class="container-fluid">
+    
   </div>
 
   <script type="text/javascript">
@@ -14,4 +14,5 @@
       'twitter': "{% url 'social:begin' 'twitter' %}?next={{ request.path }}"
     };
   </script>
+  {% csrf_token %}
 {% endblock %}

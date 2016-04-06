@@ -5,4 +5,4 @@ from gear_vibes_app.serializers import UserSerializer
 
 class UserCreateAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
-    permissions_classes = (AllowAny,)
+    permission_classes = (AllowAny,)

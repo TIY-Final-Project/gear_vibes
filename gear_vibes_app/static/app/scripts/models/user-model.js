@@ -8,6 +8,10 @@ var Backbone = require('backbone');
 
 // local
 
+var Credentials = Backbone.Model.extend({
+  urlRoot: '/api/login/'
+});
+
 
 var UserModel = Backbone.Model.extend({
   urlRoot: '/api/signup/'
@@ -16,4 +20,7 @@ var UserModel = Backbone.Model.extend({
 
 
 
-module.exports = UserModel;
+module.exports = {
+  Credentials: Credentials,
+  UserModel: UserModel
+};
