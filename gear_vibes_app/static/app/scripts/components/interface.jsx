@@ -10,6 +10,7 @@ require('backbone-react-component');
 
 // local
 var AccountComponent = require('./account.jsx');
+var HomePage = require('./homepage.jsx');
 var models = require('../models/user-model.js');
 
 var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
@@ -36,6 +37,19 @@ var Interface = React.createClass({
       router: this.props.router
     }
   },
+  componentWillMount: function(){
+  this.callback = (function(){
+    this.forceUpdate();
+  }).bind(this);
+  this.state.router.on('route', this.callback);
+  },
+  componentWillUnmount: function(){
+    this.state.router.off('route', this.callback);
+  },
+  createAccount: function(e){
+    e.preventDefault();
+    Backbone.history.navigate('account', {trigger: true});
+  },
   login: function(e){
     e.preventDefault();
     var credentials = new models.Credentials();
@@ -49,6 +63,7 @@ var Interface = React.createClass({
       if (data.success){
         user.set(data.user);
         console.log('success');
+        Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');
       };
@@ -75,15 +90,18 @@ var Interface = React.createClass({
     var currentRoute;
     var routing = this.props.router;
     if (routing.current == 'home'){
-      currentRoute = <div>homepage</div>
+      currentRoute = <HomePage
+                        router={this.props.router}
+                        createAccount={this.createAccount}
+                      />
     } else if (routing.current == 'account'){
       currentRoute = <AccountComponent
                         login={this.login}
                         signUp={this.signUp}
                         router={this.props.router}
                       />
-    } else {
-      currentRoute = <div>nothing here</div>
+    } else if (routing.current == 'dashboard'){
+      currentRoute = <div>User Dash</div>
     }
 
     return (

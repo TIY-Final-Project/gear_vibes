@@ -14,8 +14,8 @@ var Router = Backbone.Router.extend({
     '': 'home',
     'account': 'account',
     'login': 'login',
-    'userdash': 'userdash',
-    'userdash/createreview': 'createreview'
+    'dashboard': 'dashboard',
+    'dashboard/createreview': 'createreview'
   },
   home: function(){
     this.current = 'home';
@@ -26,11 +26,11 @@ var Router = Backbone.Router.extend({
   login: function(){
 
   },
-  userdash: function(){
-
+  dashboard: function(){
+    this.current = 'dashboard';
   },
   createreview: function(){
-
+    this.current = 'createreview';
   }
 
 });
