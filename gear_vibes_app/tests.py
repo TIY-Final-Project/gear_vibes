@@ -38,3 +38,14 @@ class UserCreateAPIViewTestCase(APITestCase):
     def test_cannot_make_get_request_to_create_api_view(self):
         json_response = client.get(reverse('user_create_api_view')).json()
         self.assertEqual(json_response.get('detail'), 'Method "GET" not allowed.')
+
+
+class LoginAPIViewTestCase(APITestCase):
+
+    def test_login_is_successful(self):
+        user = User.objects.create(username='asdf', password='safepass')
+        response = client.post(reverse('login_api_view'), {'username': 'asdf', 'password': 'safepass'})
+        json_response = response.json()
+        print(json_response.keys())
+        self.assertEqual(response.user.is_authenticated(), True)
+        self.assertEqual(response.user, user)
