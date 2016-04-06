@@ -28,82 +28,82 @@ var AccontComponent = React.createClass({displayName: "AccontComponent",
   },
   render: function(){
     return (
-      React.createElement("div", null, 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "login-form-container col-xs-4 col-xs-offset-4"}, 
-            React.createElement("h2", {className: "text-center"}, "Gear-Vibes"), 
+      React.createElement("div", null,
+        React.createElement("div", {className: "row"},
+          React.createElement("div", {className: "login-form-container col-xs-4 col-xs-offset-4"},
+            React.createElement("h2", {className: "text-center"}, "Gear-Vibes"),
 
-            React.createElement("form", {onSubmit: this.props.login, className: "login-form"}, 
-              React.createElement(Input, {type: "username", placeholder: "Username", id: "login-username", valueLink: this.linkState('username')}), 
-              React.createElement(Input, {type: "password", placeholder: "Password", id: "login-password", valueLink: this.linkState('password')}), 
+            React.createElement("form", {onSubmit: this.props.login, className: "login-form"},
+              React.createElement(Input, {type: "username", placeholder: "Username", id: "login-username", valueLink: this.linkState('username')}),
+              React.createElement(Input, {type: "password", placeholder: "Password", id: "login-password", valueLink: this.linkState('password')}),
               React.createElement(ButtonInput, {type: "submit", value: "Login"})
-            ), 
+            ),
 
-            React.createElement("div", {className: "or-container row"}, 
-              React.createElement("div", {className: "col-xs-12"}, 
-                React.createElement("span", {className: "or-border col-xs-5"}), 
-                React.createElement("span", {className: "or-txt col-xs-2 text-center"}, "Or"), 
+            React.createElement("div", {className: "or-container row"},
+              React.createElement("div", {className: "col-xs-12"},
+                React.createElement("span", {className: "or-border col-xs-5"}),
+                React.createElement("span", {className: "or-txt col-xs-2 text-center"}, "Or"),
                 React.createElement("span", {className: "or-border col-xs-5"})
               )
-            ), 
+            ),
 
-            React.createElement("div", {className: "other-login-container row"}, 
-              React.createElement("a", {href: socialAuthUrls.facebook}, 
-                React.createElement("button", {className: "center-block"}, 
-                  React.createElement("i", {className: "fa fa-facebook-official", id: "facebook-icon"}), 
+            React.createElement("div", {className: "other-login-container row"},
+              React.createElement("a", {href: socialAuthUrls.facebook},
+                React.createElement("button", {className: "center-block"},
+                  React.createElement("i", {className: "fa fa-facebook-official", id: "facebook-icon"}),
                   React.createElement("span", {className: "facebook-txt"}, "Log in with Facebook")
                 )
               )
-            ), 
+            ),
 
-            React.createElement("div", {className: "account-link-container row"}, 
-              React.createElement("p", {className: "text-center"}, 
-                React.createElement("span", null, "Don't have and account?"), 
+            React.createElement("div", {className: "account-link-container row"},
+              React.createElement("p", {className: "text-center"},
+                React.createElement("span", null, "Don't have and account?"),
                 React.createElement("a", null, " Sign Up")
               )
             )
 
           )
-        ), 
-        React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "signup-form-container col-xs-4 col-xs-offset-4"}, 
+        ),
+        React.createElement("div", {className: "row"},
+          React.createElement("div", {className: "signup-form-container col-xs-4 col-xs-offset-4"},
 
-            React.createElement("div", {className: "other-signup-container row"}, 
-              React.createElement("a", {href: socialAuthUrls.facebook}, 
-                React.createElement("button", {className: "center-block"}, 
-                  React.createElement("i", {className: "fa fa-facebook-official", id: "facebook-icon"}), 
+            React.createElement("div", {className: "other-signup-container row"},
+              React.createElement("a", {href: socialAuthUrls.facebook},
+                React.createElement("button", {className: "center-block"},
+                  React.createElement("i", {className: "fa fa-facebook-official", id: "facebook-icon"}),
                   React.createElement("span", {className: "facebook-txt"}, "Log in with Facebook")
                 )
               )
-            ), 
+            ),
 
-            React.createElement("div", {className: "or-container row"}, 
-              React.createElement("div", {className: "col-xs-12"}, 
-                React.createElement("span", {className: "or-border col-xs-5"}), 
-                React.createElement("span", {className: "or-txt col-xs-2 text-center"}, "Or"), 
+            React.createElement("div", {className: "or-container row"},
+              React.createElement("div", {className: "col-xs-12"},
+                React.createElement("span", {className: "or-border col-xs-5"}),
+                React.createElement("span", {className: "or-txt col-xs-2 text-center"}, "Or"),
                 React.createElement("span", {className: "or-border col-xs-5"})
               )
-            ), 
+            ),
 
-            React.createElement("h2", {className: "text-center"}, "Gear-Vibes"), 
+            React.createElement("h2", {className: "text-center"}, "Gear-Vibes"),
 
-            React.createElement("form", {onSubmit: this.props.signUp, className: "signup-form"}, 
-              React.createElement(Input, {type: "email", placeholder: "Email", id: "signup-email", valueLink: this.linkState('email')}), 
-              React.createElement(Input, {type: "username", placeholder: "Username", id: "signup-username", valueLink: this.linkState('username')}), 
-              React.createElement(Input, {type: "password", placeholder: "Password", id: "signup-password", valueLink: this.linkState('password')}), 
+            React.createElement("form", {onSubmit: this.props.signUp, className: "signup-form"},
+              React.createElement(Input, {type: "email", placeholder: "Email", id: "signup-email", valueLink: this.linkState('email')}),
+              React.createElement(Input, {type: "username", placeholder: "Username", id: "signup-username", valueLink: this.linkState('username')}),
+              React.createElement(Input, {type: "password", placeholder: "Password", id: "signup-password", valueLink: this.linkState('password')}),
               React.createElement(ButtonInput, {type: "submit", value: "Sign up"})
-            ), 
+            ),
 
-            React.createElement("div", {className: "login-link-container row"}, 
-              React.createElement("p", {className: "text-center"}, 
-                React.createElement("span", null, "Already have an account?"), 
+            React.createElement("div", {className: "login-link-container row"},
+              React.createElement("p", {className: "text-center"},
+                React.createElement("span", null, "Already have an account?"),
                 React.createElement("a", null, " Log in")
               )
             )
 
           )
         )
-      )  
+      )
 
     )
   }
@@ -195,8 +195,8 @@ var Interface = React.createClass({displayName: "Interface",
       currentRoute = React.createElement("div", null, "homepage")
     } else if (routing.current == 'account'){
       currentRoute = React.createElement(AccountComponent, {
-                        login: this.login, 
-                        signUp: this.signUp, 
+                        login: this.login,
+                        signUp: this.signUp,
                         router: this.props.router}
                       )
     } else {
@@ -204,7 +204,7 @@ var Interface = React.createClass({displayName: "Interface",
     }
 
     return (
-      React.createElement("div", null, 
+      React.createElement("div", null,
         currentRoute
       )
     )
@@ -4160,7 +4160,7 @@ module.exports = performanceNow;
  *
  * @providesModule shallowEqual
  * @typechecks
- * 
+ *
  */
 
 'use strict';
