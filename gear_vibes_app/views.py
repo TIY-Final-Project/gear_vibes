@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import AnonymousUser
 from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -10,7 +9,6 @@ from gear_vibes_app.serializers import UserSerializer
 class UserCreateAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
-
 
 
 @api_view(['POST'])

@@ -1,1 +1,0 @@
-console.error("ReactifyError: /Users/brandonemerson/code/gear_vibes/gear_vibes_app/static/app/scripts/components/interface.jsx: Parse Error: Line 63: Unexpected token { while parsing file: /Users/brandonemerson/code/gear_vibes/gear_vibes_app/static/app/scripts/components/interface.jsx");
