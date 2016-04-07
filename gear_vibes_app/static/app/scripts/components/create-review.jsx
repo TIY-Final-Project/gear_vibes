@@ -13,7 +13,7 @@ require('backbone-react-component');
 
 // local
 var collection = require('../models/review-model.js');
-
+var models = require('../models/user-model.js');
 
 
 // csrftoken

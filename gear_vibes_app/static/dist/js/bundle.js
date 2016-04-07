@@ -130,7 +130,7 @@ require('backbone-react-component');
 
 // local
 var collection = require('../models/review-model.js');
-
+var models = require('../models/user-model.js');
 
 
 // csrftoken
@@ -258,7 +258,7 @@ var RatingTableFormset = React.createClass({displayName: "RatingTableFormset",
 
 module.exports = CreateReview;
 
-},{"../models/review-model.js":7,"backbone":21,"backbone-react-component":20,"jquery":74,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],3:[function(require,module,exports){
+},{"../models/review-model.js":7,"../models/user-model.js":8,"backbone":21,"backbone-react-component":20,"jquery":74,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],3:[function(require,module,exports){
 "use strict";
 /* dashboard jsx */
 
