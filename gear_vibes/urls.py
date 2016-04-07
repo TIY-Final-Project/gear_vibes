@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'api/login/$', views.login_api_view, name='login_api_view'),
     url(r'api/logout/$', views.logout_api_view, name='logout_api_view'),
     url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
+    url(r'^api/reviews/$', views.ReviewCreateAPIView.as_view(), name='review_create_api_view'),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
 ]
