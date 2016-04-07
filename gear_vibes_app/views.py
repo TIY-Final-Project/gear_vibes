@@ -2,13 +2,18 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from rest_framework.permissions import AllowAny
-from gear_vibes_app.serializers import UserSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from gear_vibes_app.serializers import UserSerializer, ReviewSerializer
 
 
 class UserCreateAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
+
+
+class ReviewCreateAPIView(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 @api_view(['POST'])
