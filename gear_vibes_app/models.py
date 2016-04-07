@@ -31,7 +31,7 @@ class Review(models.Model):
     video_url = models.TextField(blank=True, null=True)
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     rating = JSONField()
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
 
 
 class Gallery(models.Model):
