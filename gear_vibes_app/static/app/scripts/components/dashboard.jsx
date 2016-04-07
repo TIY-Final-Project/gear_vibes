@@ -1,4 +1,4 @@
-/* homepage jsx */
+/* dashboard jsx */
 
 // 3rd party
 var $ = require('jquery');
@@ -14,15 +14,15 @@ require('backbone-react-component');
 // local
 
 
-var HomePage = React.createClass({
+var Dashboard = React.createClass({
   render: function(){
     return (
       <div>
-        <ButtonInput onClick={this.props.createAccount} value="Create Account"/>
+        <ButtonInput onClick={this.props.createReview} value="Create Review"/>
       </div>
     )
   }
 });
 
 
-module.exports = HomePage;
+module.exports = Dashboard;

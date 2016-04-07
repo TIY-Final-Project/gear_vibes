@@ -10,6 +10,7 @@ require('backbone-react-component');
 
 // local
 var AccountComponent = require('./account.jsx');
+var Dashboard = require('./dashboard.jsx');
 var HomePage = require('./homepage.jsx');
 var models = require('../models/user-model.js');
 
@@ -45,6 +46,10 @@ var Interface = React.createClass({
   },
   componentWillUnmount: function(){
     this.state.router.off('route', this.callback);
+  },
+  createReview: function(e){
+    e.preventDefault();
+    Backbone.history.navigate('dashboard/createreview', {trigger: true});
   },
   createAccount: function(e){
     e.preventDefault();
@@ -101,7 +106,9 @@ var Interface = React.createClass({
                         router={this.props.router}
                       />
     } else if (routing.current == 'dashboard'){
-      currentRoute = <div>User Dash</div>
+      currentRoute = <Dashboard createReview={this.createReview}/>
+    } else if (routing.current == 'createreview'){
+      currentRoute = <div>Review</div>
     }
 
     return (
