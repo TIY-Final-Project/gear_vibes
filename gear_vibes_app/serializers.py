@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User(
+            email=validated_data['email'],
             username=validated_data['username']
         )
         user.set_password(validated_data['password'])

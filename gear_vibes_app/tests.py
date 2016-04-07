@@ -45,6 +45,6 @@ class LoginAPIViewTestCase(APITestCase):
     def test_login_is_successful(self):
         client.post(reverse('user_create_api_view'), {'username': 'asdf', 'password': 'safepass'})
         response = client.post(reverse('login_api_view'), {'username': 'asdf', 'password': 'safepass'})
-        print(dir(response.json))
-        print(response.content)
-        self.assertEqual(response.get('user').get('username'), 'asdf')
+        json_response = response.json()
+        self.assertEqual(json_response.get('user').get('username'), 'asdf')
+        self.assertEqual(json_response.get('success'), True)
