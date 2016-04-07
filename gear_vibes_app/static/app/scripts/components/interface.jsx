@@ -12,6 +12,7 @@ require('backbone-react-component');
 var AccountComponent = require('./account.jsx');
 var Dashboard = require('./dashboard.jsx');
 var HomePage = require('./homepage.jsx');
+var CreateReview = require('./create-review.jsx');
 var models = require('../models/user-model.js');
 
 var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
@@ -108,11 +109,11 @@ var Interface = React.createClass({
     } else if (routing.current == 'dashboard'){
       currentRoute = <Dashboard createReview={this.createReview}/>
     } else if (routing.current == 'createreview'){
-      currentRoute = <div>Review</div>
+      currentRoute = <CreateReview />
     }
 
     return (
-      <div>
+      <div className="row">
         {currentRoute}
       </div>
     )
