@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
-from gear_vibes_app.models import UserProfile
+from gear_vibes_app.models import UserProfile, Tag, Review
 from gear_vibes_app.serializers import UserSerializer
 
 
@@ -19,6 +19,35 @@ class UserProfileTestCase(TestCase):
         self.assertEqual(UserProfile.objects.count(), 1)
         self.assertEqual(UserProfile.objects.get().user, user)
         self.assertEqual(UserProfile.objects.get().user.username, 'brennon')
+
+
+class ReviewTestCase(TestCase):
+
+    def setUp(self):
+        user = User.objects.create(username='brennon')
+        tag1 = Tag.objects.create(name='tag1')
+        tag2 = Tag.objects.create(name='tag2')
+        review = Review.objects.create(
+            title='New Product Review',
+            body='This was a great product',
+            author=user,
+            block_quote='This is a blockquote',
+            category='cam',
+            rating={'quality': 5, 'takes_pics': 10, 'lens': 10}
+        )
+        review.tags.add(tag1)
+        review.tags.add(tag2)
+        review.save()
+
+    def test_review_is_created_with_required_fields(self):
+        review = Review.objects.get()
+        tag1 = Tag.objects.get(name='tag1')
+        tag2 = Tag.objects.get(name='tag2')
+        self.assertEqual(review.author.username, 'brennon')
+        self.assertEqual(review.rating, {'quality': 5, 'takes_pics': 10, 'lens': 10})
+        self.assertIn(tag1, review.tags.all())
+        self.assertIn(tag2, review.tags.all())
+        self.assertEqual(review.category, 'cam')
 
 
 # API View tests
