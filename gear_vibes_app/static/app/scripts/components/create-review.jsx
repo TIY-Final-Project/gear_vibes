@@ -15,6 +15,23 @@ require('backbone-react-component');
 var collection = require('../models/review-model.js');
 
 
+
+// csrftoken
+var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+
 var CreateReview = React.createClass({
   mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
   getInitialState: function(){
@@ -22,10 +39,11 @@ var CreateReview = React.createClass({
       product_name: '',
       title: '',
       body: '',
+      author: 1,
       block_quote: '',
       video_url: '',
       category: '',
-      rating: []
+      rating: [{title: 'Looks', value: 5}]
     }
   },
   handleSubmit: function(e){
@@ -36,9 +54,11 @@ var CreateReview = React.createClass({
       "product_name": this.state.product_name,
       "title": this.state.title,
       "body": this.state.body,
+      "author": this.state.author,
       "block_quote": this.state.block_quote,
       "video_url": this.state.video_url,
-      "category": this.state.category
+      "category": this.state.category,
+      "rating": this.state.rating
     });
     console.log(review);
 

@@ -13,7 +13,7 @@ class UserCreateAPIView(generics.CreateAPIView):
 
 class ReviewCreateAPIView(generics.CreateAPIView):
     serializer_class = ReviewSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
 
 @api_view(['POST'])
