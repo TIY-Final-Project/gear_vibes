@@ -28,29 +28,17 @@ class Review(models.Model):
     body = models.TextField()
     author = models.ForeignKey(User)
     block_quote = models.CharField(max_length=100)
-    featured_image = models.ImageField(blank=True, null=True, upload_to='review_images')
     video_url = models.TextField(blank=True, null=True)
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     rating = JSONField()
     tags = models.ManyToManyField(Tag, blank=True)
 
 
-class Gallery(models.Model):
-    review = models.OneToOneField(Review)
-    image1 = models.ImageField(blank=True, null=True, upload_to='review_images')
-    caption1 = models.CharField(max_length=30, blank=True, null=True)
-
-    image2 = models.ImageField(blank=True, null=True, upload_to='review_images')
-    caption2 = models.CharField(max_length=30, blank=True, null=True)
-
-    image3 = models.ImageField(blank=True, null=True, upload_to='review_images')
-    caption3 = models.CharField(max_length=30, blank=True, null=True)
-
-    image4 = models.ImageField(blank=True, null=True, upload_to='review_images')
-    caption4 = models.CharField(max_length=30, blank=True, null=True)
-
-    image5 = models.ImageField(blank=True, null=True, upload_to='review_images')
-    caption5 = models.CharField(max_length=30, blank=True, null=True)
+class GalleryImage(models.Model):
+    review = models.ForeignKey(Review)
+    image = models.ImageField(blank=True, null=True, upload_to='review_images')
+    caption = models.CharField(max_length=30, blank=True, null=True)
+    featured = models.BooleanField(default=False)
 
 
 @receiver(post_save, sender=User)
