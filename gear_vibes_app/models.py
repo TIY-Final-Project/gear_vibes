@@ -3,6 +3,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 class UserProfile(models.Model):
@@ -57,3 +58,4 @@ def create_user_profile(sender, **kwargs):
     user_instance = kwargs.get('instance')
     if kwargs.get('created'):
         UserProfile.objects.create(user=user_instance)
+        Token.objects.create(user=user_instance)

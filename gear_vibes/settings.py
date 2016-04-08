@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'social.apps.django_app.default',
     'gear_vibes_app'
 ]
@@ -84,6 +85,12 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 SOCIAL_AUTH_FACEBOOK_KEY = ''
 SOCIAL_AUTH_FACEBOOK_SECRET = ''

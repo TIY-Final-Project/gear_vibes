@@ -16,12 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
+from rest_framework.authtoken import views as auth_views
 from gear_vibes_app import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index_view'),
-    url(r'api/login/$', views.login_api_view, name='login_api_view'),
+    url(r'api/login/$', auth_views.obtain_auth_token, name='login_api_view'),
     url(r'api/logout/$', views.logout_api_view, name='logout_api_view'),
     url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
     url(r'^api/reviews/$', views.ReviewCreateAPIView.as_view(), name='review_create_api_view'),
