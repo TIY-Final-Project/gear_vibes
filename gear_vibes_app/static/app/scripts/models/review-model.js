@@ -1,7 +1,6 @@
 /* user-model js */
 
 // 3rd party
-var $ = require('jquery');
 var Backbone = require('backbone');
 
 

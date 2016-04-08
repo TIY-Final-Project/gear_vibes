@@ -14,7 +14,21 @@ var Credentials = Backbone.Model.extend({
 
 
 var UserModel = Backbone.Model.extend({
-  urlRoot: '/api/signup/'
+  urlRoot: '/api/signup/',
+  auth: function(){
+    console.log('begining of auth');
+    var self = this;
+    var token = self.get('token');
+    if(typeof(token) !== "undefined"){
+      console.log('user model');
+      
+      $.ajaxSetup({
+        headers: {
+          'Authorization': 'Token ' + token
+        }
+      });
+    }
+  }
 });
 
 

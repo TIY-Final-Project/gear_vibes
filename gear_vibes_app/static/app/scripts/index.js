@@ -1,7 +1,7 @@
 /* main js */
 
 // 3rd party
-var $ = require('jquery');
+window.$ = window.jQuery = require('jquery');
 var Backbone = require('backbone')
 var React = require('react');
 var ReactDOM = require('react-dom');

@@ -1,7 +1,6 @@
 /* interface jsx */
 
 // 3rd party
-var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -65,10 +64,13 @@ var Interface = React.createClass({
     credentials.set("username", username);
     credentials.set("password", password);
     credentials.save().then(function(data){
+      console.log(credentials);
       console.log(data);
-      if (data.success){
-        user.set(data.user);
-        console.log('success');
+      console.log(data.token);
+      if (data.token){
+        console.log('inside login');
+        user.set("token", data.token);
+        user.auth();
         Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');

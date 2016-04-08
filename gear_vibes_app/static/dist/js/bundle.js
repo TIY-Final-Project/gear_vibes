@@ -3,7 +3,6 @@
 /* interface jsx */
 
 // 3rd party
-var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -103,7 +102,7 @@ var AccontComponent = React.createClass({displayName: "AccontComponent",
 
           )
         )
-      )  
+      )
 
     )
   }
@@ -113,12 +112,11 @@ var AccontComponent = React.createClass({displayName: "AccontComponent",
 
 module.exports = AccontComponent;
 
-},{"backbone":21,"backbone-react-component":20,"jquery":74,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],2:[function(require,module,exports){
+},{"backbone":21,"backbone-react-component":20,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],2:[function(require,module,exports){
 "use strict";
 /* create-review jsx */
 
 // 3rd party
-var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -131,23 +129,6 @@ require('backbone-react-component');
 // local
 var collection = require('../models/review-model.js');
 var models = require('../models/user-model.js');
-
-
-// csrftoken
-var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
-
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
-
 
 var CreateReview = React.createClass({displayName: "CreateReview",
   mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
@@ -258,12 +239,11 @@ var RatingTableFormset = React.createClass({displayName: "RatingTableFormset",
 
 module.exports = CreateReview;
 
-},{"../models/review-model.js":7,"../models/user-model.js":8,"backbone":21,"backbone-react-component":20,"jquery":74,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],3:[function(require,module,exports){
+},{"../models/review-model.js":7,"../models/user-model.js":8,"backbone":21,"backbone-react-component":20,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],3:[function(require,module,exports){
 "use strict";
 /* dashboard jsx */
 
 // 3rd party
-var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -289,12 +269,11 @@ var Dashboard = React.createClass({displayName: "Dashboard",
 
 module.exports = Dashboard;
 
-},{"backbone":21,"backbone-react-component":20,"jquery":74,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],4:[function(require,module,exports){
+},{"backbone":21,"backbone-react-component":20,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],4:[function(require,module,exports){
 "use strict";
 /* homepage jsx */
 
 // 3rd party
-var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -320,12 +299,11 @@ var HomePage = React.createClass({displayName: "HomePage",
 
 module.exports = HomePage;
 
-},{"backbone":21,"backbone-react-component":20,"jquery":74,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],5:[function(require,module,exports){
+},{"backbone":21,"backbone-react-component":20,"react":223,"react-bootstrap/lib/ButtonInput":77,"react-bootstrap/lib/Input":82,"react-dom":88,"react/lib/LinkedStateMixin":112}],5:[function(require,module,exports){
 "use strict";
 /* interface jsx */
 
 // 3rd party
-var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -389,10 +367,13 @@ var Interface = React.createClass({displayName: "Interface",
     credentials.set("username", username);
     credentials.set("password", password);
     credentials.save().then(function(data){
+      console.log(credentials);
       console.log(data);
-      if (data.success){
-        user.set(data.user);
-        console.log('success');
+      console.log(data.token);
+      if (data.token){
+        console.log('inside login');
+        user.set("token", data.token);
+        user.auth();
         Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');
@@ -449,12 +430,12 @@ var Interface = React.createClass({displayName: "Interface",
 
 module.exports = Interface;
 
-},{"../models/user-model.js":8,"./account.jsx":1,"./create-review.jsx":2,"./dashboard.jsx":3,"./homepage.jsx":4,"backbone":21,"backbone-react-component":20,"jquery":74,"react":223,"react-dom":88}],6:[function(require,module,exports){
+},{"../models/user-model.js":8,"./account.jsx":1,"./create-review.jsx":2,"./dashboard.jsx":3,"./homepage.jsx":4,"backbone":21,"backbone-react-component":20,"react":223,"react-dom":88}],6:[function(require,module,exports){
 "use strict";
 /* main js */
 
 // 3rd party
-var $ = require('jquery');
+window.$ = window.jQuery = require('jquery');
 var Backbone = require('backbone')
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -482,7 +463,6 @@ ReactDOM.render(
 /* user-model js */
 
 // 3rd party
-var $ = require('jquery');
 var Backbone = require('backbone');
 
 
@@ -507,7 +487,7 @@ module.exports = {
   ReviewsCollection: ReviewsCollection
 };
 
-},{"backbone":21,"jquery":74}],8:[function(require,module,exports){
+},{"backbone":21}],8:[function(require,module,exports){
 "use strict";
 /* user-model js */
 
@@ -525,7 +505,21 @@ var Credentials = Backbone.Model.extend({
 
 
 var UserModel = Backbone.Model.extend({
-  urlRoot: '/api/signup/'
+  urlRoot: '/api/signup/',
+  auth: function(){
+    console.log('begining of auth');
+    var self = this;
+    var token = self.get('token');
+    if(typeof(token) !== "undefined"){
+      console.log('user model');
+      
+      $.ajaxSetup({
+        headers: {
+          'Authorization': 'Token ' + token
+        }
+      });
+    }
+  }
 });
 
 
