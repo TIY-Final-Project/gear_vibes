@@ -3,10 +3,12 @@ from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient, APIRequestFactory, force_authenticate
+from rest_framework.test import APITestCase
+from rest_framework.authtoken.models import Token
 from gear_vibes_app.models import UserProfile, Tag, Review
 from gear_vibes_app.serializers import UserSerializer
 from gear_vibes_app.views import ReviewCreateAPIView
+import json
 
 
 # Model tests
@@ -79,58 +81,68 @@ class UserCreateAPIViewTestCase(APITestCase):
         self.assertEqual(json_response.get('detail'), 'Method "GET" not allowed.')
 
 
-class LoginAPIViewTestCase(APITestCase):
+# class LoginAPIViewTestCase(APITestCase):
 
-    def test_login_is_successful(self):
-        self.client.post(reverse('user_create_api_view'), {'username': 'asdf', 'password': 'safepass'})
-        response = self.client.post(reverse('login_api_view'), {'username': 'asdf', 'password': 'safepass'})
-        json_response = response.json()
-        self.assertEqual(json_response.get('user').get('username'), 'asdf')
-        self.assertEqual(json_response.get('success'), True)
-
-
-class LogoutAPIViewTestCase(APITestCase):
-
-    def test_logout_is_successful(self):
-        self.client.post(reverse('user_create_api_view'), {'username': 'asdf', 'password': 'safepass'})
-        self.client.post(reverse('login_api_view'), {'username': 'asdf', 'password': 'safepass'})
-        response = self.client.get(reverse('logout_api_view'))
-
-        json_response = response.json()
-        self.assertEqual(json_response.get('user').get('username'), 'asdf')
-        self.assertEqual(json_response.get('logged_out'), True)
+#     def test_login_is_successful(self):
+#         self.client.post(reverse('user_create_api_view'), {'username': 'asdf', 'password': 'safepass'})
+#         response = self.client.post(reverse('login_api_view'), {'username': 'asdf', 'password': 'safepass'})
+#         json_response = response.json()
+#         self.assertEqual(json_response.get('user').get('username'), 'asdf')
+#         self.assertEqual(json_response.get('success'), True)
 
 
-class ReviewCreateAPIViewTestCase(APITestCase):
+class TokenAuthTestCase(APITestCase):
 
-    def test_review_create_api_creates_review(self):
-        author = User.objects.create(username='brennon')
-        author.set_password('safepass')
-        author.save()
+    def _create_django_user(self):
+        self.user = User.objects.create(username="testuser")
+        self.user.set_password("asdf")
+        self.token = Token.objects.get()
+
+    def _create_auth_token(self):
+        self.token = Token.objects.create(user=self.user)
+
+    def login(self):
+        self._create_django_user()
+        # self._create_auth_token() # token is created on user post_save signal
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+
+    def logout(self):
+        self.client.logout()
+
+    def get_json(self, url):
+        response = self.client.get(url)
+        return response, json.loads(response.content.decode('utf-8'))
+
+    def test_user_can_create_review_with_authenticated_request(self):
+        self.login()
         tag = Tag.objects.create(name='test')
-        self.client.post(reverse('login_api_view'), {'username': 'brennon', 'password': 'safepass'})
         data = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
                 'body': 'This was an ok product',
-                'author': author.pk,
+                'author': self.user.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'pho',
                 'rating': {'point1': 5, 'point2': 5},
                 'tags': [tag.pk]
         }
-        self.client.post(reverse('review_create_api_view'), format='json', data=data)
+        response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
         self.assertEqual(Review.objects.count(), 1)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    # def test_logout_is_successful(self):
+    #     self.login()
+    #     print(self.user.is_authenticated())
+    #     response = self.client.get(reverse('logout_api_view'))
+    #     print(response.content)
+    #     print(self.user.is_authenticated())
+    #     self.fail('X')
 
-class ReviewRetrieveUpdateAPIViewTestCase(APITestCase):
-
-    def setUp(self):
+    def test_review_create_api_does_not_create_review_with_unauthenticated_requests(self):
         author = User.objects.create(username='brennon')
         author.set_password('safepass')
         author.save()
         tag = Tag.objects.create(name='test')
-        self.client.post(reverse('login_api_view'), {'username': 'brennon', 'password': 'safepass'})
         data = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
@@ -141,9 +153,28 @@ class ReviewRetrieveUpdateAPIViewTestCase(APITestCase):
                 'rating': {'point1': 5, 'point2': 5},
                 'tags': [tag.pk]
         }
-        self.client.post(reverse('review_create_api_view'), format='json', data=data)
+        response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
+        self.assertEqual(Review.objects.count(), 0)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    # def test_retrieve_update_api_view_retrieves_users_review(self):
-    #     author = User.objects.get()
-    #     request = self.client.get(reverse('retrieve_update_api_view'))
-    #     print(request.body)
+
+# class ReviewRetrieveUpdateAPIViewTestCase(APITestCase):
+
+#     def setUp(self):
+#         author = User.objects.create(username='brennon')
+#         author.set_password('safepass')
+#         author.save()
+#         tag = Tag.objects.create(name='test')
+#         self.client.post(reverse('login_api_view'), {'username': 'brennon', 'password': 'safepass'})
+#         data = {
+#                 'product_name': 'iPad 2',
+#                 'title': 'Test Review',
+#                 'body': 'This was an ok product',
+#                 'author': author.pk,
+#                 'block_quote': 'My sweet quote',
+#                 'category': 'pho',
+#                 'rating': {'point1': 5, 'point2': 5},
+#                 'tags': [tag.pk]
+#         }
+#         self.client.post(reverse('review_create_api_view'), format='json', data=data)
+
