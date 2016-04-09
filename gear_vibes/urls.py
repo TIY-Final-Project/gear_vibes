@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'api/logout/$', auth_views.logout, name='logout_api_view'),
     url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
     url(r'^api/reviews/$', views.ReviewCreateAPIView.as_view(), name='review_create_api_view'),
+    url(r'^api/galleryimages/$', views.GalleryImageCreateAPIView.as_view(), name='gallery_image_create_api_view'),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
     url(r'^media/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),

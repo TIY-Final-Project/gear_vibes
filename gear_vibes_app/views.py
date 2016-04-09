@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from gear_vibes_app.serializers import UserSerializer, ReviewSerializer
+from gear_vibes_app.serializers import UserSerializer, ReviewSerializer, GalleryImageSerializer
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -13,6 +13,11 @@ class UserCreateAPIView(generics.CreateAPIView):
 
 class ReviewCreateAPIView(generics.CreateAPIView):
     serializer_class = ReviewSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class GalleryImageCreateAPIView(generics.CreateAPIView):
+    serializer_class = GalleryImageSerializer
     permission_classes = (IsAuthenticated,)
 
 
