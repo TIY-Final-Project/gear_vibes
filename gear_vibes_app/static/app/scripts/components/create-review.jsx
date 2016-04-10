@@ -47,17 +47,24 @@ var CreateReview = React.createClass({
     });
 
     review.save().then(function(review){
-      console.log(review)
-      var image = self.refs.featuredImage.getInputDOMNode().files;
-      var id = review.id;
+      var data = new FormData();
+      data.append('image', self.refs.featuredImage.getInputDOMNode().files[0]);
+      data.append('review', review.id);
 
-      console.log(image);
-      galleryImages.set({
-        "image": image,
-        "review": id
-      });
-
-      galleryImages.save();
+      $.ajax({
+      url: '/api/galleryimages/',
+      data: data,
+      cache: false,
+      contentType: false,
+      processData: false,
+      type: 'POST',
+      success: function(data){
+        alert(data);
+      },
+      error: function(data){
+        alert('no upload');
+      }
+    });
 
 
 
