@@ -10,3 +10,4 @@ node_modules
 static/admin/fonts/LICENSE.txt
 npm-debug.log
 *.pyc
+media/

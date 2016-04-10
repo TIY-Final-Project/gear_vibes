@@ -12,9 +12,15 @@ class UserProfile(models.Model):
     profile_photo = models.ImageField(blank=True, null=True, upload_to='profile_images')
     joined = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.user.username
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
 
 
 class Review(models.Model):
@@ -32,6 +38,9 @@ class Review(models.Model):
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     rating = JSONField()
     tags = models.ManyToManyField(Tag, blank=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.product_name, self.author)
 
 
 class GalleryImage(models.Model):
