@@ -130,6 +130,7 @@ require('backbone-react-component');
 var reviews = require('../models/review-model.js');
 var models = require('../models/user-model.js');
 var gallery = require('../models/gallery-model.js');
+var submittedRating;
 
 var CreateReview = React.createClass({displayName: "CreateReview",
   mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
@@ -142,11 +143,12 @@ var CreateReview = React.createClass({displayName: "CreateReview",
       block_quote: '',
       video_url: '',
       category: '',
-      rating: [{title: 'Looks', value: 5}]
+      rating: []
     }
   },
   handleSubmit: function(e){
     e.preventDefault();
+    console.log(submittedRating);
     var self = this;
     var review = new reviews.ReviewsModel();
     var galleryImages = new gallery.GalleryModel();

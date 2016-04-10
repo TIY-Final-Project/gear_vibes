@@ -14,6 +14,7 @@ require('backbone-react-component');
 var reviews = require('../models/review-model.js');
 var models = require('../models/user-model.js');
 var gallery = require('../models/gallery-model.js');
+var submittedRating;
 
 var CreateReview = React.createClass({
   mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
@@ -26,11 +27,12 @@ var CreateReview = React.createClass({
       block_quote: '',
       video_url: '',
       category: '',
-      rating: [{title: 'Looks', value: 5}]
+      rating: []
     }
   },
   handleSubmit: function(e){
     e.preventDefault();
+    console.log(submittedRating);
     var self = this;
     var review = new reviews.ReviewsModel();
     var galleryImages = new gallery.GalleryModel();
@@ -129,7 +131,7 @@ var RatingTableFormset = React.createClass({
   render: function(){
     return (
       <div>
-        <Input ref={"title"} type="text" placeholder="Rating Type" />
+        <Input ref={"title"} type="text" placeholder="Rating Type"/>
         <Input ref={"value"} type="select" defaultValue="Value" placeholder="Rating Value">
           <option disabled value="Value">Value</option>
           <option value="1">1</option>
