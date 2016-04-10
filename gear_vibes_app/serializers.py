@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from gear_vibes_app.models import UserProfile, Review, Tag
+from gear_vibes_app.models import UserProfile, Review, Tag, GalleryImage
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -36,6 +36,12 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
+
+
+class GalleryImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = GalleryImage
 
 
 class TagSerializer(serializers.ModelSerializer):
