@@ -1,4 +1,4 @@
-/* user-model js */
+/* review-model js */
 
 // 3rd party
 var Backbone = require('backbone');
@@ -9,7 +9,7 @@ var Backbone = require('backbone');
 
 
 var ReviewsModel = Backbone.Model.extend({
-
+  urlRoot: '/api/reviews/'
 });
 
 

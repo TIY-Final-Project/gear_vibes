@@ -11,8 +11,9 @@ require('backbone-react-component');
 
 
 // local
-var collection = require('../models/review-model.js');
+var reviews = require('../models/review-model.js');
 var models = require('../models/user-model.js');
+var gallery = require('../models/gallery-model.js');
 
 var CreateReview = React.createClass({
   mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
@@ -30,9 +31,11 @@ var CreateReview = React.createClass({
   },
   handleSubmit: function(e){
     e.preventDefault();
-    var review = new collection.ReviewsCollection();
+    var self = this;
+    var review = new reviews.ReviewsModel();
+    var galleryImages = new gallery.GalleryModel();
 
-    review.create({
+    review.set({
       "product_name": this.state.product_name,
       "title": this.state.title,
       "body": this.state.body,
@@ -42,7 +45,25 @@ var CreateReview = React.createClass({
       "category": this.state.category,
       "rating": this.state.rating
     });
+
+    review.save().then(function(review){
+      console.log(review)
+      var image = self.refs.featuredImage.getInputDOMNode().files;
+      var id = review.id;
+
+      galleryImages.set({
+        "image": image,
+        "review": id
+      });
+
+      galleryImages.save();
+
+
+
+    });
+
     console.log(review);
+    console.log(galleryImages);
 
 
 
@@ -52,7 +73,7 @@ var CreateReview = React.createClass({
     return (
       <div className="col-xs-6 col-xs-offset-3 text-center">
         <form onSubmit={this.handleSubmit}>
-          <Input className="center-block" type="file" help="Upload your Featured Image" />
+          <Input ref="featuredImage" className="center-block" type="file" help="Upload your Featured Image" />
           <Input type="text" placeholder="Product Name" valueLink={this.linkState('product_name')}/>
           <Input type="text" placeholder="Title" valueLink={this.linkState('title')}/>
           <Input type="textarea" placeholder="Body" valueLink={this.linkState('body')}/>

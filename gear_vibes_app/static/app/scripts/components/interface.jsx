@@ -64,13 +64,10 @@ var Interface = React.createClass({
     credentials.set("username", username);
     credentials.set("password", password);
     credentials.save().then(function(data){
-      console.log(credentials);
-      console.log(data);
-      console.log(data.token);
       if (data.token){
-        console.log('inside login');
         user.set("token", data.token);
         user.auth();
+        console.log('success');
         Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');
