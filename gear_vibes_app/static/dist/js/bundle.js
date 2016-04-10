@@ -167,6 +167,7 @@ var CreateReview = React.createClass({displayName: "CreateReview",
       var image = self.refs.featuredImage.getInputDOMNode().files;
       var id = review.id;
 
+      console.log(image);
       galleryImages.set({
         "image": image,
         "review": id
@@ -489,13 +490,13 @@ var Backbone = require('backbone');
 
 
 var GalleryModel = Backbone.Model.extend({
-  urlRoot: '/api/galleryimages'
+  urlRoot: '/api/galleryimages/'
 });
 
 
 var GalleryCollection = Backbone.Model.extend({
   model: GalleryModel,
-  url: '/api/galleryimages'
+  url: '/api/galleryimages/'
 });
 
 

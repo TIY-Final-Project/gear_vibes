@@ -51,6 +51,7 @@ var CreateReview = React.createClass({
       var image = self.refs.featuredImage.getInputDOMNode().files;
       var id = review.id;
 
+      console.log(image);
       galleryImages.set({
         "image": image,
         "review": id

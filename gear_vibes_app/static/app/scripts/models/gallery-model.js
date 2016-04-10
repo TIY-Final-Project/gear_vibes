@@ -9,13 +9,13 @@ var Backbone = require('backbone');
 
 
 var GalleryModel = Backbone.Model.extend({
-  urlRoot: '/api/galleryimages'
+  urlRoot: '/api/galleryimages/'
 });
 
 
 var GalleryCollection = Backbone.Model.extend({
   model: GalleryModel,
-  url: '/api/galleryimages'
+  url: '/api/galleryimages/'
 });
 
 
