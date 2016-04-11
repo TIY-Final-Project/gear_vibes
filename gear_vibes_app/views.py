@@ -1,8 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from gear_vibes_app.models import Tag
 from gear_vibes_app.serializers import UserSerializer, ReviewSerializer, GalleryImageSerializer, TagSerializer
 
 
@@ -14,6 +16,17 @@ class UserCreateAPIView(generics.CreateAPIView):
 class ReviewCreateAPIView(generics.CreateAPIView):
     serializer_class = ReviewSerializer
     permission_classes = (IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        tags_list = request.data.get('tags')
+        tags = [tag.get('name') for tag in tags_list]
+        for tag in tags:
+            try:
+                Tag.objects.get(name=tag)
+            except ObjectDoesNotExist:
+                Tag.objects.create(name=tag)
+        request.data['tags'] = list(map(lambda x: Tag.objects.get(name=x).pk, tags))
+        return super().create(request, *args, **kwargs)
 
 
 class GalleryImageCreateAPIView(generics.CreateAPIView):
