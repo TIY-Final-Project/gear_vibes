@@ -14,6 +14,7 @@ require('backbone-react-component');
 var reviews = require('../models/review-model.js');
 var models = require('../models/user-model.js');
 var gallery = require('../models/gallery-model.js');
+var tagsModel = require('../models/tags-model.js');
 var submittedRating;
 
 var CreateReview = React.createClass({
@@ -30,9 +31,13 @@ var CreateReview = React.createClass({
       rating: []
     }
   },
+  addRating: function(newRating){
+    var rating = this.state.rating;
+    rating.push(newRating);
+    this.setState({'rating': rating});
+  },
   handleSubmit: function(e){
     e.preventDefault();
-    console.log(submittedRating);
     var self = this;
     var review = new reviews.ReviewsModel();
     var galleryImages = new gallery.GalleryModel();
@@ -76,10 +81,16 @@ var CreateReview = React.createClass({
     console.log(galleryImages);
 
 
-
-
   },
   render: function(){
+
+    var i = -1;
+    var rating = this.state.rating.map(function(rating){
+      i++;
+      return (<RatingTableFormset ref={"formset"} key={i} index={i} addRating={this.addRating} type="render" model={rating} />)
+    }.bind(this));
+
+
     return (
       <div className="col-xs-6 col-xs-offset-3 text-center">
         <form onSubmit={this.handleSubmit}>
@@ -100,9 +111,10 @@ var CreateReview = React.createClass({
           <ButtonInput value="Add Tag" />
           <h3>Rating Table</h3>
 
-            <RatingTableFormset ref={"formset"}/>
+            {rating}
 
-          <ButtonInput value="Add Rating" />
+            <RatingTableFormset ref={"formset"} key={i} index={i} addRating={this.addRating} type="edit" />
+          {/*<ButtonInput value="Add Rating" />*/}
           <Input type="text" placeholder="Video URL" valueLink={this.linkState('video_url')}/>
           <Input className="center-block" type="file" help="Upload to Gallery" />
           <ButtonInput type="submit" value="Publish Review" />
@@ -125,28 +137,50 @@ var TagsFormset = React.createClass({
 });
 
 
-
 var RatingTableFormset = React.createClass({
   mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
+  getInitialState: function(){
+    return {
+      ratingType: '',
+      ratingValue: '',
+      type: this.props.type
+    }
+  },
+  handleSubmit: function(e){
+    e.preventDefault();
+    this.props.addRating({'title':this.state.ratingType, 'value': this.state.ratingValue});
+    this.setState({ratingType: '', ratingValue: ''});
+  },
   render: function(){
-    return (
-      <div>
-        <Input ref={"title"} type="text" placeholder="Rating Type"/>
-        <Input ref={"value"} type="select" defaultValue="Value" placeholder="Rating Value">
-          <option disabled value="Value">Value</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </Input>
-      </div>
-    )
+    if(this.state.type == "edit"){
+      return (
+        <div>
+          <Input ref={"title"} type="text" valueLink={this.linkState('ratingType')} placeholder="Rating Type"/>
+          <Input ref={"value"} type="select" valueLink={this.linkState('ratingValue')} defaultValue="Value" placeholder="Rating Value">
+            <option disabled value="Value">Value</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </Input>
+          <ButtonInput onClick={this.handleSubmit} value="Add Rating"/>
+        </div>
+      )
+    }else{
+      return (
+        <div>
+          <span>{this.props.model.title}</span>
+          <span>{this.props.model.value}</span>
+        </div>
+      )
+    }
+
   }
 });
 
