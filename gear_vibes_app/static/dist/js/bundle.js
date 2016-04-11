@@ -130,7 +130,7 @@ require('backbone-react-component');
 var reviews = require('../models/review-model.js');
 var models = require('../models/user-model.js');
 var gallery = require('../models/gallery-model.js');
-var tagsModel = require('../models/tags-model.js');
+var tags = require('../models/tags-model.js');
 var submittedRating;
 
 var CreateReview = React.createClass({displayName: "CreateReview",
@@ -144,8 +144,14 @@ var CreateReview = React.createClass({displayName: "CreateReview",
       block_quote: '',
       video_url: '',
       category: '',
-      rating: []
+      rating: [],
+      tags: []
     }
+  },
+  addTag: function(newTag){
+    var tag = this.state.tags;
+    tag.push(newTag);
+    this.setState({'tags': tag});
   },
   addRating: function(newRating){
     var rating = this.state.rating;
@@ -154,9 +160,12 @@ var CreateReview = React.createClass({displayName: "CreateReview",
   },
   handleSubmit: function(e){
     e.preventDefault();
+    console.log(this.state.tags);
     var self = this;
     var review = new reviews.ReviewsModel();
     var galleryImages = new gallery.GalleryModel();
+    var reviewTags = new tags.TagsModel();
+
 
     review.set({
       "product_name": this.state.product_name,
@@ -166,7 +175,8 @@ var CreateReview = React.createClass({displayName: "CreateReview",
       "block_quote": this.state.block_quote,
       "video_url": this.state.video_url,
       "category": this.state.category,
-      "rating": this.state.rating
+      "rating": this.state.rating,
+      "tags": this.state.tags
     });
 
     review.save().then(function(review){
@@ -190,13 +200,10 @@ var CreateReview = React.createClass({displayName: "CreateReview",
     });
 
 
-
     });
 
     console.log(review);
     console.log(galleryImages);
-
-
   },
   render: function(){
 
@@ -205,6 +212,13 @@ var CreateReview = React.createClass({displayName: "CreateReview",
       i++;
       return (React.createElement(RatingTableFormset, {ref: "formset", key: i, index: i, addRating: this.addRating, type: "render", model: rating}))
     }.bind(this));
+
+
+    var tagList = this.state.tags.map(function(tagList){
+      return (React.createElement(TagsFormset, {ref: "formset", key: tagList.id, addTag: this.addTag, model: tagList}))
+    }.bind(this));
+
+
 
 
     return (
@@ -222,9 +236,8 @@ var CreateReview = React.createClass({displayName: "CreateReview",
             React.createElement("option", {value: "mob"}, "Mobile Tech")
           ), 
 
-            React.createElement(TagsFormset, {ref: "formset"}), 
+            React.createElement(TagsFormset, {ref: "formset", key: tagList.id, addTag: this.addTag, type: "edit"}), 
 
-          React.createElement(ButtonInput, {value: "Add Tag"}), 
           React.createElement("h3", null, "Rating Table"), 
 
             rating, 
@@ -242,13 +255,33 @@ var CreateReview = React.createClass({displayName: "CreateReview",
 
 
 var TagsFormset = React.createClass({displayName: "TagsFormset",
-  mixins: [Backbone.React.Component.mixin],
+  mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
+  getInitialState: function(){
+    return {
+      tag: '',
+      type: this.props.type
+    }
+  },
+  handleSubmit: function(e){
+    e.preventDefault();
+    this.props.addTag({"name": this.state.tag});
+    this.setState({tag: ''});
+  },
   render: function(){
-    return (
-      React.createElement("div", null, 
-        React.createElement(Input, {ref: "tag", type: "text", placeholder: "Tags"})
+    if (this.state.type == "edit"){
+      return (
+        React.createElement("div", null, 
+          React.createElement(Input, {ref: "tag", type: "text", placeholder: "Tags", valueLink: this.linkState('tag')}), 
+          React.createElement(ButtonInput, {value: "Add Tag", onClick: this.handleSubmit})
+        )
       )
-    )
+    }else{
+      return (
+        React.createElement("div", null, 
+          React.createElement("span", null, this.props.model.title)
+        )
+      )
+    }
   }
 });
 
@@ -599,6 +632,14 @@ var TagsCollection = Backbone.Collection.extend({
   model: TagsModel,
   url: '/api/tags/'
 });
+
+
+
+
+module.exports = {
+  TagsModel: TagsModel,
+  TagsCollection: TagsCollection
+};
 
 },{"backbone":23}],10:[function(require,module,exports){
 "use strict";

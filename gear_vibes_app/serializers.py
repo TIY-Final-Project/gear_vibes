@@ -36,6 +36,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
+        exclude = ('tags',)
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):

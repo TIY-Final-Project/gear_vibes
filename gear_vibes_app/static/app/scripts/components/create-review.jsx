@@ -14,7 +14,7 @@ require('backbone-react-component');
 var reviews = require('../models/review-model.js');
 var models = require('../models/user-model.js');
 var gallery = require('../models/gallery-model.js');
-var tagsModel = require('../models/tags-model.js');
+var tags = require('../models/tags-model.js');
 var submittedRating;
 
 var CreateReview = React.createClass({
@@ -28,8 +28,14 @@ var CreateReview = React.createClass({
       block_quote: '',
       video_url: '',
       category: '',
-      rating: []
+      rating: [],
+      tags: []
     }
+  },
+  addTag: function(newTag){
+    var tag = this.state.tags;
+    tag.push(newTag);
+    this.setState({'tags': tag});
   },
   addRating: function(newRating){
     var rating = this.state.rating;
@@ -38,9 +44,12 @@ var CreateReview = React.createClass({
   },
   handleSubmit: function(e){
     e.preventDefault();
+    console.log(this.state.tags);
     var self = this;
     var review = new reviews.ReviewsModel();
     var galleryImages = new gallery.GalleryModel();
+    var reviewTags = new tags.TagsModel();
+
 
     review.set({
       "product_name": this.state.product_name,
@@ -50,7 +59,8 @@ var CreateReview = React.createClass({
       "block_quote": this.state.block_quote,
       "video_url": this.state.video_url,
       "category": this.state.category,
-      "rating": this.state.rating
+      "rating": this.state.rating,
+      "tags": this.state.tags
     });
 
     review.save().then(function(review){
@@ -74,13 +84,10 @@ var CreateReview = React.createClass({
     });
 
 
-
     });
 
     console.log(review);
     console.log(galleryImages);
-
-
   },
   render: function(){
 
@@ -89,6 +96,13 @@ var CreateReview = React.createClass({
       i++;
       return (<RatingTableFormset ref={"formset"} key={i} index={i} addRating={this.addRating} type="render" model={rating} />)
     }.bind(this));
+
+
+    var tagList = this.state.tags.map(function(tagList){
+      return (<TagsFormset ref={"formset"} key={tagList.id} addTag={this.addTag} model={tagList}/>)
+    }.bind(this));
+
+
 
 
     return (
@@ -106,9 +120,8 @@ var CreateReview = React.createClass({
             <option value="mob">Mobile Tech</option>
           </Input>
 
-            <TagsFormset ref={"formset"} />
+            <TagsFormset ref={"formset"} key={tagList.id} addTag={this.addTag} type="edit" />
 
-          <ButtonInput value="Add Tag" />
           <h3>Rating Table</h3>
 
             {rating}
@@ -126,13 +139,33 @@ var CreateReview = React.createClass({
 
 
 var TagsFormset = React.createClass({
-  mixins: [Backbone.React.Component.mixin],
+  mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
+  getInitialState: function(){
+    return {
+      tag: '',
+      type: this.props.type
+    }
+  },
+  handleSubmit: function(e){
+    e.preventDefault();
+    this.props.addTag({"name": this.state.tag});
+    this.setState({tag: ''});
+  },
   render: function(){
-    return (
-      <div>
-        <Input ref={"tag"} type="text" placeholder="Tags" />
-      </div>
-    )
+    if (this.state.type == "edit"){
+      return (
+        <div>
+          <Input ref={"tag"} type="text" placeholder="Tags" valueLink={this.linkState('tag')}/>
+          <ButtonInput value="Add Tag" onClick={this.handleSubmit}/>
+        </div>
+      )
+    }else{
+      return (
+        <div>
+          <span>{this.props.model.title}</span>
+        </div>
+      )
+    }
   }
 });
 

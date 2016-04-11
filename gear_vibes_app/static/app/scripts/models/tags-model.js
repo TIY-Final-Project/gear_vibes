@@ -17,3 +17,11 @@ var TagsCollection = Backbone.Collection.extend({
   model: TagsModel,
   url: '/api/tags/'
 });
+
+
+
+
+module.exports = {
+  TagsModel: TagsModel,
+  TagsCollection: TagsCollection
+};
