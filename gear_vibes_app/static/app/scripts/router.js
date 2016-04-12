@@ -17,17 +17,29 @@ var Router = Backbone.Router.extend({
     'dashboard/reviews/create': 'createreview',
     'dashboard/reviews/:id': 'reviewDetail'
   },
+  requireLogin: function(){
+    var currentUser = localStorage.getItem("username");
+      if (!currentUser) {
+        this.navigate('account', {trigger: true});
+      }
+  },
   home: function(){
     this.current = 'home';
   },
   account: function(){
     this.current = 'account';
+    var currentUser = localStorage.getItem("username");
+      if (currentUser) {
+        this.navigate('dashboard', {trigger: true});
+      }
   },
   dashboard: function(){
     this.current = 'dashboard';
+    this.requireLogin();
   },
   createreview: function(){
     this.current = 'createreview';
+    this.requireLogin();
   },
   reviewDetail: function(id){
     this.current = 'reviewDetail';

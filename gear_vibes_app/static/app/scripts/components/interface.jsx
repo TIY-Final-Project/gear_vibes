@@ -74,7 +74,8 @@ var Interface = React.createClass({
       if (data.token){
         user.set("token", data.token);
         user.auth();
-        console.log('success');
+        localStorage.setItem("username", username)
+        
         Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');
