@@ -18,14 +18,16 @@ class ReviewCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
-        tags_list = request.data.get('tags')
-        tags = [tag.get('name') for tag in tags_list]
-        for tag in tags:
+        submitted_tags = [tag.get('name') for tag in request.data.get('tags')]
+        tag_ids = []
+        for tag in submitted_tags:
             try:
-                Tag.objects.get(name=tag)
+                existing_tag = Tag.objects.get(name=tag)
+                tag_ids.append(existing_tag.pk)
             except ObjectDoesNotExist:
-                Tag.objects.create(name=tag)
-        request.data['tags'] = list(map(lambda x: Tag.objects.get(name=x).pk, tags))
+                new_tag = Tag.objects.create(name=tag)
+                tag_ids.append(new_tag.pk)
+        request.data['tags'] = tag_ids
         return super().create(request, *args, **kwargs)
 
 
