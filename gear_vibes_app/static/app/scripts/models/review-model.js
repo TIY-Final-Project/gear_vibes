@@ -15,7 +15,7 @@ var ReviewsModel = Backbone.Model.extend({
 
 var ReviewsCollection = Backbone.Collection.extend({
   model: ReviewsModel,
-  url: '/api/reviews/'
+  url: '/api/reviews/' 
 });
 
 
