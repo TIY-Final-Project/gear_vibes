@@ -8,12 +8,19 @@ require('backbone-react-component');
 
 
 // local
+
+// components
 var AccountComponent = require('./account.jsx');
 var Dashboard = require('./dashboard.jsx');
 var HomePage = require('./homepage.jsx');
 var CreateReview = require('./create-review.jsx');
+var ReviewDetail = require('./review-detail.jsx');
+
+// models
 var models = require('../models/user-model.js');
 
+
+// CSRFtoken
 var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
 
 function csrfSafeMethod(method) {
@@ -49,7 +56,7 @@ var Interface = React.createClass({
   },
   createReview: function(e){
     e.preventDefault();
-    Backbone.history.navigate('dashboard/createreview', {trigger: true});
+    Backbone.history.navigate('dashboard/reviews/create', {trigger: true});
   },
   createAccount: function(e){
     e.preventDefault();
@@ -108,7 +115,9 @@ var Interface = React.createClass({
     } else if (routing.current == 'dashboard'){
       currentRoute = <Dashboard createReview={this.createReview}/>
     } else if (routing.current == 'createreview'){
-      currentRoute = <CreateReview />
+      currentRoute = <CreateReview router={this.props.router}/>
+    }else if (routing.current == 'reviewDetail'){
+      currentRoute = <ReviewDetail router={this.props.router}/>
     }
 
     return (

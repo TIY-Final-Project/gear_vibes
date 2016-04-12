@@ -69,37 +69,38 @@ var CreateReview = React.createClass({
       data.append('review', review.id);
 
       $.ajax({
-      url: '/api/galleryimages/',
-      data: data,
-      cache: false,
-      contentType: false,
-      processData: false,
-      type: 'POST',
-      success: function(data){
-        alert(data);
-      },
-      error: function(data){
-        alert('no upload');
-      }
-    });
+        url: '/api/galleryimages/',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function(data){
+          console.log(data);
+          self.props.router.navigate('dashboard/reviews/' + data.review, {trigger: true});
+        },
+        error: function(data){
+          alert('no upload');
+        }
+      });
 
 
     });
 
-    console.log(review);
-    console.log(galleryImages);
+
+
   },
   render: function(){
 
     var i = -1;
-    var rating = this.state.rating.map(function(rating){
+    var rating = this.state.rating.map(function(rating, index){
       i++;
-      return (<RatingTableFormset ref={"formset"} key={i} index={i} addRating={this.addRating} type="render" model={rating} />)
+      return (<RatingTableFormset ref={"formset"} key={index} addRating={this.addRating} type="render" model={rating} />)
     }.bind(this));
 
 
-    var tagList = this.state.tags.map(function(tagList){
-      return (<TagsFormset ref={"formset"} key={tagList.id} addTag={this.addTag} model={tagList}/>)
+    var tagList = this.state.tags.map(function(tagList, index){
+      return (<TagsFormset ref={"formset"} key={index} addTag={this.addTag} model={tagList}/>)
     }.bind(this));
 
 
@@ -115,10 +116,12 @@ var CreateReview = React.createClass({
           <Input type="textarea" placeholder="Block Quote" valueLink={this.linkState('block_quote')}/>
           <Input type="select" defaultValue="Category" placeholder="category" valueLink={this.linkState('category')}>
             <option disabled value="Category">Category</option>
-            <option value="mus">Music Gear</option>
-            <option value="pho">Photography</option>
-            <option value="mob">Mobile Tech</option>
+            <option value="Music Gear">Music Gear</option>
+            <option value="Photography">Photography</option>
+            <option value="Mobile Tech">Mobile Tech</option>
           </Input>
+
+            {tagList}
 
             <TagsFormset ref={"formset"} key={tagList.id} addTag={this.addTag} type="edit" />
 
@@ -162,7 +165,7 @@ var TagsFormset = React.createClass({
     }else{
       return (
         <div>
-          <span>{this.props.model.title}</span>
+          <span>{this.props.model.name}</span>
         </div>
       )
     }
