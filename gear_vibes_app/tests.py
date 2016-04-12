@@ -58,7 +58,7 @@ class ReviewTestCase(TestCase):
             body='This was a not so great product',
             author=User.objects.get(),
             block_quote='quote quote quote',
-            category='mob',
+            category='Mobile Tech',
             rating={'point1': 5, 'point2': 6, 'point3': 8, 'point4': 7, 'point5': 8})
 
         self.assertEqual(len(review1.rating), 3)
@@ -110,7 +110,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
-                'category': 'pho',
+                'category': 'Photography',
                 'rating': {'point1': 5, 'point2': 5},
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
@@ -128,7 +128,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': author.pk,
                 'block_quote': 'My sweet quote',
-                'category': 'pho',
+                'category': 'Photography',
                 'rating': {'point1': 5, 'point2': 5},
                 'tags': [{'name': 'test'}]
         }
@@ -144,7 +144,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': new_user,
                 'block_quote': 'My sweet quote',
-                'category': 'pho',
+                'category': 'Photography',
                 'rating': {'point1': 5, 'point2': 5},
         }
         Review.objects.create(**data)
@@ -165,7 +165,7 @@ class TokenAuthTestCase(APITestCase):
     #             'body': 'This was an ok product',
     #             'author': self.user.pk,
     #             'block_quote': 'My sweet quote',
-    #             'category': 'pho',
+    #             'category': 'Photography',
     #             'rating': {'point1': 5, 'point2': 5},
     #             'tags': [tag.pk]
     #     }
@@ -192,7 +192,7 @@ class TokenAuthTestCase(APITestCase):
 #                 'body': 'This was an ok product',
 #                 'author': author.pk,
 #                 'block_quote': 'My sweet quote',
-#                 'category': 'pho',
+#                 'category': 'Photography',
 #                 'rating': {'point1': 5, 'point2': 5},
 #                 'tags': [tag.pk]
 #         }

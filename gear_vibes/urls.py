@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^api/user/reviews/$', views.UserReviewListAPIView.as_view(), name='user_review_list_api_view'),
     url(r'^api/galleryimages/$', views.GalleryImageCreateAPIView.as_view(), name='gallery_image_create_api_view'),
     url(r'^api/tags/$', views.TagCreateAPIView.as_view(), name='tag_create_api_view'),
+    url(r'^api/tags/(?P<pk>\d+)/$', views.TagRetrieveAPIView.as_view(), name='tag_retrieve_api_view'),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
     url(r'^media/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),

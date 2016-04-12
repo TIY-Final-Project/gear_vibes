@@ -25,9 +25,9 @@ class Tag(models.Model):
 
 class Review(models.Model):
     CATEGORY_CHOICES = (
-        ('pho', 'Photography'),
-        ('mus', 'Music Gear'),
-        ('mob', 'Mobile Tech')
+        ('Photography', 'Photography'),
+        ('Music Gear', 'Music Gear'),
+        ('Mobile Tech', 'Mobile Tech')
     )
     product_name = models.CharField(max_length=40)
     title = models.CharField(max_length=60)
@@ -35,7 +35,7 @@ class Review(models.Model):
     author = models.ForeignKey(User)
     block_quote = models.CharField(max_length=100)
     video_url = models.TextField(blank=True, null=True)
-    category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES)
     rating = JSONField()
     tags = models.ManyToManyField(Tag, blank=True)
 

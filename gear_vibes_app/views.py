@@ -61,6 +61,11 @@ class UserProfileRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = UserProfileSerializer
 
 
+class TagRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = ReviewSerializer
+
+
 @api_view(['POST'])
 def login_api_view(request):
     username = request.data.get('username')
