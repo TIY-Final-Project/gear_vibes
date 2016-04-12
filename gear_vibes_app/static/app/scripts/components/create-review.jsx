@@ -76,7 +76,8 @@ var CreateReview = React.createClass({
         processData: false,
         type: 'POST',
         success: function(data){
-          self.props.router.navigate('dashboard/reviews/' + data.id, {trigger: true});
+          console.log(data);
+          self.props.router.navigate('dashboard/reviews/' + data.review, {trigger: true});
         },
         error: function(data){
           alert('no upload');
@@ -115,9 +116,9 @@ var CreateReview = React.createClass({
           <Input type="textarea" placeholder="Block Quote" valueLink={this.linkState('block_quote')}/>
           <Input type="select" defaultValue="Category" placeholder="category" valueLink={this.linkState('category')}>
             <option disabled value="Category">Category</option>
-            <option value="mus">Music Gear</option>
-            <option value="pho">Photography</option>
-            <option value="mob">Mobile Tech</option>
+            <option value="Music Gear">Music Gear</option>
+            <option value="Photography">Photography</option>
+            <option value="Mobile Tech">Mobile Tech</option>
           </Input>
 
             {tagList}

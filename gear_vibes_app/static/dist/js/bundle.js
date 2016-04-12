@@ -192,7 +192,8 @@ var CreateReview = React.createClass({displayName: "CreateReview",
         processData: false,
         type: 'POST',
         success: function(data){
-          self.props.router.navigate('dashboard/reviews/' + data.id, {trigger: true});
+          console.log(data);
+          self.props.router.navigate('dashboard/reviews/' + data.review, {trigger: true});
         },
         error: function(data){
           alert('no upload');
@@ -231,9 +232,9 @@ var CreateReview = React.createClass({displayName: "CreateReview",
           React.createElement(Input, {type: "textarea", placeholder: "Block Quote", valueLink: this.linkState('block_quote')}), 
           React.createElement(Input, {type: "select", defaultValue: "Category", placeholder: "category", valueLink: this.linkState('category')}, 
             React.createElement("option", {disabled: true, value: "Category"}, "Category"), 
-            React.createElement("option", {value: "mus"}, "Music Gear"), 
-            React.createElement("option", {value: "pho"}, "Photography"), 
-            React.createElement("option", {value: "mob"}, "Mobile Tech")
+            React.createElement("option", {value: "Music Gear"}, "Music Gear"), 
+            React.createElement("option", {value: "Photography"}, "Photography"), 
+            React.createElement("option", {value: "Mobile Tech"}, "Mobile Tech")
           ), 
 
             tagList, 
@@ -568,36 +569,37 @@ var ReviewDetail = React.createClass({displayName: "ReviewDetail",
   componentWillMount: function(){
     var self = this;
     var review = new models.ReviewsModel({id: this.props.router.reviewId});
-    review.fetch().then(function(review){
+    console.log(review);
+    review.fetch().then(function(data){
       self.setState({"review": review});
     });
   },
   render: function(){
+
     return (
       React.createElement("div", null, 
         React.createElement(Jumbotron, null, 
-          React.createElement("p", null, "Product Name"), 
-          React.createElement("h1", null, "Title"), 
-          React.createElement("p", null, "Catagory")
+          React.createElement("p", null, this.state.review.get('product_name')), 
+          React.createElement("h1", null, this.state.review.get('title')), 
+          React.createElement("p", null, this.state.review.get('category'))
         ), 
 
         React.createElement("div", {className: "review-body row-fluid"}, 
           React.createElement("div", {className: "review-text-outer col-xs-7"}, 
             React.createElement("p", {className: "review-text-content"}, 
-              this.state.review.get("body")
-              
+              this.state.review.get('body')
             )
           ), 
           React.createElement("div", {className: "review-sidebar col-xs-5"}, 
             React.createElement("div", {className: "bq-wrapper"}, 
-              React.createElement("blockquote", null, "I promise you, they don’t want you to jetski, they don’t want you to smile.")
+              React.createElement("blockquote", null, this.state.review.get('block_quote'))
             ), 
             React.createElement("div", {className: "review-video-wrapper"}, 
               React.createElement("img", {src: "https://unsplash.it/435/300/?random"})
             ), 
             React.createElement("div", {className: "rating-table-wrapper"}, 
               React.createElement("ul", {className: "rating-list"}, 
-                React.createElement("li", {className: "rating-list-item"}, "rating")
+                React.createElement("li", {className: "rating-list-item"}, "hello")
               )
             )
           )
