@@ -80,16 +80,6 @@ class UserCreateAPIViewTestCase(APITestCase):
         self.assertEqual(json_response.get('detail'), 'Method "GET" not allowed.')
 
 
-# class LoginAPIViewTestCase(APITestCase):
-
-#     def test_login_is_successful(self):
-#         self.client.post(reverse('user_create_api_view'), {'username': 'asdf', 'password': 'safepass'})
-#         response = self.client.post(reverse('login_api_view'), {'username': 'asdf', 'password': 'safepass'})
-#         json_response = response.json()
-#         self.assertEqual(json_response.get('user').get('username'), 'asdf')
-#         self.assertEqual(json_response.get('success'), True)
-
-
 class TokenAuthTestCase(APITestCase):
 
     def _create_django_user(self):
@@ -114,7 +104,6 @@ class TokenAuthTestCase(APITestCase):
 
     def test_user_can_create_review_with_authenticated_request(self):
         self.login()
-        tag = Tag.objects.create(name='test')
         data = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
@@ -123,25 +112,16 @@ class TokenAuthTestCase(APITestCase):
                 'block_quote': 'My sweet quote',
                 'category': 'pho',
                 'rating': {'point1': 5, 'point2': 5},
-                'tags': [tag.pk]
+                'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
         response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
         self.assertEqual(Review.objects.count(), 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    # def test_logout_is_successful(self):
-    #     self.login()
-    #     print(self.user.is_authenticated())
-    #     response = self.client.get(reverse('logout_api_view'))
-    #     print(response.content)
-    #     print(self.user.is_authenticated())
-    #     self.fail('X')
-
     def test_review_create_api_does_not_create_review_with_unauthenticated_requests(self):
         author = User.objects.create(username='brennon')
         author.set_password('safepass')
         author.save()
-        tag = Tag.objects.create(name='test')
         data = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
@@ -150,11 +130,29 @@ class TokenAuthTestCase(APITestCase):
                 'block_quote': 'My sweet quote',
                 'category': 'pho',
                 'rating': {'point1': 5, 'point2': 5},
-                'tags': [tag.pk]
+                'tags': [{'name': 'test'}]
         }
         response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
         self.assertEqual(Review.objects.count(), 0)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_user_can_retrieve_any_review_on_get_request(self):
+        new_user = User.objects.create(username='testtest')
+        data = {
+                'product_name': 'iPad 2',
+                'title': 'Test Review',
+                'body': 'This was an ok product',
+                'author': new_user,
+                'block_quote': 'My sweet quote',
+                'category': 'pho',
+                'rating': {'point1': 5, 'point2': 5},
+        }
+        Review.objects.create(**data)
+        response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 5}))
+        print(response.data)
+        self.assertEqual(response.data.get('id'), 5)
+        self.assertEqual(response.data.get('product_name'), 'iPad 2')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # def test_upload_gallery_image(self):
     #     self.login()
@@ -180,7 +178,7 @@ class TokenAuthTestCase(APITestCase):
     #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-# class ReviewRetrieveUpdateAPIViewTestCase(APITestCase):
+# class ReviewRetrieveAPIViewTestCase(APITestCase):
 
 #     def setUp(self):
 #         author = User.objects.create(username='brennon')
@@ -200,3 +198,7 @@ class TokenAuthTestCase(APITestCase):
 #         }
 #         self.client.post(reverse('review_create_api_view'), format='json', data=data)
 
+#     def test_user_can_retrieve_a_review_on_get_request(self):
+#         response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 1}))
+#         print(response.data)
+#         self.fail('X')

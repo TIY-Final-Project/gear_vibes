@@ -4,8 +4,10 @@ from django.http import JsonResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from gear_vibes_app.models import Tag
-from gear_vibes_app.serializers import UserSerializer, ReviewSerializer, GalleryImageSerializer, TagSerializer
+from gear_vibes_app.models import Tag, Review, UserProfile
+from gear_vibes_app.serializers import UserSerializer, ReviewSerializer, GalleryImageSerializer, \
+        TagSerializer, UserProfileSerializer
+from gear_vibes_app.permissions import IsAuthorOrReadOnly
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -39,6 +41,24 @@ class GalleryImageCreateAPIView(generics.CreateAPIView):
 class TagCreateAPIView(generics.CreateAPIView):
     serializer_class = TagSerializer
     permission_classes = (IsAuthenticated,)
+
+
+class UserReviewListAPIView(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        return Review.objects.filter(author=self.request.user.pk)
+
+
+class ReviewRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = (IsAuthorOrReadOnly,)
+
+
+class UserProfileRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
 
 
 @api_view(['POST'])
