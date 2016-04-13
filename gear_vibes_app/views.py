@@ -67,7 +67,7 @@ class MyProfileAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return UserProfile.objects.get(user=self.request.user)
+        return UserProfile.objects.filter(user=self.request.user)
 
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):
