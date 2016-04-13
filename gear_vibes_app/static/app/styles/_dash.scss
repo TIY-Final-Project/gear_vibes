@@ -1,0 +1,37 @@
+// DASHBOARD SCSS
+
+
+// extends
+%header-height {
+  height: 270px;
+}
+
+%content-height {
+  height: 500px;
+}
+
+
+// header
+
+.profile-header {
+  @extend %header-height;
+}
+
+.header-content {
+  @extend %header-height;
+}
+
+
+// content
+
+.dash-content {
+  @extend %content-height;
+}
+
+.dash-sidebar-wrapper {
+  @extend %content-height;
+}
+
+// .posts-content {
+//   @extend %content-height;
+// }

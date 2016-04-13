@@ -1,4 +1,10 @@
 @charset "UTF-8";
+.profile-header, .header-content {
+  height: 270px; }
+
+.dash-content, .dash-sidebar-wrapper {
+  height: 500px; }
+
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
