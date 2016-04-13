@@ -26,7 +26,7 @@ var DashboardEdit = React.createClass({
     }
   },
   handleSubmit: function(){
-
+    
   },
   render: function(){
     return (

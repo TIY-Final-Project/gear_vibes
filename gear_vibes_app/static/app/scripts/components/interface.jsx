@@ -81,6 +81,7 @@ var Interface = React.createClass({
     credentials.set("username", username);
     credentials.set("password", password);
     credentials.save().then(function(data){
+      
       if (data.token){
         user.set("token", data.token);
         user.auth();

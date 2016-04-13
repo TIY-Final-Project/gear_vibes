@@ -12,9 +12,21 @@ require('backbone-react-component');
 
 
 // local
-
+var models = require('../models/userProfileModel.js');
 
 var Dashboard = React.createClass({
+  getInitialState: function(){
+    return {
+      profile: new models.UserProfile()
+    }
+  },
+  componentWillMount: function(){
+    var self = this;
+    var profile = new models.UserProfile();
+    profile.fetch().then(function(data){
+      self.setState({profile: profile});
+    });
+  },
   render: function(){
     return (
       <div>

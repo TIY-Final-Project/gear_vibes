@@ -19,7 +19,6 @@ var models = require('../models/review-model.js');
 
 
 var ReviewDetail = React.createClass({
-  mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
   getInitialState: function(){
     return {
       review: new models.ReviewsModel()
@@ -34,7 +33,7 @@ var ReviewDetail = React.createClass({
     });
   },
   render: function(){
-    console.log(this.state);
+    console.log(this.state.review);
     return (
       <div>
         <Jumbotron>
@@ -73,9 +72,25 @@ var ReviewDetail = React.createClass({
 var RatingTable = React.createClass({
   mixins: [Backbone.React.Component.mixin],
   render: function(){
+    var ratings = this.props.review.get('rating');
+
+    // If no ratings then return an empty div
+    if(!ratings){
+      return (<div className="hide" />);
+    }
+
+    var ratingList = ratings.map(function(rating){
+      return (
+        <li key={rating.title}>
+          {rating.title}
+          {rating.value}
+        </li>
+      );
+    });
+
     return (
       <div>
-
+        {ratingList}
       </div>
     )
   }

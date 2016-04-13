@@ -178,7 +178,7 @@ var RatingTableFormset = React.createClass({
   getInitialState: function(){
     return {
       ratingType: '',
-      ratingValue: '',
+      ratingValue: 5,
       type: this.props.type
     }
   },
@@ -192,19 +192,7 @@ var RatingTableFormset = React.createClass({
       return (
         <div>
           <Input ref={"title"} type="text" valueLink={this.linkState('ratingType')} placeholder="Rating Type"/>
-          <Input ref={"value"} type="select" valueLink={this.linkState('ratingValue')} defaultValue="Value" placeholder="Rating Value">
-            <option disabled value="Value">Value</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </Input>
+          <Input id="slider" type="range" min="0" max="10" step=".1" valueLink={this.linkState('ratingValue')} />
           <ButtonInput onClick={this.handleSubmit} value="Add Rating"/>
         </div>
       )

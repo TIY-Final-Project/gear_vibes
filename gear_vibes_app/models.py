@@ -13,9 +13,9 @@ class UserProfile(models.Model):
     bio = models.TextField(blank=True)
     profile_photo = models.ImageField(blank=True, null=True, upload_to='profile_images')
     joined = models.DateTimeField(auto_now_add=True)
-    facebook_link = models.CharField(max_length=30, null=True, blank=True)
-    twitter_link = models.CharField(max_length=30, null=True, blank=True)
-    instagram_link = models.CharField(max_length=30, null=True, blank=True)
+    facebook_link = models.CharField(max_length=50, null=True, blank=True)
+    twitter_link = models.CharField(max_length=50, null=True, blank=True)
+    instagram_link = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         if self.first_name and self.last_name:
