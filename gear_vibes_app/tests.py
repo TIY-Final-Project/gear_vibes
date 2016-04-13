@@ -149,7 +149,6 @@ class TokenAuthTestCase(APITestCase):
         }
         Review.objects.create(**data)
         response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 5}))
-        print(response.data)
         self.assertEqual(response.data.get('id'), 5)
         self.assertEqual(response.data.get('product_name'), 'iPad 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
