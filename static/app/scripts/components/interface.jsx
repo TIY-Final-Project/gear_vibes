@@ -12,7 +12,6 @@ require('backbone-react-component');
 // components
 var AccountComponent = require('./account.jsx');
 var Dashboard = require('./dashboard.jsx');
-var DashboardEdit = require('./dashboardEdit.jsx');
 var HomePage = require('./homepage.jsx');
 var CreateReview = require('./create-review.jsx');
 var ReviewDetail = require('./review-detail.jsx');
@@ -54,10 +53,6 @@ var Interface = React.createClass({
   },
   componentWillUnmount: function(){
     this.state.router.off('route', this.callback);
-  },
-  editDash: function(e){
-    e.preventDefault();
-    Backbone.history.navigate('dashboard/edit', {trigger: true});
   },
   createReview: function(e){
     e.preventDefault();
@@ -117,24 +112,18 @@ var Interface = React.createClass({
                         router={this.props.router}
                         createAccount={this.createAccount}
                       />
-    }else if (routing.current == 'account'){
+    } else if (routing.current == 'account'){
       currentRoute = <AccountComponent
                         login={this.login}
                         signUp={this.signUp}
                         router={this.props.router}
                       />
-    }else if (routing.current == 'dashboard'){
-      currentRoute = <Dashboard
-                        createReview={this.createReview}
-                        editDash={this.editDash}
-                        logout={this.logout}
-                      />
-    }else if (routing.current == 'createReview'){
+    } else if (routing.current == 'dashboard'){
+      currentRoute = <Dashboard createReview={this.createReview} logout={this.logout}/>
+    } else if (routing.current == 'createreview'){
       currentRoute = <CreateReview router={this.props.router}/>
     }else if (routing.current == 'reviewDetail'){
       currentRoute = <ReviewDetail router={this.props.router}/>
-    }else if (routing.current == 'dashboardEdit'){
-      currentRoute = <DashboardEdit />
     }
 
     return (
