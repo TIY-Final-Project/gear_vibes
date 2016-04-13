@@ -8,11 +8,18 @@ from rest_framework.authtoken.models import Token
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=40, blank=True, null=True)
     bio = models.TextField(blank=True)
     profile_photo = models.ImageField(blank=True, null=True, upload_to='profile_images')
     joined = models.DateTimeField(auto_now_add=True)
+    facebook_link = models.CharField(max_length=30, null=True, blank=True)
+    twitter_link = models.CharField(max_length=30, null=True, blank=True)
+    instagram_link = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
+        if self.first_name and self.last_name:
+            return '{} {}'.format(self.first_name, self.last_name)
         return self.user.username
 
 

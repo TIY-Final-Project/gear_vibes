@@ -27,9 +27,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    total_posts = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
+
+    def get_total_posts(self, obj):
+        return Review.objects.filter(author=obj.user).count()
 
 
 class ReviewSerializer(serializers.ModelSerializer):

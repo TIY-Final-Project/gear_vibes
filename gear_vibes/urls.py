@@ -29,7 +29,11 @@ urlpatterns = [
     url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
     url(r'^api/reviews/$', views.ReviewCreateAPIView.as_view(), name='review_create_api_view'),
     url(r'^api/reviews/(?P<pk>\d+)/$', views.ReviewRetrieveAPIView.as_view(), name='review_retrieve_api_view'),
-    url(r'^api/userprofiles/(?P<pk>\d+)/$', views.UserProfileRetrieveAPIView.as_view(), name='userprofile_retrieve_api_view'),
+    url(
+        r'^api/userprofiles/(?P<pk>\d+)/$',
+        views.UserProfileRetrieveUpdateAPIView.as_view(),
+        name='userprofile_retrieve_update_api_view'
+    ),
     url(r'^api/user/reviews/$', views.UserReviewListAPIView.as_view(), name='user_review_list_api_view'),
     url(r'^api/galleryimages/$', views.GalleryImageCreateAPIView.as_view(), name='gallery_image_create_api_view'),
     url(r'^api/tags/$', views.TagCreateAPIView.as_view(), name='tag_create_api_view'),

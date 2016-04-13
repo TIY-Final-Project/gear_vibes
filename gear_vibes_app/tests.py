@@ -149,7 +149,6 @@ class TokenAuthTestCase(APITestCase):
         }
         Review.objects.create(**data)
         response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 5}))
-        print(response.data)
         self.assertEqual(response.data.get('id'), 5)
         self.assertEqual(response.data.get('product_name'), 'iPad 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -176,29 +175,3 @@ class TokenAuthTestCase(APITestCase):
     #     )
     #     self.assertEqual(GalleryImage.objects.count(), 1)
     #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-
-# class ReviewRetrieveAPIViewTestCase(APITestCase):
-
-#     def setUp(self):
-#         author = User.objects.create(username='brennon')
-#         author.set_password('safepass')
-#         author.save()
-#         tag = Tag.objects.create(name='test')
-#         self.client.post(reverse('login_api_view'), {'username': 'brennon', 'password': 'safepass'})
-#         data = {
-#                 'product_name': 'iPad 2',
-#                 'title': 'Test Review',
-#                 'body': 'This was an ok product',
-#                 'author': author.pk,
-#                 'block_quote': 'My sweet quote',
-#                 'category': 'Photography',
-#                 'rating': {'point1': 5, 'point2': 5},
-#                 'tags': [tag.pk]
-#         }
-#         self.client.post(reverse('review_create_api_view'), format='json', data=data)
-
-#     def test_user_can_retrieve_a_review_on_get_request(self):
-#         response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 1}))
-#         print(response.data)
-#         self.fail('X')

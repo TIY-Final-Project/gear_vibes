@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from gear_vibes_app.models import Tag, Review, UserProfile
 from gear_vibes_app.serializers import UserSerializer, ReviewSerializer, GalleryImageSerializer, \
         TagSerializer, UserProfileSerializer
-from gear_vibes_app.permissions import IsAuthorOrReadOnly
+from gear_vibes_app.permissions import IsAuthorOrReadOnly, IsOwnerOrReadOnly
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -56,9 +56,10 @@ class ReviewRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
 
 
-class UserProfileRetrieveAPIView(generics.RetrieveAPIView):
+class UserProfileRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+    permission_classes = (IsOwnerOrReadOnly,)
 
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):
