@@ -56,10 +56,18 @@ class ReviewRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
 
 
-class UserProfileRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+class UserProfileRetrieveUpdateAPIView(generics.RetrieveAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = (IsOwnerOrReadOnly,)
+
+
+class MyProfileAPIView(generics.ListAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return UserProfile.objects.get(user=self.request.user)
 
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):

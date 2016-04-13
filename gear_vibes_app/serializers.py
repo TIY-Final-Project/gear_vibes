@@ -37,9 +37,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    rating_average = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
+
+    def get_rating_average(self, obj):
+        return 5
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):
