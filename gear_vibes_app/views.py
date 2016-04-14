@@ -43,7 +43,7 @@ class TagCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class UserReviewListAPIView(generics.ListAPIView):
+class MyProfileReviewListAPIView(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
