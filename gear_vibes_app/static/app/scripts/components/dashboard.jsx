@@ -35,6 +35,7 @@ var Dashboard = React.createClass({
       return (<div className="hide" />);
     }
 
+    console.log(profile.get('first_name'));
 
 
 
@@ -51,21 +52,21 @@ var Dashboard = React.createClass({
             <Image src="https://unsplash.it/270/270/?random" responsive />
           </div>
           <div className="header-content col-xs-9 col-lg-9">
-            <h1>Emerson</h1>
-            <p>Vibing since Sep 06, 2011</p>
+            <h1>{profile.get('first_name')} {profile.get('last_name')}</h1>
+            <p>Vibing since {profile.get('joined')}</p>
           </div>
         </div>
 
           <div className="dash-content row-fluid">
             <div className="dash-sidebar-wrapper col-xs-3 col-lg-3">
               <div className="total-posts">
-                <h3>20</h3>
+                <h3>{profile.get('total_posts')}</h3>
                 <p>posts</p>
               </div>
               <div className="bio">
-                <h3>About <span>Brandon</span></h3>
+                <h3>About <span>{profile.get('first_name')}</span></h3>
                 <p>
-                  Special cloth alert. The key to success is to keep your head above the water, never give up. They never said winning was easy. Some people can’t handle success, I can. Learning is cool, but knowing is better, and I know the key to success. In life there will be road blocks but we will over come it. They don’t want us to eat. Wraith talk. Stay focused. The other day the grass was brown, now it’s green because I ain’t give up. Never surrender.
+                  {profile.get('bio')}
                 </p>
               </div>
               <div className="profile-catagories">

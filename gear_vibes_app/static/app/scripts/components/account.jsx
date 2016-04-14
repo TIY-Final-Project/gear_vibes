@@ -20,12 +20,18 @@ var AccontComponent = React.createClass({
     return {
       email: '',
       username: '',
-      password: ''
+      password: '',
+      toggleSignUp: false
     };
+  },
+  toggleSignUp: function(e){
+    e.preventDefault();
+    this.setState({toggleSignUp: !this.state.toggleSignUp});
   },
   render: function(){
     return (
       <div>
+
         <div className="row">
           <div className="login-form-container col-xs-4 col-xs-offset-4">
             <h2 className="text-center">Gear-Vibes</h2>

@@ -22,12 +22,18 @@ var AccontComponent = React.createClass({displayName: "AccontComponent",
     return {
       email: '',
       username: '',
-      password: ''
+      password: '',
+      toggleSignUp: false
     };
+  },
+  toggleSignUp: function(e){
+    e.preventDefault();
+    this.setState({toggleSignUp: !this.state.toggleSignUp});
   },
   render: function(){
     return (
       React.createElement("div", null, 
+
         React.createElement("div", {className: "row"}, 
           React.createElement("div", {className: "login-form-container col-xs-4 col-xs-offset-4"}, 
             React.createElement("h2", {className: "text-center"}, "Gear-Vibes"), 
@@ -367,6 +373,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
       return (React.createElement("div", {className: "hide"}));
     }
 
+    console.log(profile.get('first_name'));
 
 
 
@@ -383,21 +390,21 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement(Image, {src: "https://unsplash.it/270/270/?random", responsive: true})
           ), 
           React.createElement("div", {className: "header-content col-xs-9 col-lg-9"}, 
-            React.createElement("h1", null, "Emerson"), 
-            React.createElement("p", null, "Vibing since Sep 06, 2011")
+            React.createElement("h1", null, profile.get('first_name'), " ", profile.get('last_name')), 
+            React.createElement("p", null, "Vibing since ", profile.get('joined'))
           )
         ), 
 
           React.createElement("div", {className: "dash-content row-fluid"}, 
             React.createElement("div", {className: "dash-sidebar-wrapper col-xs-3 col-lg-3"}, 
               React.createElement("div", {className: "total-posts"}, 
-                React.createElement("h3", null, "20"), 
+                React.createElement("h3", null, profile.get('total_posts')), 
                 React.createElement("p", null, "posts")
               ), 
               React.createElement("div", {className: "bio"}, 
-                React.createElement("h3", null, "About ", React.createElement("span", null, "Brandon")), 
+                React.createElement("h3", null, "About ", React.createElement("span", null, profile.get('first_name'))), 
                 React.createElement("p", null, 
-                  "Special cloth alert. The key to success is to keep your head above the water, never give up. They never said winning was easy. Some people can’t handle success, I can. Learning is cool, but knowing is better, and I know the key to success. In life there will be road blocks but we will over come it. They don’t want us to eat. Wraith talk. Stay focused. The other day the grass was brown, now it’s green because I ain’t give up. Never surrender."
+                  profile.get('bio')
                 )
               ), 
               React.createElement("div", {className: "profile-catagories"}, 
