@@ -139,13 +139,24 @@ var ReviewListComponent = React.createClass({
 
 var ContributionComponent = React.createClass({
   render: function(){
-    var profile = this.props.profile.get('first_name');
-    console.log(profile);
+    var contributions = this.props.profile.get('contributed_to');
+
+    if (!contributions){
+      return (<div className="hide" />);
+    }
+
+    var contribuitionListing = contributions.map(function(data, index){
+      return (
+        <li className="contributions-list-item" key={index}>
+          <p>{data}</p>
+        </li>
+      )
+
+    });
+
     return (
       <div>
-        <li className="contributions-list-item">
-          <p>Music Gear</p>
-        </li>
+        {contribuitionListing}
       </div>
     )
   }

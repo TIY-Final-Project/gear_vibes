@@ -26,6 +26,37 @@ var DashboardEdit = React.createClass({
     }
   },
   handleSubmit: function(){
+    var self = this;
+    var data = new FormData();
+    data.append({
+      'profile_photo': self.refs.featuredImage.getInputDOMNode().files[0],
+      'first_name': self.state.first_name,
+      'last_name': self.state.last_name,
+      'bio': self.state.bio,
+      'facebook_link': self.state.facebook_link,
+      'twitter_link': self.state.twitter_link,
+      'instagram_link': self.state.instagram_link
+    });
+
+
+    $.ajax({
+      url: '/api/myprofile/',
+      data: data,
+      cache: false,
+      contentType: false,
+      processData: false,
+      type: 'POST',
+      success: function(data){
+        console.log(data);
+        self.props.router.navigate('dashboard/reviews/' + data.review, {trigger: true});
+      },
+      error: function(data){
+        alert('no upload');
+      }
+    });
+
+
+
 
   },
   render: function(){
