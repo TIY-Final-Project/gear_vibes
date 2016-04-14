@@ -365,17 +365,17 @@ var Dashboard = React.createClass({displayName: "Dashboard",
 
         React.createElement("div", {className: "profile-header row-fluid"}, 
 
-          React.createElement("div", {className: "avatar-wrapper col-xs-3"}, 
-            React.createElement(Image, {src: "https://unsplash.it/300/300/?random", responsive: true})
+          React.createElement("div", {className: "avatar-wrapper col-xs-3 col-lg-3"}, 
+            React.createElement(Image, {src: "https://unsplash.it/270/270/?random", responsive: true})
           ), 
-          React.createElement("div", {className: "header-content col-xs-9"}, 
-            React.createElement("h1", null, "Brandon Emerson"), 
+          React.createElement("div", {className: "header-content col-xs-9 col-lg-9"}, 
+            React.createElement("h1", null, this.state.profile.get('first_name'), " Emerson"), 
             React.createElement("p", null, "Vibing since Sep 06, 2011")
           )
         ), 
 
           React.createElement("div", {className: "dash-content row-fluid"}, 
-            React.createElement("div", {className: "dash-sidebar-wrapper col-xs-3"}, 
+            React.createElement("div", {className: "dash-sidebar-wrapper col-xs-3 col-lg-3"}, 
               React.createElement("div", {className: "total-posts"}, 
                 React.createElement("h3", null, "20"), 
                 React.createElement("p", null, "posts")
@@ -391,7 +391,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
                 React.createElement("p", null, "Music Gear")
               )
             ), 
-            React.createElement("div", {className: "posts-content col-xs-9"}, 
+            React.createElement("div", {className: "posts-content col-xs-9 col-lg-9"}, 
               React.createElement("h1", null, "Reviews"), 
               React.createElement("ul", {className: "posts-list"}, 
                 React.createElement("li", {className: "posts-list-item"}, 

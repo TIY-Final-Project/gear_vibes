@@ -33,17 +33,17 @@ var Dashboard = React.createClass({
 
         <div className="profile-header row-fluid">
 
-          <div className="avatar-wrapper col-xs-3">
-            <Image src="https://unsplash.it/300/300/?random" responsive />
+          <div className="avatar-wrapper col-xs-3 col-lg-3">
+            <Image src="https://unsplash.it/270/270/?random" responsive />
           </div>
-          <div className="header-content col-xs-9">
-            <h1>Brandon Emerson</h1>
+          <div className="header-content col-xs-9 col-lg-9">
+            <h1>{this.state.profile.get('first_name')} Emerson</h1>
             <p>Vibing since Sep 06, 2011</p>
           </div>
         </div>
 
           <div className="dash-content row-fluid">
-            <div className="dash-sidebar-wrapper col-xs-3">
+            <div className="dash-sidebar-wrapper col-xs-3 col-lg-3">
               <div className="total-posts">
                 <h3>20</h3>
                 <p>posts</p>
@@ -59,7 +59,7 @@ var Dashboard = React.createClass({
                 <p>Music Gear</p>
               </div>
             </div>
-            <div className="posts-content col-xs-9">
+            <div className="posts-content col-xs-9 col-lg-9">
               <h1>Reviews</h1>
               <ul className="posts-list">
                 <li className="posts-list-item">
