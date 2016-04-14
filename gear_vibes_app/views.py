@@ -20,6 +20,7 @@ class ReviewCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
+        request.data['author'] = request.user.pk
         submitted_tags = [tag.get('name') for tag in request.data.get('tags')]
         tag_ids = []
         for tag in submitted_tags:

@@ -44,7 +44,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def get_rating_average(self, obj):
         if obj.rating:
-            rating_values = [int(rating.get('value')) for rating in obj.rating if isinstance(rating, type(dict()))]
+            rating_values = [float(rating.get('value')) for rating in obj.rating if isinstance(rating, type(dict()))]
             rating_total = sum(rating_values)
             if len(rating_values) > 0:
                 return rating_total/len(rating_values)
