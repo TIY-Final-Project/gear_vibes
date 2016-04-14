@@ -28,15 +28,19 @@ var Dashboard = React.createClass({
     var reviews = new collection.UserReviewsCollection();
     profile.fetch().then(function(data){
       self.setState({profile: profile});
+    });
+    reviews.fetch().then(function(data){
+      console.log('data: ', data);
       self.setState({reviews: reviews});
     });
+    console.log('reviews ', reviews);
 
   },
   render: function(){
     var profile = this.state.profile;
     var reviews = this.state.reviews;
 
-    console.log(reviews);
+    console.log('on render after state: ', reviews);
 
     if (!profile){
       return (<div className="hide" />);
