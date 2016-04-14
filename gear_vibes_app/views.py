@@ -80,6 +80,11 @@ class MyAwesomeProfileAPIView(views.APIView):
         serializer = UserProfileSerializer(profile)
         return JsonResponse(serializer.data)
 
+    def put(self, request, *args, **kwargs):
+        profile = UserProfile.objects.get(user=request.user)
+        serializer = UserProfileSerializer(profile, data=request.data)
+        return JsonResponse(serializer.data)
+
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Tag.objects.all()
