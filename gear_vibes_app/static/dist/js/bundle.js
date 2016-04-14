@@ -222,12 +222,12 @@ var CreateReview = React.createClass({displayName: "CreateReview",
     var i = -1;
     var rating = this.state.rating.map(function(rating, index){
       i++;
-      return (React.createElement(RatingTableFormset, {ref: "formset", key: index, addRating: this.addRating, type: "render", model: rating}))
+      return (React.createElement(RatingTableFormset, {key: index, addRating: this.addRating, type: "render", model: rating}))
     }.bind(this));
 
 
     var tagList = this.state.tags.map(function(tagList, index){
-      return (React.createElement(TagsFormset, {ref: "formset", key: index, addTag: this.addTag, model: tagList}))
+      return (React.createElement(TagsFormset, {key: index, addTag: this.addTag, model: tagList}))
     }.bind(this));
 
 
@@ -362,7 +362,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
   getInitialState: function(){
     return {
       profile: new models.UserProfile(),
-      reviews: new collection.UserReviewsCollection()
+      reviews: []
     }
   },
   componentWillMount: function(){
@@ -381,7 +381,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
     var profile = this.state.profile;
     var reviews = this.state.reviews;
 
-    console.log(reviews);
+
 
 
     if (!profile){
@@ -421,7 +421,9 @@ var Dashboard = React.createClass({displayName: "Dashboard",
               ), 
               React.createElement("div", {className: "profile-catagories"}, 
                 React.createElement("h3", null, "Contributed to"), 
-                React.createElement("p", null, "Music Gear")
+                React.createElement("ul", {className: "contributions-list"}, 
+                  React.createElement(ContributionComponent, {profile: profile})
+                )
               )
             ), 
             React.createElement("div", {className: "posts-content col-xs-9 col-lg-9"}, 
@@ -453,24 +455,40 @@ var Dashboard = React.createClass({displayName: "Dashboard",
 var ReviewListComponent = React.createClass({displayName: "ReviewListComponent",
   render: function(){
     var reviews = this.props.reviews;
-
-    if (!reviews){
-      return (React.createElement("div", {className: "hide"}));
-    }
-    console.log(reviews);
-    var reviewListing = reviews.map(function(reviews){
-      console.log('IN MAP: ')
+    var reviewListing = reviews.map(function(review){
+      return (
+        React.createElement("li", {className: "posts-list-item", key: review.get('id')}, 
+          React.createElement("span", {className: "posts-list-catagory"}, review.get('category')), 
+          React.createElement("div", {className: "post-title-wrapper"}, 
+            React.createElement("h3", {className: "post-item-title"}, 
+              React.createElement("a", {href: "#dashboard/reviews/" + review.get('id')}, review.get('title'))
+            )
+          ), 
+          React.createElement("span", {className: "post-item-time"}, review.get('created_at'))
+        )
+      )
     });
 
+
+
     return (
-      React.createElement("li", {className: "posts-list-item"}, 
-        React.createElement("span", {className: "posts-list-catagory"}, "Mobile Tech"), 
-        React.createElement("div", {className: "post-title-wrapper"}, 
-          React.createElement("h3", {className: "post-item-title"}, 
-            React.createElement("a", {href: "#"}, "Apple's iPad Review")
-          )
-        ), 
-        React.createElement("span", {className: "post-item-time"}, "2 days ago")
+      React.createElement("div", null, 
+        reviewListing
+      )
+    )
+  }
+});
+
+
+var ContributionComponent = React.createClass({displayName: "ContributionComponent",
+  render: function(){
+    var profile = this.props.profile.get('first_name');
+    console.log(profile);
+    return (
+      React.createElement("div", null, 
+        React.createElement("li", {className: "contributions-list-item"}, 
+          React.createElement("p", null, "Music Gear")
+        )
       )
     )
   }
