@@ -95,12 +95,12 @@ var CreateReview = React.createClass({
     var i = -1;
     var rating = this.state.rating.map(function(rating, index){
       i++;
-      return (<RatingTableFormset ref={"formset"} key={index} addRating={this.addRating} type="render" model={rating} />)
+      return (<RatingTableFormset key={index} addRating={this.addRating} type="render" model={rating} />)
     }.bind(this));
 
 
     var tagList = this.state.tags.map(function(tagList, index){
-      return (<TagsFormset ref={"formset"} key={index} addTag={this.addTag} model={tagList}/>)
+      return (<TagsFormset key={index} addTag={this.addTag} model={tagList}/>)
     }.bind(this));
 
 

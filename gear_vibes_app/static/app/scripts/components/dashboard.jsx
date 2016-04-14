@@ -19,7 +19,7 @@ var Dashboard = React.createClass({
   getInitialState: function(){
     return {
       profile: new models.UserProfile(),
-      reviews: new collection.UserReviewsCollection()
+      reviews: []
     }
   },
   componentWillMount: function(){
@@ -38,7 +38,7 @@ var Dashboard = React.createClass({
     var profile = this.state.profile;
     var reviews = this.state.reviews;
 
-    console.log(reviews);
+
 
 
     if (!profile){
@@ -78,7 +78,9 @@ var Dashboard = React.createClass({
               </div>
               <div className="profile-catagories">
                 <h3>Contributed to</h3>
-                <p>Music Gear</p>
+                <ul className="contributions-list">
+                  <ContributionComponent profile={profile}/>
+                </ul>
               </div>
             </div>
             <div className="posts-content col-xs-9 col-lg-9">
@@ -110,25 +112,41 @@ var Dashboard = React.createClass({
 var ReviewListComponent = React.createClass({
   render: function(){
     var reviews = this.props.reviews;
-
-    if (!reviews){
-      return (<div className="hide" />);
-    }
-    console.log(reviews);
-    var reviewListing = reviews.map(function(reviews){
-      console.log('IN MAP: ')
+    var reviewListing = reviews.map(function(review){
+      return (
+        <li className="posts-list-item" key={review.get('id')}>
+          <span className="posts-list-catagory">{review.get('category')}</span>
+          <div className="post-title-wrapper">
+            <h3 className="post-item-title">
+              <a href={"#dashboard/reviews/" + review.get('id')}>{review.get('title')}</a>
+            </h3>
+          </div>
+          <span className="post-item-time">{review.get('created_at')}</span>
+        </li>
+      )
     });
 
+
+
     return (
-      <li className="posts-list-item">
-        <span className="posts-list-catagory">Mobile Tech</span>
-        <div className="post-title-wrapper">
-          <h3 className="post-item-title">
-            <a href="#">Apple&#39;s iPad Review</a>
-          </h3>
-        </div>
-        <span className="post-item-time">2 days ago</span>
-      </li>
+      <div>
+        {reviewListing}
+      </div>
+    )
+  }
+});
+
+
+var ContributionComponent = React.createClass({
+  render: function(){
+    var profile = this.props.profile.get('first_name');
+    console.log(profile);
+    return (
+      <div>
+        <li className="contributions-list-item">
+          <p>Music Gear</p>
+        </li>
+      </div>
     )
   }
 });

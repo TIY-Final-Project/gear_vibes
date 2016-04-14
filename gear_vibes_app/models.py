@@ -45,6 +45,7 @@ class Review(models.Model):
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES)
     rating = JSONField()
     tags = models.ManyToManyField(Tag, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{} - {}'.format(self.product_name, self.author)
