@@ -157,7 +157,6 @@ class TokenAuthTestCase(APITestCase):
         self.login()
         response = self.client.get(reverse('my_profile_api_view'))
         json_response = response.json()
-        # data = json_response[0]
         self.assertEqual(json_response.get('id'), self.user.pk)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
