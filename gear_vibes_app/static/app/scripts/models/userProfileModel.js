@@ -13,10 +13,17 @@ var UserProfile = Backbone.Model.extend({
 });
 
 
+var UserProfileCollection = Backbone.Collection.extend({
+  model: UserProfile,
+  url: '/api/myprofile/'
+});
+
+
 
 
 
 
 module.exports = {
-  "UserProfile": UserProfile
+  UserProfile: UserProfile,
+  UserProfileCollection: UserProfileCollection
 };

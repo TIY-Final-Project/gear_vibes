@@ -16,6 +16,19 @@ var user = new userModel.UserModel();
 
 
 
+// reAuth: function(){
+//   var token = localStorage.getItem('token')
+//   if(typeof(token) !== "undefined"){
+//     $.ajaxSetup({
+//       headers: {
+//         'Authorization': 'Token ' + token
+//       }
+//     });
+//   }
+// }
+
+
+
 Backbone.history.start();
 
 

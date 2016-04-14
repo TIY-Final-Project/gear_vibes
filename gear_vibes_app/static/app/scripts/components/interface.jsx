@@ -81,12 +81,11 @@ var Interface = React.createClass({
     credentials.set("username", username);
     credentials.set("password", password);
     credentials.save().then(function(data){
-      
       if (data.token){
         user.set("token", data.token);
         user.auth();
-        localStorage.setItem("username", username)
-
+        localStorage.setItem("username", username);
+        localStorage.setItem("token", data.token);
         Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');
@@ -129,6 +128,7 @@ var Interface = React.createClass({
                         createReview={this.createReview}
                         editDash={this.editDash}
                         logout={this.logout}
+                        user={this.props.user}
                       />
     }else if (routing.current == 'createReview'){
       currentRoute = <CreateReview router={this.props.router}/>

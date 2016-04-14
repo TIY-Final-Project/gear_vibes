@@ -26,9 +26,23 @@ var Dashboard = React.createClass({
     profile.fetch().then(function(data){
       self.setState({profile: profile});
     });
+
   },
   render: function(){
+    var profile = this.state.profile;
+
+    if (!profile){
+      return (<div className="hide" />);
+    }
+
+
+
+
+
+
+
     return (
+
       <div>
 
         <div className="profile-header row-fluid">
@@ -37,7 +51,7 @@ var Dashboard = React.createClass({
             <Image src="https://unsplash.it/270/270/?random" responsive />
           </div>
           <div className="header-content col-xs-9 col-lg-9">
-            <h1>{this.state.profile.get('first_name')} Emerson</h1>
+            <h1>Emerson</h1>
             <p>Vibing since Sep 06, 2011</p>
           </div>
         </div>

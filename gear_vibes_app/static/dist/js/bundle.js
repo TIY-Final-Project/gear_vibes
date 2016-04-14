@@ -358,9 +358,23 @@ var Dashboard = React.createClass({displayName: "Dashboard",
     profile.fetch().then(function(data){
       self.setState({profile: profile});
     });
+
   },
   render: function(){
+    var profile = this.state.profile;
+
+    if (!profile){
+      return (React.createElement("div", {className: "hide"}));
+    }
+
+
+
+
+
+
+
     return (
+
       React.createElement("div", null, 
 
         React.createElement("div", {className: "profile-header row-fluid"}, 
@@ -369,7 +383,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement(Image, {src: "https://unsplash.it/270/270/?random", responsive: true})
           ), 
           React.createElement("div", {className: "header-content col-xs-9 col-lg-9"}, 
-            React.createElement("h1", null, this.state.profile.get('first_name'), " Emerson"), 
+            React.createElement("h1", null, "Emerson"), 
             React.createElement("p", null, "Vibing since Sep 06, 2011")
           )
         ), 
@@ -602,12 +616,11 @@ var Interface = React.createClass({displayName: "Interface",
     credentials.set("username", username);
     credentials.set("password", password);
     credentials.save().then(function(data){
-      
       if (data.token){
         user.set("token", data.token);
         user.auth();
-        localStorage.setItem("username", username)
-
+        localStorage.setItem("username", username);
+        localStorage.setItem("token", data.token);
         Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');
@@ -649,7 +662,8 @@ var Interface = React.createClass({displayName: "Interface",
       currentRoute = React.createElement(Dashboard, {
                         createReview: this.createReview, 
                         editDash: this.editDash, 
-                        logout: this.logout}
+                        logout: this.logout, 
+                        user: this.props.user}
                       )
     }else if (routing.current == 'createReview'){
       currentRoute = React.createElement(CreateReview, {router: this.props.router})
@@ -797,6 +811,19 @@ var user = new userModel.UserModel();
 
 
 
+// reAuth: function(){
+//   var token = localStorage.getItem('token')
+//   if(typeof(token) !== "undefined"){
+//     $.ajaxSetup({
+//       headers: {
+//         'Authorization': 'Token ' + token
+//       }
+//     });
+//   }
+// }
+
+
+
 Backbone.history.start();
 
 
@@ -923,6 +950,7 @@ var UserModel = Backbone.Model.extend({
       });
     }
   }
+
 });
 
 
@@ -950,12 +978,19 @@ var UserProfile = Backbone.Model.extend({
 });
 
 
+var UserProfileCollection = Backbone.Collection.extend({
+  model: UserProfile,
+  url: '/api/myprofile/'
+});
+
+
 
 
 
 
 module.exports = {
-  "UserProfile": UserProfile
+  UserProfile: UserProfile,
+  UserProfileCollection: UserProfileCollection
 };
 
 },{"backbone":26}],14:[function(require,module,exports){
