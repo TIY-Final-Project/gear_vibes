@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
-from rest_framework import generics, views
+from django.http import Response, JsonResponse
+from rest_framework import generics, views, status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from gear_vibes_app.models import Tag, Review, UserProfile
@@ -83,7 +83,10 @@ class MyAwesomeProfileAPIView(views.APIView):
     def put(self, request, *args, **kwargs):
         profile = UserProfile.objects.get(user=request.user)
         serializer = UserProfileSerializer(profile, data=request.data)
-        return JsonResponse(serializer.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return Response(serializer.errors, status_code=status.HTTP_400_BAD_REQUEST)
 
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):
