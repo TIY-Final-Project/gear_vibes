@@ -381,6 +381,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
     var profile = this.state.profile;
     var reviews = this.state.reviews;
 
+    console.log(reviews);
 
 
     if (!profile){
