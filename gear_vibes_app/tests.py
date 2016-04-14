@@ -7,6 +7,7 @@ from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 from gear_vibes_app.models import UserProfile, Tag, Review, GalleryImage
 from gear_vibes_app.views import ReviewCreateAPIView
+from gear_vibes_app.serializers import UserProfileSerializer, ReviewSerializer
 import json
 
 
@@ -22,6 +23,21 @@ class UserProfileTestCase(TestCase):
         self.assertEqual(UserProfile.objects.get().user, user)
         self.assertEqual(UserProfile.objects.get().user.username, 'brennon')
 
+    def test_userprofile_serializer_returns_users_total_posts(self):
+        user_profile = UserProfile.objects.get()
+        data = {
+            'title': 'New Product Review',
+            'body': 'This was a great product',
+            'author': User.objects.get(),
+            'block_quote': 'This is a blockquote',
+            'category': 'cam',
+            'rating': {'quality': 5, 'takes_pics': 10, 'lens': 10}
+        }
+        Review.objects.create(**data)
+        Review.objects.create(**data)
+        serializer = UserProfileSerializer(user_profile)
+        self.assertEqual(serializer.data.get('total_posts'), 2)
+
 
 class ReviewTestCase(TestCase):
 
@@ -35,7 +51,7 @@ class ReviewTestCase(TestCase):
             author=user,
             block_quote='This is a blockquote',
             category='cam',
-            rating={'quality': 5, 'takes_pics': 10, 'lens': 10}
+            rating={'quality': 5.0, 'takes_pics': 9.5, 'lens': 9.5}
         )
         review.tags.add(tag1)
         review.tags.add(tag2)
@@ -46,7 +62,7 @@ class ReviewTestCase(TestCase):
         tag1 = Tag.objects.get(name='tag1')
         tag2 = Tag.objects.get(name='tag2')
         self.assertEqual(review.author.username, 'brennon')
-        self.assertEqual(review.rating, {'quality': 5, 'takes_pics': 10, 'lens': 10})
+        self.assertEqual(review.rating, {'quality': 5, 'takes_pics': 9.5, 'lens': 9.5})
         self.assertIn(tag1, review.tags.all())
         self.assertIn(tag2, review.tags.all())
         self.assertEqual(review.category, 'cam')
@@ -63,6 +79,11 @@ class ReviewTestCase(TestCase):
 
         self.assertEqual(len(review1.rating), 3)
         self.assertEqual(len(review2.rating), 5)
+
+    def test_review_serializer_returns_rating_average(self):
+        review = Review.objects.get()
+        serializer = ReviewSerializer(review)
+        self.assertEqual(serializer.data.get('rating_average'), 8.0)
 
 
 class UserCreateAPIViewTestCase(APITestCase):
@@ -148,8 +169,8 @@ class TokenAuthTestCase(APITestCase):
                 'rating': {'point1': 5, 'point2': 5},
         }
         Review.objects.create(**data)
-        response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 5}))
-        self.assertEqual(response.data.get('id'), 5)
+        response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 6}))
+        self.assertEqual(response.data.get('id'), 6)
         self.assertEqual(response.data.get('product_name'), 'iPad 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

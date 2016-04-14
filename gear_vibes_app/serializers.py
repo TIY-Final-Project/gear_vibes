@@ -43,7 +43,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
 
     def get_rating_average(self, obj):
-        return 5
+        rating_total = sum(obj.rating.values())
+        return rating_total/len(obj.rating)
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):
