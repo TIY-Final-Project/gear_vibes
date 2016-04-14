@@ -14,7 +14,7 @@ require('backbone-react-component');
 
 
 
-var AccontComponent = React.createClass({
+var AccountComponent = React.createClass({
   mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
   getInitialState: function(){
     return {
@@ -119,4 +119,4 @@ var AccontComponent = React.createClass({
 
 
 
-module.exports = AccontComponent;
+module.exports = AccountComponent;

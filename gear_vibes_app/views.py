@@ -47,7 +47,7 @@ class MyProfileReviewListAPIView(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        return Review.objects.filter(author=self.request.user.pk)
+        return Review.objects.filter(author=self.request.user)
 
 
 class ReviewRetrieveAPIView(generics.RetrieveAPIView):

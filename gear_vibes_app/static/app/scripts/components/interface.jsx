@@ -21,20 +21,7 @@ var ReviewDetail = require('./review-detail.jsx');
 var models = require('../models/user-model.js');
 
 
-// CSRFtoken
-var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
 
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
 
 
 
@@ -70,6 +57,7 @@ var Interface = React.createClass({
   logout:function(e){
     e.preventDefault();
     localStorage.removeItem("username");
+    localStorage.removeItem('token');
     Backbone.history.navigate('', {trigger: true});
   },
   login: function(e){

@@ -13,32 +13,34 @@ require('backbone-react-component');
 
 // local
 var models = require('../models/userProfileModel.js');
+var collection = require('../models/userReviewsModel.js');
 
 var Dashboard = React.createClass({
   getInitialState: function(){
     return {
-      profile: new models.UserProfile()
+      profile: new models.UserProfile(),
+      reviews: new collection.UserReviewsCollection()
     }
   },
   componentWillMount: function(){
     var self = this;
     var profile = new models.UserProfile();
+    var reviews = new collection.UserReviewsCollection();
     profile.fetch().then(function(data){
       self.setState({profile: profile});
+      self.setState({reviews: reviews});
     });
 
   },
   render: function(){
     var profile = this.state.profile;
+    var reviews = this.state.reviews;
+
+    console.log(reviews);
 
     if (!profile){
       return (<div className="hide" />);
     }
-
-    console.log(profile.get('first_name'));
-
-
-
 
 
 
@@ -49,7 +51,7 @@ var Dashboard = React.createClass({
         <div className="profile-header row-fluid">
 
           <div className="avatar-wrapper col-xs-3 col-lg-3">
-            <Image src="https://unsplash.it/270/270/?random" responsive />
+            <Image id="avatar" src={profile.get('profile_photo')} responsive />
           </div>
           <div className="header-content col-xs-9 col-lg-9">
             <h1>{profile.get('first_name')} {profile.get('last_name')}</h1>

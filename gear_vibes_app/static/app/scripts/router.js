@@ -21,7 +21,8 @@ var Router = Backbone.Router.extend({
   },
   requireLogin: function(){
     var currentUser = localStorage.getItem("username");
-      if (!currentUser) {
+    var token = localStorage.getItem('token');
+      if (!currentUser && token) {
         this.navigate('account', {trigger: true});
       }
   },
@@ -31,7 +32,8 @@ var Router = Backbone.Router.extend({
   account: function(){
     this.current = 'account';
     var currentUser = localStorage.getItem("username");
-      if (currentUser) {
+    var token = localStorage.getItem('token');
+      if (currentUser && token) {
         this.navigate('dashboard', {trigger: true});
       }
   },
