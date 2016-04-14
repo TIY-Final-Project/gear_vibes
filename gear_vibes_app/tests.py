@@ -153,6 +153,14 @@ class TokenAuthTestCase(APITestCase):
         self.assertEqual(response.data.get('product_name'), 'iPad 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_current_user_gets_own_userprofile_data_on_nav_to_dashboard(self):
+        self.login()
+        response = self.client.get(reverse('my_profile_api_view'))
+        json_response = response.json()
+        # data = json_response[0]
+        self.assertEqual(json_response.get('id'), self.user.pk)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     # def test_upload_gallery_image(self):
     #     self.login()
     #     with open('/Users/brennon/tiy-projects/craigs_list_pkmn/media/uploads/Ninetales.jpg') as infile:

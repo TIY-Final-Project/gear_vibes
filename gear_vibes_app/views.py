@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
-from rest_framework import generics
+from rest_framework import generics, views
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from gear_vibes_app.models import Tag, Review, UserProfile
@@ -67,7 +67,16 @@ class MyProfileAPIView(generics.ListAPIView):
     # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return UserProfile.objects.filter(user=self.request.user)
+        return UserProfile.objects.filter(user=self.request.user.pk)
+
+
+class MyAwesomeProfileAPIView(views.APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        profile = UserProfile.objects.get(user=request.user)
+        serializer = UserProfileSerializer(profile)
+        return JsonResponse(serializer.data)
 
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):
