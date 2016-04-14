@@ -373,21 +373,21 @@ var Dashboard = React.createClass({displayName: "Dashboard",
       self.setState({profile: profile});
     });
     reviews.fetch().then(function(data){
-      console.log('data: ', data);
       self.setState({reviews: reviews});
     });
-    console.log('reviews ', reviews);
 
   },
   render: function(){
     var profile = this.state.profile;
     var reviews = this.state.reviews;
 
-    console.log('on render after state: ', reviews);
+
 
     if (!profile){
       return (React.createElement("div", {className: "hide"}));
     }
+
+
 
 
 
@@ -426,15 +426,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement("div", {className: "posts-content col-xs-9 col-lg-9"}, 
               React.createElement("h1", null, "Reviews"), 
               React.createElement("ul", {className: "posts-list"}, 
-                React.createElement("li", {className: "posts-list-item"}, 
-                  React.createElement("span", {className: "posts-list-catagory"}, "Mobile Tech"), 
-                  React.createElement("div", {className: "post-title-wrapper"}, 
-                    React.createElement("h3", {className: "post-item-title"}, 
-                      React.createElement("a", {href: "#"}, "Apple's iPad Review")
-                    )
-                  ), 
-                  React.createElement("span", {className: "post-item-time"}, "2 days ago")
-                )
+                React.createElement(ReviewListComponent, {reviews: reviews})
               )
             )
           ), 
@@ -450,16 +442,39 @@ var Dashboard = React.createClass({displayName: "Dashboard",
               React.createElement(ButtonInput, {onClick: this.props.editDash, value: "Edit"})
             )
           )
-
-
-
-
       )
-
-
     )
   }
 });
+
+
+
+var ReviewListComponent = React.createClass({displayName: "ReviewListComponent",
+  render: function(){
+    var reviews = this.props.reviews;
+
+    if (!reviews){
+      return (React.createElement("div", {className: "hide"}));
+    }
+    console.log(reviews);
+    var reviewListing = reviews.map(function(reviews){
+      console.log('IN MAP: ')
+    });
+
+    return (
+      React.createElement("li", {className: "posts-list-item"}, 
+        React.createElement("span", {className: "posts-list-catagory"}, "Mobile Tech"), 
+        React.createElement("div", {className: "post-title-wrapper"}, 
+          React.createElement("h3", {className: "post-item-title"}, 
+            React.createElement("a", {href: "#"}, "Apple's iPad Review")
+          )
+        ), 
+        React.createElement("span", {className: "post-item-time"}, "2 days ago")
+      )
+    )
+  }
+});
+
 
 
 module.exports = Dashboard;

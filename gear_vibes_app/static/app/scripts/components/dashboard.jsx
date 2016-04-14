@@ -30,21 +30,21 @@ var Dashboard = React.createClass({
       self.setState({profile: profile});
     });
     reviews.fetch().then(function(data){
-      console.log('data: ', data);
       self.setState({reviews: reviews});
     });
-    console.log('reviews ', reviews);
 
   },
   render: function(){
     var profile = this.state.profile;
     var reviews = this.state.reviews;
 
-    console.log('on render after state: ', reviews);
+
 
     if (!profile){
       return (<div className="hide" />);
     }
+
+
 
 
 
@@ -83,15 +83,7 @@ var Dashboard = React.createClass({
             <div className="posts-content col-xs-9 col-lg-9">
               <h1>Reviews</h1>
               <ul className="posts-list">
-                <li className="posts-list-item">
-                  <span className="posts-list-catagory">Mobile Tech</span>
-                  <div className="post-title-wrapper">
-                    <h3 className="post-item-title">
-                      <a href="#">Apple&#39;s iPad Review</a>
-                    </h3>
-                  </div>
-                  <span className="post-item-time">2 days ago</span>
-                </li>
+                <ReviewListComponent reviews={reviews} />
               </ul>
             </div>
           </div>
@@ -107,16 +99,39 @@ var Dashboard = React.createClass({
               <ButtonInput onClick={this.props.editDash} value="Edit"/>
             </div>
           </div>
-
-
-
-
       </div>
-
-
     )
   }
 });
+
+
+
+var ReviewListComponent = React.createClass({
+  render: function(){
+    var reviews = this.props.reviews;
+
+    if (!reviews){
+      return (<div className="hide" />);
+    }
+    console.log(reviews);
+    var reviewListing = reviews.map(function(reviews){
+      console.log('IN MAP: ')
+    });
+
+    return (
+      <li className="posts-list-item">
+        <span className="posts-list-catagory">Mobile Tech</span>
+        <div className="post-title-wrapper">
+          <h3 className="post-item-title">
+            <a href="#">Apple&#39;s iPad Review</a>
+          </h3>
+        </div>
+        <span className="post-item-time">2 days ago</span>
+      </li>
+    )
+  }
+});
+
 
 
 module.exports = Dashboard;
