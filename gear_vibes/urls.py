@@ -34,7 +34,7 @@ urlpatterns = [
         views.UserProfileRetrieveUpdateAPIView.as_view(),
         name='userprofile_retrieve_update_api_view'
     ),
-    url(r'^api/myprofile/$', views.MyProfileAPIView.as_view(), name='my_profile_api_view'),
+    url(r'^api/myprofile/$', views.MyAwesomeProfileAPIView.as_view(), name='my_profile_api_view'),
     url(r'^api/myprofile/reviews/$', views.MyProfileReviewListAPIView.as_view(), name='my_profile_review_list_api_view'),
     url(r'^api/galleryimages/$', views.GalleryImageCreateAPIView.as_view(), name='gallery_image_create_api_view'),
     url(r'^api/tags/$', views.TagCreateAPIView.as_view(), name='tag_create_api_view'),
