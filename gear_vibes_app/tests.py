@@ -83,6 +83,7 @@ class ReviewTestCase(TestCase):
     def test_review_serializer_returns_rating_average(self):
         review = Review.objects.get()
         serializer = ReviewSerializer(review)
+        print(serializer.data)
         self.assertEqual(serializer.data.get('rating_average'), 8.0)
 
 

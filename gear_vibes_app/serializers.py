@@ -28,12 +28,18 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     total_posts = serializers.SerializerMethodField()
+    contributed_to = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
 
     def get_total_posts(self, obj):
         return Review.objects.filter(author=obj.user).count()
+
+    def get_contributed_to(self, obj):
+        reviews = Review.objects.filter(author=obj.user)
+        contributed_to = list({review.category for review in reviews})
+        return contributed_to
 
 
 class ReviewSerializer(serializers.ModelSerializer):
