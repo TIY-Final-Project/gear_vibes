@@ -43,7 +43,7 @@ class TagCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class UserReviewListAPIView(generics.ListAPIView):
+class MyProfileReviewListAPIView(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -67,7 +67,7 @@ class MyProfileAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return UserProfile.objects.get(user=self.request.user)
+        return UserProfile.objects.filter(user=self.request.user)
 
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):
