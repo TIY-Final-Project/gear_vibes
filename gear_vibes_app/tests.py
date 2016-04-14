@@ -51,7 +51,11 @@ class ReviewTestCase(TestCase):
             author=user,
             block_quote='This is a blockquote',
             category='cam',
-            rating={'quality': 5.0, 'takes_pics': 9.5, 'lens': 9.5}
+            rating=[
+                {'title': 'quality', 'value': 5.0},
+                {'title': 'takes_pics', 'value': 9.5},
+                {'title': 'lens', 'value': 9.5}
+            ]
         )
         review.tags.add(tag1)
         review.tags.add(tag2)
@@ -62,28 +66,17 @@ class ReviewTestCase(TestCase):
         tag1 = Tag.objects.get(name='tag1')
         tag2 = Tag.objects.get(name='tag2')
         self.assertEqual(review.author.username, 'brennon')
-        self.assertEqual(review.rating, {'quality': 5, 'takes_pics': 9.5, 'lens': 9.5})
+        self.assertEqual(
+            review.rating,
+            [{'title': 'quality', 'value': 5.0}, {'title': 'takes_pics', 'value': 9.5}, {'title': 'lens', 'value': 9.5}]
+        )
         self.assertIn(tag1, review.tags.all())
         self.assertIn(tag2, review.tags.all())
         self.assertEqual(review.category, 'cam')
 
-    def test_reviews_can_have_variable_length_rating_fields(self):
-        review1 = Review.objects.get()
-        review2 = Review.objects.create(
-            title='Review 2',
-            body='This was a not so great product',
-            author=User.objects.get(),
-            block_quote='quote quote quote',
-            category='Mobile Tech',
-            rating={'point1': 5, 'point2': 6, 'point3': 8, 'point4': 7, 'point5': 8})
-
-        self.assertEqual(len(review1.rating), 3)
-        self.assertEqual(len(review2.rating), 5)
-
     def test_review_serializer_returns_rating_average(self):
         review = Review.objects.get()
         serializer = ReviewSerializer(review)
-        print(serializer.data)
         self.assertEqual(serializer.data.get('rating_average'), 8.0)
 
 
@@ -170,8 +163,8 @@ class TokenAuthTestCase(APITestCase):
                 'rating': {'point1': 5, 'point2': 5},
         }
         Review.objects.create(**data)
-        response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 6}))
-        self.assertEqual(response.data.get('id'), 6)
+        response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 4}))
+        self.assertEqual(response.data.get('id'), 4)
         self.assertEqual(response.data.get('product_name'), 'iPad 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
