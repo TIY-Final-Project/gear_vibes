@@ -1,18 +1,3 @@
-"""gear_vibes URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.9/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
@@ -28,14 +13,22 @@ urlpatterns = [
     url(r'api/logout/$', auth_views.logout, name='logout_api_view'),
     url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
     url(r'^api/reviews/$', views.ReviewCreateAPIView.as_view(), name='review_create_api_view'),
-    url(r'^api/reviews/(?P<pk>\d+)/$', views.ReviewRetrieveUpdateAPIView.as_view(), name='review_retrieve_update_api_view'),
+    url(
+        r'^api/reviews/(?P<pk>\d+)/$',
+        views.ReviewRetrieveUpdateAPIView.as_view(),
+        name='review_retrieve_update_api_view'
+    ),
     url(
         r'^api/userprofiles/(?P<pk>\d+)/$',
         views.UserProfileRetrieveUpdateAPIView.as_view(),
         name='userprofile_retrieve_update_api_view'
     ),
     url(r'^api/myprofile/$', views.MyAwesomeProfileAPIView.as_view(), name='my_profile_api_view'),
-    url(r'^api/myprofile/reviews/$', views.MyProfileReviewListAPIView.as_view(), name='my_profile_review_list_api_view'),
+    url(
+        r'^api/myprofile/reviews/$',
+        views.MyProfileReviewListAPIView.as_view(),
+        name='my_profile_review_list_api_view'
+    ),
     url(r'^api/galleryimages/$', views.GalleryImageCreateAPIView.as_view(), name='gallery_image_create_api_view'),
     url(r'^api/tags/$', views.TagCreateAPIView.as_view(), name='tag_create_api_view'),
     url(r'^api/tags/(?P<pk>\d+)/$', views.TagRetrieveAPIView.as_view(), name='tag_retrieve_api_view'),
