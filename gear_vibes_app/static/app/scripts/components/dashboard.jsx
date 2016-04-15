@@ -59,6 +59,7 @@ var Dashboard = React.createClass({
             <Image id="avatar" src={profile.get('profile_photo')} responsive />
           </div>
           <div className="header-content col-xs-9 col-lg-9">
+            <p>{profile.get('username')}</p>
             <h1>{profile.get('first_name')} {profile.get('last_name')}</h1>
             <p>Vibing since {profile.get('joined')}</p>
           </div>
@@ -116,6 +117,7 @@ var ReviewListComponent = React.createClass({
       return (
         <li className="posts-list-item" key={review.get('id')}>
           <span className="posts-list-catagory">{review.get('category')}</span>
+          <a href={"#dashboard/review/" + review.get('id') + "/edit"}>Edit</a>
           <div className="post-title-wrapper">
             <h3 className="post-item-title">
               <a href={"#dashboard/reviews/" + review.get('id')}>{review.get('title')}</a>

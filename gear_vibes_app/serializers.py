@@ -29,6 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     total_posts = serializers.SerializerMethodField()
     contributed_to = serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -40,6 +41,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         reviews = Review.objects.filter(author=obj.user)
         contributed_to = list({review.category for review in reviews})
         return contributed_to
+
+    def get_username(self, obj):
+        return obj.user.username
 
 
 class ReviewSerializer(serializers.ModelSerializer):

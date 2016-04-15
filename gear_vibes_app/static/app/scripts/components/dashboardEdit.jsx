@@ -25,18 +25,18 @@ var DashboardEdit = React.createClass({
       instagram_link: ''
     }
   },
-  handleSubmit: function(){
+  handleSubmit: function(e){
+    e.preventDefault();
     var self = this;
     var data = new FormData();
-    data.append({
-      'profile_photo': self.refs.featuredImage.getInputDOMNode().files[0],
-      'first_name': self.state.first_name,
-      'last_name': self.state.last_name,
-      'bio': self.state.bio,
-      'facebook_link': self.state.facebook_link,
-      'twitter_link': self.state.twitter_link,
-      'instagram_link': self.state.instagram_link
-    });
+    data.append('profile_photo', self.refs.profilePhoto.getInputDOMNode().files[0]);
+    data.append('first_name', self.state.first_name);
+    data.append('last_name', self.state.last_name);
+    data.append('bio', self.state.bio);
+    data.append('facebook_link', self.state.facebook_link);
+    data.append('twitter_link', self.state.twitter_link);
+    data.append('instagram_link', self.state.instagram_link);
+
 
 
     $.ajax({
@@ -45,10 +45,10 @@ var DashboardEdit = React.createClass({
       cache: false,
       contentType: false,
       processData: false,
-      type: 'POST',
+      type: 'PUT',
       success: function(data){
         console.log(data);
-        self.props.router.navigate('dashboard/reviews/' + data.review, {trigger: true});
+
       },
       error: function(data){
         alert('no upload');
@@ -63,13 +63,13 @@ var DashboardEdit = React.createClass({
     return (
       <div className="col-xs-6 col-xs-offset-3 text-center">
         <form onSubmit={this.handleSubmit} method="PUT">
-          <Input type="file" help="Upload Profile Picture" />
+          <Input type="file" ref="profilePhoto" help="Upload Profile Picture" />
           <Input type="text" placeholder="First name" valueLink={this.linkState('first_name')}/>
           <Input type="text" placeholder="Last name" valueLink={this.linkState('last_name')}/>
           <Input type="textarea" placeholder="Bio" valueLink={this.linkState('bio')}/>
-          <Input type="url" placeholder="Facebook" valueLink={this.linkState('facebook_link')}/>
-          <Input type="url" placeholder="Twitter" valueLink={this.linkState('twitter_link')}/>
-          <Input type="url" placeholder="Instagram" valueLink={this.linkState('instagram_link')}/>
+          <Input type="text" placeholder="Facebook" valueLink={this.linkState('facebook_link')}/>
+          <Input type="text" placeholder="Twitter" valueLink={this.linkState('twitter_link')}/>
+          <Input type="text" placeholder="Instagram" valueLink={this.linkState('instagram_link')}/>
           <ButtonInput type="submit" value="Update Profile" />
         </form>
       </div>

@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Response, JsonResponse
+from django.http import JsonResponse
 from rest_framework import generics, views, status
+from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from gear_vibes_app.models import Tag, Review, UserProfile
@@ -52,7 +53,7 @@ class MyProfileReviewListAPIView(generics.ListAPIView):
         return reviews
 
 
-class ReviewRetrieveAPIView(generics.RetrieveAPIView):
+class ReviewRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = (IsAuthorOrReadOnly,)
@@ -82,11 +83,12 @@ class MyAwesomeProfileAPIView(views.APIView):
 
     def put(self, request, *args, **kwargs):
         profile = UserProfile.objects.get(user=request.user)
+        request.data['user'] = request.user.pk
         serializer = UserProfileSerializer(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
-        return Response(serializer.errors, status_code=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TagRetrieveAPIView(generics.RetrieveAPIView):

@@ -159,6 +159,12 @@ var CreateReview = React.createClass({displayName: "CreateReview",
       tags: []
     }
   },
+  componentWillMount: function(){
+    var self = this;
+    
+
+
+  },
   addTag: function(newTag){
     var tag = this.state.tags;
     tag.push(newTag);
@@ -402,6 +408,7 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement(Image, {id: "avatar", src: profile.get('profile_photo'), responsive: true})
           ), 
           React.createElement("div", {className: "header-content col-xs-9 col-lg-9"}, 
+            React.createElement("p", null, profile.get('username')), 
             React.createElement("h1", null, profile.get('first_name'), " ", profile.get('last_name')), 
             React.createElement("p", null, "Vibing since ", profile.get('joined'))
           )
@@ -459,6 +466,7 @@ var ReviewListComponent = React.createClass({displayName: "ReviewListComponent",
       return (
         React.createElement("li", {className: "posts-list-item", key: review.get('id')}, 
           React.createElement("span", {className: "posts-list-catagory"}, review.get('category')), 
+          React.createElement("a", {href: "#dashboard/review/" + review.get('id') + "/edit"}, "Edit"), 
           React.createElement("div", {className: "post-title-wrapper"}, 
             React.createElement("h3", {className: "post-item-title"}, 
               React.createElement("a", {href: "#dashboard/reviews/" + review.get('id')}, review.get('title'))
@@ -538,18 +546,18 @@ var DashboardEdit = React.createClass({displayName: "DashboardEdit",
       instagram_link: ''
     }
   },
-  handleSubmit: function(){
+  handleSubmit: function(e){
+    e.preventDefault();
     var self = this;
     var data = new FormData();
-    data.append({
-      'profile_photo': self.refs.featuredImage.getInputDOMNode().files[0],
-      'first_name': self.state.first_name,
-      'last_name': self.state.last_name,
-      'bio': self.state.bio,
-      'facebook_link': self.state.facebook_link,
-      'twitter_link': self.state.twitter_link,
-      'instagram_link': self.state.instagram_link
-    });
+    data.append('profile_photo', self.refs.profilePhoto.getInputDOMNode().files[0]);
+    data.append('first_name', self.state.first_name);
+    data.append('last_name', self.state.last_name);
+    data.append('bio', self.state.bio);
+    data.append('facebook_link', self.state.facebook_link);
+    data.append('twitter_link', self.state.twitter_link);
+    data.append('instagram_link', self.state.instagram_link);
+
 
 
     $.ajax({
@@ -558,10 +566,10 @@ var DashboardEdit = React.createClass({displayName: "DashboardEdit",
       cache: false,
       contentType: false,
       processData: false,
-      type: 'POST',
+      type: 'PUT',
       success: function(data){
         console.log(data);
-        self.props.router.navigate('dashboard/reviews/' + data.review, {trigger: true});
+
       },
       error: function(data){
         alert('no upload');
@@ -576,13 +584,13 @@ var DashboardEdit = React.createClass({displayName: "DashboardEdit",
     return (
       React.createElement("div", {className: "col-xs-6 col-xs-offset-3 text-center"}, 
         React.createElement("form", {onSubmit: this.handleSubmit, method: "PUT"}, 
-          React.createElement(Input, {type: "file", help: "Upload Profile Picture"}), 
+          React.createElement(Input, {type: "file", ref: "profilePhoto", help: "Upload Profile Picture"}), 
           React.createElement(Input, {type: "text", placeholder: "First name", valueLink: this.linkState('first_name')}), 
           React.createElement(Input, {type: "text", placeholder: "Last name", valueLink: this.linkState('last_name')}), 
           React.createElement(Input, {type: "textarea", placeholder: "Bio", valueLink: this.linkState('bio')}), 
-          React.createElement(Input, {type: "url", placeholder: "Facebook", valueLink: this.linkState('facebook_link')}), 
-          React.createElement(Input, {type: "url", placeholder: "Twitter", valueLink: this.linkState('twitter_link')}), 
-          React.createElement(Input, {type: "url", placeholder: "Instagram", valueLink: this.linkState('instagram_link')}), 
+          React.createElement(Input, {type: "text", placeholder: "Facebook", valueLink: this.linkState('facebook_link')}), 
+          React.createElement(Input, {type: "text", placeholder: "Twitter", valueLink: this.linkState('twitter_link')}), 
+          React.createElement(Input, {type: "text", placeholder: "Instagram", valueLink: this.linkState('instagram_link')}), 
           React.createElement(ButtonInput, {type: "submit", value: "Update Profile"})
         )
       )
@@ -605,6 +613,8 @@ var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
 var Input = require('react-bootstrap/lib/Input');
 var ButtonInput = require('react-bootstrap/lib/ButtonInput');
+var Jumbotron = require('react-bootstrap/lib/Jumbotron');
+var Image = require('react-bootstrap/lib/Image');
 var LinkedStateMixin = require('react/lib/LinkedStateMixin');
 require('backbone-react-component');
 
@@ -614,8 +624,37 @@ require('backbone-react-component');
 
 var HomePage = React.createClass({displayName: "HomePage",
   render: function(){
+    var jumbotron = {
+      borderRadius: 0,
+      height: '100vh'
+    }
     return (
       React.createElement("div", null, 
+        React.createElement(Jumbotron, {className: "jumbotron", style: jumbotron}, 
+          React.createElement("div", {className: "hero"}, 
+            React.createElement("div", {className: "header-outer"}, 
+              React.createElement("div", {className: "header-inner row-fluid"}, 
+                React.createElement("div", {className: "logo-container col-md-3"}, 
+                  React.createElement("img", {src: "/static/dist/images/white-logo.png", alt: ""})
+                ), 
+                React.createElement("div", {className: "header-nav-container col-md-9"}, 
+                  React.createElement("ul", {className: "header-nav-list"}, 
+                    React.createElement("li", {className: "header-nav-item"}, 
+                      React.createElement("span", {className: "login-container"}, 
+                        React.createElement("a", {className: "login-link", href: "#"}, "Login")
+                      )
+                    ), 
+                    React.createElement("li", {className: "header-nav-item"}, 
+                      React.createElement("span", {className: "login-container"}, 
+                        React.createElement("img", {src: "/static/dist/images/hamburgMenu.png", alt: ""})
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        ), 
         React.createElement(ButtonInput, {onClick: this.props.createAccount, value: "Create Account"})
       )
     )
@@ -625,7 +664,7 @@ var HomePage = React.createClass({displayName: "HomePage",
 
 module.exports = HomePage;
 
-},{"backbone":27,"backbone-react-component":26,"react":231,"react-bootstrap/lib/ButtonInput":83,"react-bootstrap/lib/Input":89,"react-dom":96,"react/lib/LinkedStateMixin":120}],6:[function(require,module,exports){
+},{"backbone":27,"backbone-react-component":26,"react":231,"react-bootstrap/lib/ButtonInput":83,"react-bootstrap/lib/Image":88,"react-bootstrap/lib/Input":89,"react-bootstrap/lib/Jumbotron":91,"react-dom":96,"react/lib/LinkedStateMixin":120}],6:[function(require,module,exports){
 "use strict";
 /* interface jsx */
 
@@ -752,7 +791,7 @@ var Interface = React.createClass({displayName: "Interface",
     }else if (routing.current == 'reviewDetail'){
       currentRoute = React.createElement(ReviewDetail, {router: this.props.router})
     }else if (routing.current == 'dashboardEdit'){
-      currentRoute = React.createElement(DashboardEdit, null)
+      currentRoute = React.createElement(DashboardEdit, {router: this.props.router})
     }
 
     return (

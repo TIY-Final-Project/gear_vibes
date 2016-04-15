@@ -123,7 +123,7 @@ var Interface = React.createClass({
     }else if (routing.current == 'reviewDetail'){
       currentRoute = <ReviewDetail router={this.props.router}/>
     }else if (routing.current == 'dashboardEdit'){
-      currentRoute = <DashboardEdit />
+      currentRoute = <DashboardEdit router={this.props.router}/>
     }
 
     return (

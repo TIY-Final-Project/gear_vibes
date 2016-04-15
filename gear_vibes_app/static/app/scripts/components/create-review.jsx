@@ -32,6 +32,12 @@ var CreateReview = React.createClass({
       tags: []
     }
   },
+  componentWillMount: function(){
+    var self = this;
+    
+
+
+  },
   addTag: function(newTag){
     var tag = this.state.tags;
     tag.push(newTag);

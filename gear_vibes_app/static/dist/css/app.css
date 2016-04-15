@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.profile-header, .header-content {
+.profile-header, .header-content, .header-outer, .header-inner, .logo-container, .header-nav-container, .login-container, .header-nav-list {
   height: 270px; }
 
 .dash-content, .dash-sidebar-wrapper {
@@ -5825,6 +5825,44 @@ button.close {
 
 img {
   max-width: 100%; }
+
+.profile-header, .header-content, .header-outer, .header-inner, .logo-container, .header-nav-container, .login-container, .header-nav-list {
+  height: 88px; }
+
+.jumbotron {
+  background: url("../images/jumbo-bg.png");
+  background-size: cover;
+  height: 100vh; }
+
+.jumbotron::before {
+  content: "";
+  position: absolute;
+  width: 42%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 218, 186, 0.87); }
+
+.logo-container img {
+  position: relative;
+  z-index: 1; }
+
+.logo-link {
+  line-height: 88px; }
+
+.header-nav-list {
+  float: right;
+  padding: 0;
+  margin: 0; }
+
+.header-nav-item {
+  line-height: 88px;
+  display: inline-block; }
+
+.hamburg-container {
+  height: 64px;
+  width: 64px; }
 
 .login-form h1 {
   color: green; }

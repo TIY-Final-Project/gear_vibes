@@ -1,4 +1,5 @@
 @import "dash";
+@import "home";
 // Bootstrap Variables
 $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
@@ -15,6 +16,81 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 img {
   max-width: 100%;
 }
+
+
+// HOMEPAGE
+%header-height {
+  height: 88px;
+}
+
+.jumbotron {
+  background: url('../images/jumbo-bg.png');
+  background-size: cover;
+  height: 100vh;
+}
+
+.jumbotron::before {
+  content: "";
+  position: absolute;
+  width: 42%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 218, 186, 0.87);
+}
+
+.header-outer {
+  @extend %header-height;
+}
+
+.header-inner {
+  @extend %header-height;
+}
+
+.logo-container {
+  @extend %header-height;
+}
+
+.logo-container img{
+  position: relative;
+  z-index: 1;
+}
+
+.header-logo {
+
+}
+
+.header-nav-container {
+  @extend %header-height;
+}
+
+.login-container {
+  @extend %header-height;
+}
+
+.logo-link {
+  line-height: 88px;
+}
+
+.header-nav-list {
+  @extend %header-height;
+  float: right;
+  padding: 0;
+  margin: 0;
+}
+
+.header-nav-item {
+  line-height: 88px;
+  display: inline-block;
+}
+
+.hamburg-container {
+  height: 64px;
+  width: 64px;
+}
+
+
 
 
 // LOGIN FORM
