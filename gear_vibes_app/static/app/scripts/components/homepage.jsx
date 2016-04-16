@@ -32,13 +32,14 @@ var HomePage = React.createClass({
                 </div>
                 <div className="header-nav-container col-md-9">
                   <ul className="header-nav-list">
-                    <li className="header-nav-item">
+                    <li className="header-nav-item" id="login-nav-item">
                       <span className="login-container">
-                        <a className="login-link" href="#" >Login</a>
+                        <p className="login-link"><span className="login-text">Login</span></p>
+                        <div className="login-border"></div>
                       </span>
                     </li>
                     <li className="header-nav-item">
-                      <span className="login-container">
+                      <span className="hamburg-container">
                         <img src="/static/dist/images/hamburgMenu.png" alt=""/>
                       </span>
                     </li>

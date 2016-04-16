@@ -46,8 +46,9 @@ var Router = Backbone.Router.extend({
     this.requireLogin();
 
   },
-  createReview: function(){
+  createReview: function(id){
     this.current = 'createReview';
+    this.reviewId = id;
     this.requireLogin();
   },
   reviewDetail: function(id){

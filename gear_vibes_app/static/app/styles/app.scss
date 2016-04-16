@@ -6,6 +6,15 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 // Import Bootstrap
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
+@font-face {
+  font-family: MonReg;
+  src: local("Montserrat Regular");
+}
+
+@font-face {
+  font-family: MonBold;
+  src: local("Montserrat Bold");
+}
 
 *,
 *::before,
@@ -67,22 +76,41 @@ img {
 
 .login-container {
   @extend %header-height;
+  width: 139px;
 }
 
-.logo-link {
-  line-height: 88px;
+jumbotron p {
+
+}
+
+.login-link {
+  color: white;
+  text-align: right;
+  line-height: 30px;
+  border-bottom: 7px solid rgba(54, 205, 177, 1);
+
+}
+
+.login-text {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#login-nav-item {
+  width: 139px;
 }
 
 .header-nav-list {
   @extend %header-height;
   float: right;
   padding: 0;
-  margin: 0;
 }
 
 .header-nav-item {
   line-height: 88px;
   display: inline-block;
+  margin: 0 0 0 30px;
+  font-family:
 }
 
 .hamburg-container {
