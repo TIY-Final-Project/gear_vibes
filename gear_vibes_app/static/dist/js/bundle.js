@@ -161,7 +161,27 @@ var CreateReview = React.createClass({displayName: "CreateReview",
   },
   componentWillMount: function(){
     var self = this;
-    
+    var getData = new reviews.ReviewsModel({id: self.props.router.reviewId});
+
+    if (!self.props.router.reviewId){
+      return;
+    }
+
+
+    getData.fetch().then(function(review){
+      self.setState({
+        product_name: review.product_name,
+        title: review.title,
+        body: review.body,
+        author: review.author,
+        block_quote: review.block_quote,
+        video_url: review.video_url,
+        rating: [review.rating],
+        tags: [review.tags]
+      });
+    });
+
+    console.log(getData);
 
 
   },
@@ -179,9 +199,16 @@ var CreateReview = React.createClass({displayName: "CreateReview",
     e.preventDefault();
     console.log(this.state.tags);
     var self = this;
-    var review = new reviews.ReviewsModel();
+
     var galleryImages = new gallery.GalleryModel();
     var reviewTags = new tags.TagsModel();
+    var review;
+
+    if (self.props.router.reviewId){
+      review = new reviews.ReviewsModel({id: self.props.router.reviewId});
+    }else{
+      review = new reviews.ReviewsModel();
+    }
 
 
     review.set({
@@ -639,13 +666,14 @@ var HomePage = React.createClass({displayName: "HomePage",
                 ), 
                 React.createElement("div", {className: "header-nav-container col-md-9"}, 
                   React.createElement("ul", {className: "header-nav-list"}, 
-                    React.createElement("li", {className: "header-nav-item"}, 
+                    React.createElement("li", {className: "header-nav-item", id: "login-nav-item"}, 
                       React.createElement("span", {className: "login-container"}, 
-                        React.createElement("a", {className: "login-link", href: "#"}, "Login")
+                        React.createElement("p", {className: "login-link"}, React.createElement("span", {className: "login-text"}, "Login")), 
+                        React.createElement("div", {className: "login-border"})
                       )
                     ), 
                     React.createElement("li", {className: "header-nav-item"}, 
-                      React.createElement("span", {className: "login-container"}, 
+                      React.createElement("span", {className: "hamburg-container"}, 
                         React.createElement("img", {src: "/static/dist/images/hamburgMenu.png", alt: ""})
                       )
                     )
@@ -1201,8 +1229,9 @@ var Router = Backbone.Router.extend({
     this.requireLogin();
 
   },
-  createReview: function(){
+  createReview: function(id){
     this.current = 'createReview';
+    this.reviewId = id;
     this.requireLogin();
   },
   reviewDetail: function(id){

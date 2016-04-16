@@ -2,7 +2,7 @@
 
 
 // extends
-%header-height {
+%dash-header-height {
   height: 270px;
 }
 
@@ -14,11 +14,11 @@
 // header
 
 .profile-header {
-  @extend %header-height;
+  @extend %dash-header-height;
 }
 
 .header-content {
-  @extend %header-height;
+  @extend %dash-header-height;
 }
 
 #avatar {

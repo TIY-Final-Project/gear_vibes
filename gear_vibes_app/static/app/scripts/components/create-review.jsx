@@ -34,7 +34,27 @@ var CreateReview = React.createClass({
   },
   componentWillMount: function(){
     var self = this;
-    
+    var getData = new reviews.ReviewsModel({id: self.props.router.reviewId});
+
+    if (!self.props.router.reviewId){
+      return;
+    }
+
+
+    getData.fetch().then(function(review){
+      self.setState({
+        product_name: review.product_name,
+        title: review.title,
+        body: review.body,
+        author: review.author,
+        block_quote: review.block_quote,
+        video_url: review.video_url,
+        rating: [review.rating],
+        tags: [review.tags]
+      });
+    });
+
+    console.log(getData);
 
 
   },
@@ -52,9 +72,16 @@ var CreateReview = React.createClass({
     e.preventDefault();
     console.log(this.state.tags);
     var self = this;
-    var review = new reviews.ReviewsModel();
+
     var galleryImages = new gallery.GalleryModel();
     var reviewTags = new tags.TagsModel();
+    var review;
+
+    if (self.props.router.reviewId){
+      review = new reviews.ReviewsModel({id: self.props.router.reviewId});
+    }else{
+      review = new reviews.ReviewsModel();
+    }
 
 
     review.set({
