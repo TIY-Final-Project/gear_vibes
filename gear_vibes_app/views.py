@@ -5,7 +5,7 @@ from rest_framework import generics, views, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from gear_vibes_app.models import Tag, Review, UserProfile
+from gear_vibes_app.models import Tag, Review, UserProfile, GalleryImage
 from gear_vibes_app.serializers import UserSerializer, ReviewSerializer, GalleryImageSerializer, \
         TagSerializer, UserProfileSerializer
 from gear_vibes_app.permissions import IsAuthorOrReadOnly, IsOwnerOrReadOnly
@@ -41,6 +41,7 @@ class GalleryImageCreateAPIView(generics.CreateAPIView):
 
 
 class GalleryImageRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = GalleryImage.objects.all()
     serializer_class = GalleryImageSerializer
     permission_classes = (IsAuthenticated,)
 
