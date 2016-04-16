@@ -40,6 +40,11 @@ class GalleryImageCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
+class GalleryImageRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    serializer_class = GalleryImageSerializer
+    permission_classes = (IsAuthenticated,)
+
+
 class TagCreateAPIView(generics.CreateAPIView):
     serializer_class = TagSerializer
     permission_classes = (IsAuthenticated,)

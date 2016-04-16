@@ -66,6 +66,14 @@ class GalleryImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = GalleryImage
 
+    def update(self, instance, validated_data):
+        instance.review = validated_data.get('review', instance.review)
+        instance.image = validated_data.get('image', instance.image)
+        instance.caption = validated_data.get('caption', instance.caption)
+        instance.featured = validated_data.get('featured', instance.featured)
+        instance.save()
+        return instance
+
 
 class TagSerializer(serializers.ModelSerializer):
 
