@@ -13,8 +13,9 @@ urlpatterns = [
     url(r'api/logout/$', auth_views.logout, name='logout_api_view'),
     url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
     url(r'^api/reviews/$', views.ReviewCreateAPIView.as_view(), name='review_create_api_view'),
+    url(r'^api/reviews/featured/$', views.FeaturedReviewListAPIView.as_view(), name='featured_review_list_api_view'),
     url(
-        r'^api/reviews/(?P<pk>\d+)/$',
+        r'^api/reviews/(?P<pk>\d+)$',
         views.ReviewRetrieveUpdateAPIView.as_view(),
         name='review_retrieve_update_api_view'
     ),

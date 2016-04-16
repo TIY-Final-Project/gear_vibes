@@ -45,6 +45,19 @@ class TagCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
+class FeaturedReviewListAPIView(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        category = self.request.GET.get('category')
+        if category:
+            featured = Review.objects.filter(category=category).order_by('-created_at')
+        else:
+            featured = Review.objects.all().order_by('-created_at')
+        return featured[:5]
+
+
 class MyProfileReviewListAPIView(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
@@ -63,14 +76,6 @@ class UserProfileRetrieveUpdateAPIView(generics.RetrieveAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = (IsOwnerOrReadOnly,)
-
-
-# class MyProfileAPIView(generics.ListAPIView):
-#     serializer_class = UserProfileSerializer
-#     permission_classes = (IsAuthenticated,)
-
-#     def get_queryset(self):
-#         return UserProfile.objects.filter(user=self.request.user.pk)
 
 
 class MyAwesomeProfileAPIView(views.APIView):
