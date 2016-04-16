@@ -29,7 +29,11 @@ class UserProfileTestCase(TestCase):
             'author': User.objects.get(),
             'block_quote': 'This is a blockquote',
             'category': 'cam',
-            'rating': {'quality': 5, 'takes_pics': 10, 'lens': 10}
+            'rating': [
+                {'title': 'quality', 'value': 5.0},
+                {'title': 'takes pics', 'value': 9.5},
+                {'title': 'lens', 'value': 9.5}
+            ]
         }
         Review.objects.create(**data)
         Review.objects.create(**data)
@@ -51,7 +55,7 @@ class ReviewTestCase(TestCase):
             category='cam',
             rating=[
                 {'title': 'quality', 'value': 5.0},
-                {'title': 'takes_pics', 'value': 9.5},
+                {'title': 'takes pics', 'value': 9.5},
                 {'title': 'lens', 'value': 9.5}
             ]
         )
@@ -66,7 +70,7 @@ class ReviewTestCase(TestCase):
         self.assertEqual(review.author.username, 'brennon')
         self.assertEqual(
             review.rating,
-            [{'title': 'quality', 'value': 5.0}, {'title': 'takes_pics', 'value': 9.5}, {'title': 'lens', 'value': 9.5}]
+            [{'title': 'quality', 'value': 5.0}, {'title': 'takes pics', 'value': 9.5}, {'title': 'lens', 'value': 9.5}]
         )
         self.assertIn(tag1, review.tags.all())
         self.assertIn(tag2, review.tags.all())
@@ -124,7 +128,7 @@ class TokenAuthTestCase(APITestCase):
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'Photography',
-                'rating': {'point1': 5, 'point2': 5},
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
         response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
@@ -142,7 +146,7 @@ class TokenAuthTestCase(APITestCase):
                 'author': author.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'Photography',
-                'rating': {'point1': 5, 'point2': 5},
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test'}]
         }
         response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
