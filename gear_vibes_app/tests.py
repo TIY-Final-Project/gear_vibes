@@ -1,12 +1,10 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
-from gear_vibes_app.models import UserProfile, Tag, Review, GalleryImage
-from gear_vibes_app.views import ReviewCreateAPIView
+from gear_vibes_app.models import UserProfile, Tag, Review
 from gear_vibes_app.serializers import UserProfileSerializer, ReviewSerializer
 import json
 
@@ -31,7 +29,11 @@ class UserProfileTestCase(TestCase):
             'author': User.objects.get(),
             'block_quote': 'This is a blockquote',
             'category': 'cam',
-            'rating': {'quality': 5, 'takes_pics': 10, 'lens': 10}
+            'rating': [
+                {'title': 'quality', 'value': 5.0},
+                {'title': 'takes pics', 'value': 9.5},
+                {'title': 'lens', 'value': 9.5}
+            ]
         }
         Review.objects.create(**data)
         Review.objects.create(**data)
@@ -53,7 +55,7 @@ class ReviewTestCase(TestCase):
             category='cam',
             rating=[
                 {'title': 'quality', 'value': 5.0},
-                {'title': 'takes_pics', 'value': 9.5},
+                {'title': 'takes pics', 'value': 9.5},
                 {'title': 'lens', 'value': 9.5}
             ]
         )
@@ -68,7 +70,7 @@ class ReviewTestCase(TestCase):
         self.assertEqual(review.author.username, 'brennon')
         self.assertEqual(
             review.rating,
-            [{'title': 'quality', 'value': 5.0}, {'title': 'takes_pics', 'value': 9.5}, {'title': 'lens', 'value': 9.5}]
+            [{'title': 'quality', 'value': 5.0}, {'title': 'takes pics', 'value': 9.5}, {'title': 'lens', 'value': 9.5}]
         )
         self.assertIn(tag1, review.tags.all())
         self.assertIn(tag2, review.tags.all())
@@ -126,7 +128,7 @@ class TokenAuthTestCase(APITestCase):
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'Photography',
-                'rating': {'point1': 5, 'point2': 5},
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
         response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
@@ -144,7 +146,7 @@ class TokenAuthTestCase(APITestCase):
                 'author': author.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'Photography',
-                'rating': {'point1': 5, 'point2': 5},
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test'}]
         }
         response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
@@ -160,10 +162,10 @@ class TokenAuthTestCase(APITestCase):
                 'author': new_user,
                 'block_quote': 'My sweet quote',
                 'category': 'Photography',
-                'rating': {'point1': 5, 'point2': 5},
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
         }
         Review.objects.create(**data)
-        response = self.client.get(reverse('review_retrieve_api_view', kwargs={'pk': 4}))
+        response = self.client.get(reverse('review_retrieve_update_api_view', kwargs={'pk': 4}))
         self.assertEqual(response.data.get('id'), 4)
         self.assertEqual(response.data.get('product_name'), 'iPad 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -174,26 +176,3 @@ class TokenAuthTestCase(APITestCase):
         json_response = response.json()
         self.assertEqual(json_response.get('id'), self.user.pk)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    # def test_upload_gallery_image(self):
-    #     self.login()
-    #     with open('/Users/brennon/tiy-projects/craigs_list_pkmn/media/uploads/Ninetales.jpg') as infile:
-    #         suf = SimpleUploadedFile('Ninetales.jpg', infile.read(), encoding='utf-8')
-    #     tag = Tag.objects.create(name='test')
-    #     data = {
-    #             'product_name': 'iPad 2',
-    #             'title': 'Test Review',
-    #             'body': 'This was an ok product',
-    #             'author': self.user.pk,
-    #             'block_quote': 'My sweet quote',
-    #             'category': 'Photography',
-    #             'rating': {'point1': 5, 'point2': 5},
-    #             'tags': [tag.pk]
-    #     }
-    #     Review.objects.create(**data)
-    #     response = self.client.post(
-    #         reverse('gallery_image_create_api_view'),
-    #         data={'review': Review.objects.get().pk, 'image': suf}
-    #     )
-    #     self.assertEqual(GalleryImage.objects.count(), 1)
-    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
