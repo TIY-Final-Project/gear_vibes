@@ -1,10 +1,8 @@
-from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from rest_framework import generics, views, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from gear_vibes_app.models import Tag, Review, UserProfile, GalleryImage
 from gear_vibes_app.serializers import UserSerializer, ReviewSerializer, GalleryImageSerializer, \
         TagSerializer, UserProfileSerializer
@@ -16,9 +14,18 @@ class UserCreateAPIView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
 
 
-class ReviewCreateAPIView(generics.CreateAPIView):
+class ReviewListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def list(self, request):
+        categories = ['Music Gear', 'Photography', 'Mobile Tech']
+        queryset = []
+        for category in categories:
+            queryset.append(Review.objects.filter(category=category).first())
+        serializer = ReviewSerializer(queryset, many=True)
+        return JsonResponse(dict(reviews=serializer.data))
 
     def create(self, request, *args, **kwargs):
         request.data['author'] = request.user.pk
@@ -51,7 +58,7 @@ class TagCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class FeaturedReviewListAPIView(generics.ListAPIView):
+class LatestReviewListAPIView(generics.ListAPIView):
     serializer_class = ReviewSerializer
     permission_classes = (AllowAny,)
 
@@ -105,28 +112,3 @@ class MyAwesomeProfileAPIView(views.APIView):
 class TagRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-
-
-@api_view(['POST'])
-def login_api_view(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-
-    user = authenticate(username=username, password=password)
-    response_content = {}
-    if user is not None:
-        serializer = UserSerializer(user)
-        if user.is_active:
-            login(request, user)
-            response_content = {'user': serializer.data, 'success': user.is_authenticated()}
-            return JsonResponse(response_content)
-    else:
-        response_content = {'user': None, 'success': False}
-        return JsonResponse(response_content)
-
-
-@api_view()
-def logout_api_view(request):
-    serializer = UserSerializer(request.user)
-    logout(request)
-    return JsonResponse({'user': serializer.data, 'logged_out': True})
