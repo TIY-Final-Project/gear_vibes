@@ -31,6 +31,11 @@ urlpatterns = [
         name='my_profile_review_list_api_view'
     ),
     url(r'^api/galleryimages/$', views.GalleryImageCreateAPIView.as_view(), name='gallery_image_create_api_view'),
+    url(
+        r'^api/galleryimages/(?P<pk>\d+)$',
+        views.GalleryImageRetrieveUpdateAPIView.as_view(),
+        name='gallery_image_retrieve_update_view'
+    ),
     url(r'^api/tags/$', views.TagCreateAPIView.as_view(), name='tag_create_api_view'),
     url(r'^api/tags/(?P<pk>\d+)/$', views.TagRetrieveAPIView.as_view(), name='tag_retrieve_api_view'),
     url('', include('social.apps.django_app.urls', namespace='social')),
