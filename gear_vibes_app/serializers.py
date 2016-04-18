@@ -48,6 +48,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     rating_average = serializers.SerializerMethodField()
+    review_images = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
@@ -59,6 +60,9 @@ class ReviewSerializer(serializers.ModelSerializer):
             if len(rating_values) > 0:
                 return rating_total/len(rating_values)
         return 0
+
+    def get_review_images(self, obj):
+        return GalleryImage.objects.filter(review=obj)
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):

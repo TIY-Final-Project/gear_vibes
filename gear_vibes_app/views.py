@@ -50,7 +50,7 @@ class GalleryImageCreateAPIView(generics.CreateAPIView):
 class GalleryImageRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = GalleryImage.objects.all()
     serializer_class = GalleryImageSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class TagCreateAPIView(generics.CreateAPIView):
