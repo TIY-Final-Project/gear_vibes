@@ -12,8 +12,8 @@ urlpatterns = [
     url(r'api/login/$', drf_auth_views.obtain_auth_token, name='login_api_view'),
     url(r'api/logout/$', auth_views.logout, name='logout_api_view'),
     url(r'^api/signup/$', views.UserCreateAPIView.as_view(), name='user_create_api_view'),
-    url(r'^api/reviews/$', views.ReviewCreateAPIView.as_view(), name='review_create_api_view'),
-    url(r'^api/reviews/featured/$', views.FeaturedReviewListAPIView.as_view(), name='featured_review_list_api_view'),
+    url(r'^api/reviews/$', views.ReviewListCreateAPIView.as_view(), name='review_list_create_api_view'),
+    url(r'^api/reviews/latest/$', views.LatestReviewListAPIView.as_view(), name='latest_review_list_api_view'),
     url(
         r'^api/reviews/(?P<pk>\d+)$',
         views.ReviewRetrieveUpdateAPIView.as_view(),

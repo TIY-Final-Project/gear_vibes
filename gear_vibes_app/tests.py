@@ -119,6 +119,44 @@ class TokenAuthTestCase(APITestCase):
         response = self.client.get(url)
         return response, json.loads(response.content.decode('utf-8'))
 
+    def test_list_create_view_returns_three_review_objects(self):
+        self.login()
+        review1 = {
+                'product_name': 'iPad 2',
+                'title': 'Test Review',
+                'body': 'This was an ok product',
+                'author': self.user.pk,
+                'block_quote': 'My sweet quote',
+                'category': 'Photography',
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
+                'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
+        }
+        review2 = {
+                'product_name': 'iPad 2',
+                'title': 'Test Review',
+                'body': 'This was an ok product',
+                'author': self.user.pk,
+                'block_quote': 'My sweet quote',
+                'category': 'Music Gear',
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
+                'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
+        }
+        review3 = {
+                'product_name': 'iPad 2',
+                'title': 'Test Review',
+                'body': 'This was an ok product',
+                'author': self.user.pk,
+                'block_quote': 'My sweet quote',
+                'category': 'Mobile Tech',
+                'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
+                'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
+        }
+        reviews = [review1, review2, review3]
+        for review in reviews:
+            self.client.post(reverse('review_list_create_api_view'), format='json', data=review)
+        json_response = self.client.get(reverse('review_list_create_api_view')).json()
+        self.assertEqual(len(json_response.get('reviews')), 3)
+
     def test_user_can_create_review_with_authenticated_request(self):
         self.login()
         data = {
@@ -131,7 +169,7 @@ class TokenAuthTestCase(APITestCase):
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
-        response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
+        response = self.client.post(reverse('review_list_create_api_view'), format='json', data=data)
         self.assertEqual(Review.objects.count(), 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -149,7 +187,7 @@ class TokenAuthTestCase(APITestCase):
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test'}]
         }
-        response = self.client.post(reverse('review_create_api_view'), format='json', data=data)
+        response = self.client.post(reverse('review_list_create_api_view'), format='json', data=data)
         self.assertEqual(Review.objects.count(), 0)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -165,8 +203,8 @@ class TokenAuthTestCase(APITestCase):
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
         }
         Review.objects.create(**data)
-        response = self.client.get(reverse('review_retrieve_update_api_view', kwargs={'pk': 4}))
-        self.assertEqual(response.data.get('id'), 4)
+        response = self.client.get(reverse('review_retrieve_update_api_view', kwargs={'pk': 7}))
+        self.assertEqual(response.data.get('id'), 7)
         self.assertEqual(response.data.get('product_name'), 'iPad 2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
