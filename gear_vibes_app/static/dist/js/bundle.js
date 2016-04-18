@@ -656,11 +656,26 @@ var collection = require('../models/featuredModel.js');
 var HomePage = React.createClass({displayName: "HomePage",
   getInitialState: function(){
     return {
-      featured: new collection.FeaturedCollection()
-    }  
+      featured: new collection.FeaturedCollection(),
+      background: 0
+    }
   },
   componentWillMount: function(){
+    var self = this;
+    var featured = new collection.FeaturedCollection();
+    featured.fetch().then(function(data){
+      self.setState({featured: featured});
+    });
 
+    var interval = setInterval(this.changeBackground, 5000);
+  },
+  changeBackground: function(){
+    var background = this.state.background;
+    background += 1;
+    if(this.state.background >= 3){
+      background = 0;
+    }
+    this.setState({background: this.state.background});
   },
   render: function(){
     var jumbotron = {
@@ -668,25 +683,22 @@ var HomePage = React.createClass({displayName: "HomePage",
       height: '100vh'
     }
 
-    var firstStuff = {
+    {/*var bgURL = this.state.collection.get(model).get('reviews')[this.state.background].url;
+    var bgStyle = "background-image:" + bgURL + ";";*/}
 
+    var featured = this.state.featured;
+    var background = this.state.background;
+    console.log(background);
+
+    if(!featured){
+      return (React.createElement("div", {className: "hide"}));
     }
 
-    var secondStuff = {
+    var featuredList = featured.map(function(data){
+      
+    });
 
-    }
 
-    var thirdStuff = {
-
-    }
-
-    var fourthStuff = {
-
-    }
-
-    var fifthStuff = {
-
-    }
 
     return (
       React.createElement("div", null, 
@@ -740,7 +752,7 @@ var HomePage = React.createClass({displayName: "HomePage",
                   React.createElement("h2", {className: ""}, "Latest"), 
                   React.createElement("h2", {className: ""}, "Stuff")
                 ), 
-                React.createElement("li", {className: "latest-stuff-item col-md-6", style: firstStuff}, 
+                React.createElement("li", {className: "latest-stuff-item col-md-6"}, 
                   React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
                   React.createElement("div", {className: "latest-user-detail"}, 
                     React.createElement("span", {className: "latest-by"}, "By "), 
@@ -748,7 +760,7 @@ var HomePage = React.createClass({displayName: "HomePage",
                     React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
                   )
                 ), 
-                React.createElement("li", {className: "latest-stuff-item col-md-6", style: secondStuff}, 
+                React.createElement("li", {className: "latest-stuff-item col-md-6"}, 
                   React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
                   React.createElement("div", {className: "latest-user-detail"}, 
                     React.createElement("span", {className: "latest-by"}, "By "), 
@@ -756,7 +768,7 @@ var HomePage = React.createClass({displayName: "HomePage",
                     React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
                   )
                 ), 
-                React.createElement("li", {className: "latest-stuff-item col-md-6", style: thirdStuff}, 
+                React.createElement("li", {className: "latest-stuff-item col-md-6"}, 
                   React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
                   React.createElement("div", {className: "latest-user-detail"}, 
                     React.createElement("span", {className: "latest-by"}, "By "), 
@@ -764,7 +776,7 @@ var HomePage = React.createClass({displayName: "HomePage",
                     React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
                   )
                 ), 
-                React.createElement("li", {className: "latest-stuff-item col-md-6", style: fourthStuff}, 
+                React.createElement("li", {className: "latest-stuff-item col-md-6"}, 
                   React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
                   React.createElement("div", {className: "latest-user-detail"}, 
                     React.createElement("span", {className: "latest-by"}, "By "), 
@@ -772,7 +784,7 @@ var HomePage = React.createClass({displayName: "HomePage",
                     React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
                   )
                 ), 
-                React.createElement("li", {className: "latest-stuff-item col-md-6", style: fifthStuff}, 
+                React.createElement("li", {className: "latest-stuff-item col-md-6"}, 
                   React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
                   React.createElement("div", {className: "latest-user-detail"}, 
                     React.createElement("span", {className: "latest-by"}, "By "), 
@@ -831,6 +843,9 @@ var HomePage = React.createClass({displayName: "HomePage",
     )
   }
 });
+
+
+
 
 
 module.exports = HomePage;
