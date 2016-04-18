@@ -13,9 +13,20 @@ require('backbone-react-component');
 
 
 // local
+var collection = require('../models/featuredModel.js');
+
+
 
 
 var HomePage = React.createClass({
+  getInitialState: function(){
+    return {
+      featured: new collection.FeaturedCollection()
+    }  
+  },
+  componentWillMount: function(){
+
+  },
   render: function(){
     var jumbotron = {
       borderRadius: 0,
@@ -145,7 +156,7 @@ var HomePage = React.createClass({
                   <ul className="shuffle-select">
                     <li className="shuffle-item"><h2><span>Show all</span></h2></li>
                     <li className="shuffle-item"><h2><span>Music Gear</span></h2></li>
-                    <li className="shuffle-item"><h2><span>Cameras</span></h2></li>
+                    <li className="shuffle-item"><h2><span>Photography</span></h2></li>
                     <li className="shuffle-item"><h2><span>Mobile Tech</span></h2></li>
                   </ul>
                 </div>

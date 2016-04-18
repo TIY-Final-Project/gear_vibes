@@ -5930,7 +5930,7 @@ section {
 .latest-stuff-title {
   background-color: #181d2b;
   height: 33.32vh;
-  padding-top: 7.5%;
+  padding-top: 6.5%;
   padding-left: 13%; }
 
 .latest-stuff-title h2 {
@@ -5968,10 +5968,10 @@ section {
 .latest-stuff-item {
   background: url("https://unsplash.it/556/400/?random");
   height: 33.32vh;
-  padding-top: 10%; }
+  padding-top: 8%; }
 
 .shuffle-content-wrapper {
-  padding-top: 283px; }
+  padding-top: 40%; }
 
 .shuffle-select {
   padding: 0;
@@ -5997,9 +5997,9 @@ section {
 .catagory-trans-wrapper {
   background-color: #3adaba;
   position: absolute;
-  top: 400px;
+  top: 380px;
   right: -263px;
-  width: 600px;
+  width: 391%;
   height: 75px;
   margin-top: 30px;
   transform: rotate(90deg);
