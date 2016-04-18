@@ -176,8 +176,9 @@ var CreateReview = React.createClass({displayName: "CreateReview",
         author: review.author,
         block_quote: review.block_quote,
         video_url: review.video_url,
-        rating: [review.rating],
-        tags: [review.tags]
+        category: review.category,
+        rating: review.rating,
+        tags: review.tags
       });
     });
 
@@ -655,35 +656,166 @@ var HomePage = React.createClass({displayName: "HomePage",
       borderRadius: 0,
       height: '100vh'
     }
+
+    var firstStuff = {
+
+    }
+
+    var secondStuff = {
+
+    }
+
+    var thirdStuff = {
+
+    }
+
+    var fourthStuff = {
+
+    }
+
+    var fifthStuff = {
+
+    }
+
     return (
       React.createElement("div", null, 
-        React.createElement(Jumbotron, {className: "jumbotron", style: jumbotron}, 
-          React.createElement("div", {className: "hero"}, 
-            React.createElement("div", {className: "header-outer"}, 
-              React.createElement("div", {className: "header-inner row-fluid"}, 
-                React.createElement("div", {className: "logo-container col-md-3"}, 
-                  React.createElement("img", {src: "/static/dist/images/white-logo.png", alt: ""})
-                ), 
-                React.createElement("div", {className: "header-nav-container col-md-9"}, 
-                  React.createElement("ul", {className: "header-nav-list"}, 
-                    React.createElement("li", {className: "header-nav-item", id: "login-nav-item"}, 
-                      React.createElement("span", {className: "login-container"}, 
-                        React.createElement("p", {className: "login-link"}, React.createElement("span", {className: "login-text"}, "Login")), 
-                        React.createElement("div", {className: "login-border"})
-                      )
-                    ), 
-                    React.createElement("li", {className: "header-nav-item"}, 
-                      React.createElement("span", {className: "hamburg-container"}, 
-                        React.createElement("img", {src: "/static/dist/images/hamburgMenu.png", alt: ""})
+        React.createElement("section", {className: "featured"}, 
+          React.createElement(Jumbotron, {className: "jumbotron", style: jumbotron}, 
+            React.createElement("div", {className: "hero"}, 
+              React.createElement("div", {className: "header-outer"}, 
+                React.createElement("div", {className: "header-inner row-fluid"}, 
+                  React.createElement("div", {className: "logo-container col-md-3"}, 
+                    React.createElement("img", {src: "/static/dist/images/white-logo.png", alt: ""})
+                  ), 
+                  React.createElement("div", {className: "header-nav-container col-md-9"}, 
+                    React.createElement("ul", {className: "header-nav-list"}, 
+                      React.createElement("li", {className: "header-nav-item", id: "login-nav-item"}, 
+                        React.createElement("span", {className: "login-container"}, 
+                          React.createElement("div", {className: "login-link"}, React.createElement("span", {className: "login-text"}, "Login")), 
+                          React.createElement("div", {className: "login-border"})
+                        )
+                      ), 
+                      React.createElement("li", {className: "header-nav-item"}, 
+                        React.createElement("span", {className: "hamburg-container"}, 
+                          React.createElement("img", {src: "/static/dist/images/hamburgMenu.png", alt: ""})
+                        )
                       )
                     )
+                  )
+                )
+              ), 
+              React.createElement("div", {className: "featured-content row-fluid"}, 
+                React.createElement("div", {className: "featured-title-wrapper"}, 
+                  React.createElement("h3", {className: "featured-title"}, "Xotic Sp Comp Review")
+                ), 
+                React.createElement("div", {className: "featured-bq-wrapper row-fluid"}, 
+                  React.createElement("h1", {className: "featured-bq"}, " \"This pedal offers more varsatility than most compressors out there while remaining small enough to find a home on any pedalboard.\""
+                  )
+                ), 
+                React.createElement("div", {className: "featured-detail-wrapper"}, 
+                  React.createElement("span", {className: "featured-detail-pre"}, "Read the full review by "), 
+                  React.createElement("span", {className: "featured-detail-author"}, "Brandon Emerson "), 
+                  React.createElement("span", {className: "featured-detail-date"}, "April 3, 2016")
+                )
+              )
+            )
+          )
+        ), 
+        React.createElement("section", {className: "latest"}, 
+          React.createElement("div", {className: "latest-wrapper row-fluid"}, 
+            React.createElement("div", {className: "latest-stuff-wrapper col-md-7"}, 
+              React.createElement("ul", {className: "latest-stuff-list row-fluid"}, 
+                React.createElement("li", {className: "latest-stuff-title col-md-6"}, 
+                  React.createElement("h2", {className: ""}, "Latest"), 
+                  React.createElement("h2", {className: ""}, "Stuff")
+                ), 
+                React.createElement("li", {className: "latest-stuff-item col-md-6", style: firstStuff}, 
+                  React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
+                  React.createElement("div", {className: "latest-user-detail"}, 
+                    React.createElement("span", {className: "latest-by"}, "By "), 
+                    React.createElement("span", {className: "latest-name"}, "Eddie Miranda "), 
+                    React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
+                  )
+                ), 
+                React.createElement("li", {className: "latest-stuff-item col-md-6", style: secondStuff}, 
+                  React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
+                  React.createElement("div", {className: "latest-user-detail"}, 
+                    React.createElement("span", {className: "latest-by"}, "By "), 
+                    React.createElement("span", {className: "latest-name"}, "Eddie Miranda "), 
+                    React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
+                  )
+                ), 
+                React.createElement("li", {className: "latest-stuff-item col-md-6", style: thirdStuff}, 
+                  React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
+                  React.createElement("div", {className: "latest-user-detail"}, 
+                    React.createElement("span", {className: "latest-by"}, "By "), 
+                    React.createElement("span", {className: "latest-name"}, "Eddie Miranda "), 
+                    React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
+                  )
+                ), 
+                React.createElement("li", {className: "latest-stuff-item col-md-6", style: fourthStuff}, 
+                  React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
+                  React.createElement("div", {className: "latest-user-detail"}, 
+                    React.createElement("span", {className: "latest-by"}, "By "), 
+                    React.createElement("span", {className: "latest-name"}, "Eddie Miranda "), 
+                    React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
+                  )
+                ), 
+                React.createElement("li", {className: "latest-stuff-item col-md-6", style: fifthStuff}, 
+                  React.createElement("h2", {className: "latest-item-title text-center"}, "GarageBand iOS Review"), 
+                  React.createElement("div", {className: "latest-user-detail"}, 
+                    React.createElement("span", {className: "latest-by"}, "By "), 
+                    React.createElement("span", {className: "latest-name"}, "Eddie Miranda "), 
+                    React.createElement("span", {className: "latest-date"}, "April 5, 2016 ")
+                  )
+                )
+              )
+            ), 
+            React.createElement("div", {className: "latest-shuffle-wrapper col-md-5"}, 
+              React.createElement("div", {className: "latest-shuffle-inner row"}, 
+                React.createElement("div", {className: "shuffle-content-wrapper col-md-9"}, 
+                  React.createElement("div", {className: "shuffle-title"}, 
+                    React.createElement("h2", null, "Reviews by people", React.createElement("br", null), "just like you.")
+                  ), 
+                  React.createElement("ul", {className: "shuffle-select"}, 
+                    React.createElement("li", {className: "shuffle-item"}, React.createElement("h2", null, React.createElement("span", null, "Show all"))), 
+                    React.createElement("li", {className: "shuffle-item"}, React.createElement("h2", null, React.createElement("span", null, "Music Gear"))), 
+                    React.createElement("li", {className: "shuffle-item"}, React.createElement("h2", null, React.createElement("span", null, "Cameras"))), 
+                    React.createElement("li", {className: "shuffle-item"}, React.createElement("h2", null, React.createElement("span", null, "Mobile Tech")))
+                  )
+                ), 
+                React.createElement("div", {className: "col-md-3"}, 
+                  React.createElement("div", {className: "catagory-trans-wrapper"}, 
+                    React.createElement("span", null, "Categories"), 
+                    React.createElement("span", {className: "side-cat-border"})
                   )
                 )
               )
             )
           )
         ), 
-        React.createElement(ButtonInput, {onClick: this.props.createAccount, value: "Create Account"})
+        React.createElement("footer", null, 
+          React.createElement("div", {className: "footer-bg-img row-fluid"}, 
+            React.createElement("div", {className: "col-md-4"}, 
+              React.createElement("ul", {className: "footer-social-nav"}, 
+                React.createElement("li", {className: "footer-instagram footer-nav-item"}, React.createElement("a", {href: "#"}, "Instagram")), 
+                React.createElement("li", {className: "footer-twitter footer-nav-item"}, React.createElement("a", {href: "#"}, "Twitter")), 
+                React.createElement("li", {className: "footer-facebook footer-nav-item"}, React.createElement("a", {href: "#"}, "Facebook"))
+              )
+            ), 
+            React.createElement("div", {className: "col-md-4"}, 
+              React.createElement(ButtonInput, {className: "center-block", id: "account-create-btn", onClick: this.props.createAccount, value: "Create Account"})
+            ), 
+            React.createElement("div", {className: "col-md-4"}, 
+              React.createElement("ul", {className: "footer-cat-nav"}, 
+                React.createElement("li", {className: "cat-mus footer-nav-item"}, React.createElement("a", {href: "#"}, "Music Gear")), 
+                React.createElement("li", {className: "cat-phot footer-nav-item"}, React.createElement("a", {href: "#"}, "Photography")), 
+                React.createElement("li", {className: "cat-mob footer-nav-item"}, React.createElement("a", {href: "#"}, "Mobile Tech"))
+              )
+            )
+          )
+        )
+
       )
     )
   }

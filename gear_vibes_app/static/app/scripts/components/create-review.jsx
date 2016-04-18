@@ -49,8 +49,9 @@ var CreateReview = React.createClass({
         author: review.author,
         block_quote: review.block_quote,
         video_url: review.video_url,
-        rating: [review.rating],
-        tags: [review.tags]
+        category: review.category,
+        rating: review.rating,
+        tags: review.tags
       });
     });
 
