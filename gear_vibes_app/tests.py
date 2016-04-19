@@ -28,7 +28,7 @@ class UserProfileTestCase(TestCase):
             'body': 'This was a great product',
             'author': User.objects.get(),
             'block_quote': 'This is a blockquote',
-            'category': 'cam',
+            'category': 'pho',
             'rating': [
                 {'title': 'quality', 'value': 5.0},
                 {'title': 'takes pics', 'value': 9.5},
@@ -52,7 +52,7 @@ class ReviewTestCase(TestCase):
             body='This was a great product',
             author=user,
             block_quote='This is a blockquote',
-            category='cam',
+            category='pho',
             rating=[
                 {'title': 'quality', 'value': 5.0},
                 {'title': 'takes pics', 'value': 9.5},
@@ -74,7 +74,7 @@ class ReviewTestCase(TestCase):
         )
         self.assertIn(tag1, review.tags.all())
         self.assertIn(tag2, review.tags.all())
-        self.assertEqual(review.category, 'cam')
+        self.assertEqual(review.category, 'pho')
 
     def test_review_serializer_returns_rating_average(self):
         review = Review.objects.get()
@@ -127,7 +127,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
-                'category': 'Photography',
+                'category': 'pho',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
@@ -137,7 +137,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
-                'category': 'Music Gear',
+                'category': 'mus',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
@@ -147,7 +147,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
-                'category': 'Mobile Tech',
+                'category': 'mob',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
@@ -165,7 +165,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
-                'category': 'Photography',
+                'category': 'pho',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
@@ -183,7 +183,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': author.pk,
                 'block_quote': 'My sweet quote',
-                'category': 'Photography',
+                'category': 'pho',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test'}]
         }
@@ -199,7 +199,7 @@ class TokenAuthTestCase(APITestCase):
                 'body': 'This was an ok product',
                 'author': new_user,
                 'block_quote': 'My sweet quote',
-                'category': 'Photography',
+                'category': 'pho',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
         }
         Review.objects.create(**data)
