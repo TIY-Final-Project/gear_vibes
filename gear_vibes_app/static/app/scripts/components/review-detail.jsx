@@ -7,6 +7,7 @@ var Backbone = require('backbone');
 var Input = require('react-bootstrap/lib/Input');
 var ButtonInput = require('react-bootstrap/lib/ButtonInput');
 var Button = require('react-bootstrap/lib/Button');
+var ProgressBar = require('react-bootstrap/lib/ProgressBar');
 var Jumbotron = require('react-bootstrap/lib/Jumbotron');
 var LinkedStateMixin = require('react/lib/LinkedStateMixin');
 require('backbone-react-component');
@@ -82,8 +83,8 @@ var RatingTable = React.createClass({
     var ratingList = ratings.map(function(rating){
       return (
         <li key={rating.title}>
-          {rating.title}
-          {rating.value}
+          <div><span>{rating.title}</span><span>{rating.value}</span></div>
+          <ProgressBar now={rating.value*10} />
         </li>
       );
     });
