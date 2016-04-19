@@ -73,7 +73,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     def get_review_images(self, obj):
         images = GalleryImage.objects.filter(review=obj)
         if any(images):
-            return images
+            return [image.image.url for image in images]
         return None
 
     def get_category_long_form(self, obj):
