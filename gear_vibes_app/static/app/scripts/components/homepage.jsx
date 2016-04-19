@@ -21,11 +21,26 @@ var collection = require('../models/featuredModel.js');
 var HomePage = React.createClass({
   getInitialState: function(){
     return {
-      featured: new collection.FeaturedCollection()
-    }  
+      featured: new collection.FeaturedCollection(),
+      background: 0
+    }
   },
   componentWillMount: function(){
+    var self = this;
+    var featured = new collection.FeaturedCollection();
+    featured.fetch().then(function(data){
+      self.setState({featured: featured});
+    });
 
+    var interval = setInterval(this.changeBackground, 5000);
+  },
+  changeBackground: function(){
+    var background = this.state.background;
+    background += 1;
+    if(this.state.background >= 3){
+      background = 0;
+    }
+    this.setState({background: this.state.background});
   },
   render: function(){
     var jumbotron = {
@@ -33,25 +48,22 @@ var HomePage = React.createClass({
       height: '100vh'
     }
 
-    var firstStuff = {
+    {/*var bgURL = this.state.collection.get(model).get('reviews')[this.state.background].url;
+    var bgStyle = "background-image:" + bgURL + ";";*/}
 
+    var featured = this.state.featured;
+    var background = this.state.background;
+    console.log(background);
+
+    if(!featured){
+      return (<div className="hide" />);
     }
 
-    var secondStuff = {
+    var featuredList = featured.map(function(data){
+      
+    });
 
-    }
 
-    var thirdStuff = {
-
-    }
-
-    var fourthStuff = {
-
-    }
-
-    var fifthStuff = {
-
-    }
 
     return (
       <div>
@@ -105,7 +117,7 @@ var HomePage = React.createClass({
                   <h2 className="">Latest</h2>
                   <h2 className="">Stuff</h2>
                 </li>
-                <li className="latest-stuff-item col-md-6" style={firstStuff}>
+                <li className="latest-stuff-item col-md-6">
                   <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
                   <div className="latest-user-detail">
                     <span className="latest-by">By </span>
@@ -113,7 +125,7 @@ var HomePage = React.createClass({
                     <span className="latest-date">April 5, 2016 </span>
                   </div>
                 </li>
-                <li className="latest-stuff-item col-md-6" style={secondStuff}>
+                <li className="latest-stuff-item col-md-6">
                   <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
                   <div className="latest-user-detail">
                     <span className="latest-by">By </span>
@@ -121,7 +133,7 @@ var HomePage = React.createClass({
                     <span className="latest-date">April 5, 2016 </span>
                   </div>
                 </li>
-                <li className="latest-stuff-item col-md-6" style={thirdStuff}>
+                <li className="latest-stuff-item col-md-6">
                   <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
                   <div className="latest-user-detail">
                     <span className="latest-by">By </span>
@@ -129,7 +141,7 @@ var HomePage = React.createClass({
                     <span className="latest-date">April 5, 2016 </span>
                   </div>
                 </li>
-                <li className="latest-stuff-item col-md-6" style={fourthStuff}>
+                <li className="latest-stuff-item col-md-6">
                   <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
                   <div className="latest-user-detail">
                     <span className="latest-by">By </span>
@@ -137,7 +149,7 @@ var HomePage = React.createClass({
                     <span className="latest-date">April 5, 2016 </span>
                   </div>
                 </li>
-                <li className="latest-stuff-item col-md-6" style={fifthStuff}>
+                <li className="latest-stuff-item col-md-6">
                   <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
                   <div className="latest-user-detail">
                     <span className="latest-by">By </span>
@@ -196,6 +208,9 @@ var HomePage = React.createClass({
     )
   }
 });
+
+
+
 
 
 module.exports = HomePage;
