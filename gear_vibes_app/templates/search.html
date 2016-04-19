@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container-fluid">
+    Search
+
+    <br>
+
+    {% for category in categories %}
+    <div>{{ category }}</div>
+    {% endfor %}
+
+    <br>
+
+    {% for category, tags in tags_by_category.items %}
+      <div>
+        {{category}}:
+        {% for tag in tags %}
+          <li>
+            {{tag}}
+          </li>
+          {%endfor%}
+      </div>
+    {% endfor %}
+
+
+  </div>
+
+  {% csrf_token %}
+{% endblock %}

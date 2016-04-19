@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import TemplateView
 from django.http import JsonResponse
 from rest_framework import generics, views, status
 from rest_framework.response import Response
@@ -112,3 +113,23 @@ class MyAwesomeProfileAPIView(views.APIView):
 class TagRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+
+class CategorySearchView(TemplateView):
+    template_name = 'search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = ['Music Gear', 'Photography', 'Mobile Tech']
+        tags = Tag.objects.all()
+        tags_by_category = {}
+        for category in categories:
+            tag_set = []
+            for review in Review.objects.filter(category=category):
+                for tag in tags:
+                    if tag in review.tags.all() and tag not in tag_set:
+                        tag_set.append(tag)
+            tags_by_category[category] = tag_set
+        context['categories'] = categories
+        context['tags_by_category'] = tags_by_category
+        return context
