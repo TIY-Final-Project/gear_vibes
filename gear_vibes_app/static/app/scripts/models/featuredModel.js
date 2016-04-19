@@ -18,7 +18,10 @@ var FeaturedModel = Backbone.Model.extend({
 
 var  FeaturedCollection = Backbone.Collection.extend({
   model: FeaturedModel,
-  url: '/api/reviews/'
+  url: '/api/reviews/',
+  parse: function(data){
+    return data.reviews;
+  }
 });
 
 

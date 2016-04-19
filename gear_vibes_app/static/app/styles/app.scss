@@ -27,24 +27,20 @@ img {
   max-width: 100%;
 }
 
-.featured {
-
-}
-
 
 // HOMEPAGE
 %header-height {
   height: 88px;
 }
 
-.jumbotron {
+.home-jumbotron {
   background: url('../images/jumbo-bg.png');
   background-size: cover;
   // height: 100vh;
   margin-bottom: 0
 }
 
-.jumbotron::before {
+.home-jumbotron::before {
   content: "";
   position: absolute;
   width: 41%;
@@ -53,6 +49,10 @@ img {
   left: 0;
   right: 0;
   background: rgba(59, 218, 186, 0.87);
+}
+
+.jumbotron a {
+  text-decoration: none;
 }
 
 .header-outer {
@@ -153,6 +153,11 @@ img {
   z-index: 1;
 }
 
+.featured-full-review {
+  color: white;
+  cursor: pointer;
+}
+
 .featured-detail-author {
   position: relative;
   z-index: 1;
@@ -191,7 +196,12 @@ section {
 .latest-item-title {
   font-size: 34px;
   padding: 0 50px 0 50px;
-  color: rgba(58, 218, 186, 1);
+  // color: rgba(58, 218, 186, 1);
+
+  a {
+    text-decoration: none;
+    color: rgba(58, 218, 186, 1);
+  }
 }
 
 .latest-user-detail {
@@ -224,6 +234,8 @@ section {
 
 .latest-stuff-item {
   background: url('https://unsplash.it/556/400/?random');
+  background-position: center;
+  background-size: 550px;
   height: 33.32vh;
   padding-top: 8%;
 }

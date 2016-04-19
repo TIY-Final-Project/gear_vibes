@@ -16,6 +16,8 @@ var DashboardEdit = require('./dashboardEdit.jsx');
 var HomePage = require('./homepage.jsx');
 var CreateReview = require('./create-review.jsx');
 var ReviewDetail = require('./review-detail.jsx');
+var Header = require('./header.jsx');
+
 
 // models
 var models = require('../models/user-model.js');

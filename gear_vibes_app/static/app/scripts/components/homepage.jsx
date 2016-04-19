@@ -14,7 +14,7 @@ require('backbone-react-component');
 
 // local
 var collection = require('../models/featuredModel.js');
-
+var latest = require('../models/latestModel.js');
 
 
 
@@ -22,53 +22,59 @@ var HomePage = React.createClass({
   getInitialState: function(){
     return {
       featured: new collection.FeaturedCollection(),
+      latestReviews: new latest.LatestCollection(),
       background: 0
     }
   },
   componentWillMount: function(){
     var self = this;
-    var featured = new collection.FeaturedCollection();
+    var featured = new collection.FeaturedCollection({id: self.props.router.reviewId});
+    var latestReviews = new latest.LatestCollection({id: self.props.router.reviewId});
     featured.fetch().then(function(data){
       self.setState({featured: featured});
     });
 
-    var interval = setInterval(this.changeBackground, 5000);
+    latestReviews.fetch().then(function(data){
+      self.setState({latestReviews: latestReviews});
+    });
+
+    var interval = setInterval(this.changeBackground, 10000);
   },
   changeBackground: function(){
     var background = this.state.background;
     background += 1;
-    if(this.state.background >= 3){
+    if(this.state.background >= 2){
       background = 0;
     }
-    this.setState({background: this.state.background});
+    this.setState({background: background});
+  },
+  latestShuffle: function(e){
+    e.preventDefault();
+    var self = this;
   },
   render: function(){
-    var jumbotron = {
-      borderRadius: 0,
-      height: '100vh'
-    }
-
-    {/*var bgURL = this.state.collection.get(model).get('reviews')[this.state.background].url;
-    var bgStyle = "background-image:" + bgURL + ";";*/}
-
+    var latestReviews = this.state.latestReviews;
     var featured = this.state.featured;
     var background = this.state.background;
-    console.log(background);
 
-    if(!featured){
+    if(featured.length <= 0){
       return (<div className="hide" />);
     }
 
-    var featuredList = featured.map(function(data){
-      
-    });
+    var currentFeaturedReview =  featured.at(background);
+
+    var jumbotron = {
+      backgroundImage: 'url(' + currentFeaturedReview.get("review_images")[0] + ')',
+      borderRadius: 0,
+      height: '100vh'
+    }
 
 
 
     return (
       <div>
         <section className="featured">
-          <Jumbotron className="jumbotron" style={jumbotron}>
+          <Jumbotron className="home-jumbotron" style={jumbotron}>
             <div className="hero">
               <div className="header-outer">
                 <div className="header-inner row-fluid">
@@ -94,16 +100,21 @@ var HomePage = React.createClass({
               </div>
               <div className="featured-content row-fluid">
                 <div className="featured-title-wrapper">
-                  <h3 className="featured-title">Xotic Sp Comp Review</h3>
+                  <h3 className="featured-title">{currentFeaturedReview.get('title')}</h3>
                 </div>
                 <div className="featured-bq-wrapper row-fluid">
-                  <h1 className="featured-bq"> "This pedal offers more varsatility than most compressors out there while remaining small enough to find a home on any pedalboard."
+                  <h1 className="featured-bq"> {currentFeaturedReview.get('block_quote')}
                   </h1>
                 </div>
                 <div className="featured-detail-wrapper">
-                  <span className="featured-detail-pre">Read the full review by </span>
-                  <span className="featured-detail-author">Brandon Emerson </span>
-                  <span className="featured-detail-date">April 3, 2016</span>
+                  <p>
+                    <span className="featured-detail-pre">Read the
+                      <a className="featured-full-review" href={"#dashboard/reviews/" + currentFeaturedReview.get('id')}> full review
+                      </a> by </span>
+                    <span className="featured-detail-author">{currentFeaturedReview.get('author_name')}
+                    </span>
+                    <span className="featured-detail-date"> {currentFeaturedReview.get('created_at')}</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -117,46 +128,9 @@ var HomePage = React.createClass({
                   <h2 className="">Latest</h2>
                   <h2 className="">Stuff</h2>
                 </li>
-                <li className="latest-stuff-item col-md-6">
-                  <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
-                  <div className="latest-user-detail">
-                    <span className="latest-by">By </span>
-                    <span className="latest-name">Eddie Miranda </span>
-                    <span className="latest-date">April 5, 2016 </span>
-                  </div>
-                </li>
-                <li className="latest-stuff-item col-md-6">
-                  <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
-                  <div className="latest-user-detail">
-                    <span className="latest-by">By </span>
-                    <span className="latest-name">Eddie Miranda </span>
-                    <span className="latest-date">April 5, 2016 </span>
-                  </div>
-                </li>
-                <li className="latest-stuff-item col-md-6">
-                  <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
-                  <div className="latest-user-detail">
-                    <span className="latest-by">By </span>
-                    <span className="latest-name">Eddie Miranda </span>
-                    <span className="latest-date">April 5, 2016 </span>
-                  </div>
-                </li>
-                <li className="latest-stuff-item col-md-6">
-                  <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
-                  <div className="latest-user-detail">
-                    <span className="latest-by">By </span>
-                    <span className="latest-name">Eddie Miranda </span>
-                    <span className="latest-date">April 5, 2016 </span>
-                  </div>
-                </li>
-                <li className="latest-stuff-item col-md-6">
-                  <h2 className="latest-item-title text-center">GarageBand iOS Review</h2>
-                  <div className="latest-user-detail">
-                    <span className="latest-by">By </span>
-                    <span className="latest-name">Eddie Miranda </span>
-                    <span className="latest-date">April 5, 2016 </span>
-                  </div>
-                </li>
+
+                <LatestReviews latestReviews={latestReviews}/>
+
               </ul>
             </div>
             <div className="latest-shuffle-wrapper col-md-5">
@@ -167,7 +141,13 @@ var HomePage = React.createClass({
                   </div>
                   <ul className="shuffle-select">
                     <li className="shuffle-item"><h2><span>Show all</span></h2></li>
-                    <li className="shuffle-item"><h2><span>Music Gear</span></h2></li>
+                    <li className="shuffle-item">
+                      <h2>
+                        <span onClick={this.latestShuffle} id="musicGear">
+                          Music Gear
+                        </span>
+                      </h2>
+                    </li>
                     <li className="shuffle-item"><h2><span>Photography</span></h2></li>
                     <li className="shuffle-item"><h2><span>Mobile Tech</span></h2></li>
                   </ul>
@@ -204,6 +184,48 @@ var HomePage = React.createClass({
           </div>
         </footer>
 
+      </div>
+    )
+  }
+});
+
+
+
+
+var LatestReviews = React.createClass({
+  render: function(){
+    var self = this;
+    var latest = self.props.latestReviews;
+
+
+    if (latest.length <= 0){
+      return (<div className="hide" />);
+    }
+
+
+    var latestList = latest.map(function(data){
+      var latestImg = {
+        backgroundImage: 'url(' + data.get('review_images') + ')'
+      }
+      return (
+        <li className="latest-stuff-item col-md-6" key={data.cid} style={latestImg}>
+          <h2 className="latest-item-title text-center">
+            <a href={"#dashboard/reviews/" + data.get('id')}>{data.get('title')}</a>
+          </h2>
+          <div className="latest-user-detail">
+            <span className="latest-by">By </span>
+            <span className="latest-name">{data.get('author_name')} </span>
+            <span className="latest-date">{data.get('created_at')} </span>
+          </div>
+        </li>
+      )
+    });
+
+
+
+    return (
+      <div>
+        {latestList}
       </div>
     )
   }
