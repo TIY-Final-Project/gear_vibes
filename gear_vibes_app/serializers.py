@@ -50,6 +50,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     rating_average = serializers.SerializerMethodField()
     review_images = serializers.SerializerMethodField()
     author_name = serializers.SerializerMethodField()
+    category_long_form = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
@@ -62,16 +63,21 @@ class ReviewSerializer(serializers.ModelSerializer):
                 return rating_total/len(rating_values)
         return 0
 
-    def get_review_images(self, obj):
-        images = [image.image.url for image in GalleryImage.objects.filter(review=obj)]
-        return images
-
     def get_author_name(self, obj):
         profile = obj.author.userprofile
         if profile.first_name and profile.last_name:
             return "{} {}".format(profile.first_name, profile.last_name)
         else:
             return obj.author.username
+
+    def get_review_images(self, obj):
+        images = GalleryImage.objects.filter(review=obj)
+        if any(images):
+            return images
+        return None
+
+    def get_category_long_form(self, obj):
+        return obj.get_category_display()
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):

@@ -21,7 +21,7 @@ class ReviewListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def list(self, request):
-        categories = ['Music Gear', 'Photography', 'Mobile Tech']
+        categories = ['mus', 'pho', 'mob']
         queryset = []
         for category in categories:
             queryset.append(Review.objects.filter(category=category).first())
@@ -120,7 +120,7 @@ class CategorySearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        categories = ['Music Gear', 'Photography', 'Mobile Tech']
+        categories = ['mus', 'pho', 'mob']
         tags = Tag.objects.all()
         tags_by_category = {}
         for category in categories:
