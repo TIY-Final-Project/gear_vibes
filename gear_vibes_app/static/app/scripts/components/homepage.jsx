@@ -33,7 +33,7 @@ var HomePage = React.createClass({
     featured.fetch().then(function(data){
       self.setState({featured: featured});
     });
-
+  
     latestReviews.fetch().then(function(data){
       self.setState({latestReviews: latestReviews});
     });
@@ -48,9 +48,8 @@ var HomePage = React.createClass({
     }
     this.setState({background: background});
   },
-  latestShuffle: function(e){
-    e.preventDefault();
-    var self = this;
+  latestShuffle: function(){
+
   },
   render: function(){
     var latestReviews = this.state.latestReviews;
@@ -76,28 +75,7 @@ var HomePage = React.createClass({
         <section className="featured">
           <Jumbotron className="home-jumbotron" style={jumbotron}>
             <div className="hero">
-              <div className="header-outer">
-                <div className="header-inner row-fluid">
-                  <div className="logo-container col-md-3">
-                    <img src="/static/dist/images/white-logo.png" alt=""/>
-                  </div>
-                  <div className="header-nav-container col-md-9">
-                    <ul className="header-nav-list">
-                      <li className="header-nav-item" id="login-nav-item">
-                        <span className="login-container">
-                          <div className="login-link"><span className="login-text">Login</span></div>
-                          <div className="login-border"></div>
-                        </span>
-                      </li>
-                      <li className="header-nav-item">
-                        <span className="hamburg-container">
-                          <img src="/static/dist/images/hamburgMenu.png" alt=""/>
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+
               <div className="featured-content row-fluid">
                 <div className="featured-title-wrapper">
                   <h3 className="featured-title">{currentFeaturedReview.get('title')}</h3>

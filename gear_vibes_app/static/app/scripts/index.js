@@ -34,12 +34,14 @@ var router = require('./router');
 
 var user = new userModel.UserModel();
 
+var currentUser = localStorage.getItem('username');
+
 
 
 Backbone.history.start();
 
 
 ReactDOM.render(
-  React.createElement(Interface, {user: user, router: router}),
+  React.createElement(Interface, {user: user, router: router, currentUser: currentUser}),
   document.getElementById('app')
 );

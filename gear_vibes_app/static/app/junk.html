@@ -2,3 +2,7 @@
   <div className="login-link"><span className="login-text">Login</span></div>
   <div className="login-border"></div>
 </span>
+
+if(this.props.currentUser != null){
+  $('.login-container').addClass('hidden');
+}

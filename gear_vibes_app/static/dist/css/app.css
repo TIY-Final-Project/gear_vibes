@@ -5832,6 +5832,19 @@ button.close {
 img {
   max-width: 100%; }
 
+.header-outer {
+  position: absolute;
+  top: 6vh;
+  width: 100vw;
+  z-index: 10; }
+
+.menu-outer {
+  position: absolute;
+  z-index: 8;
+  width: 100vw;
+  height: 100vh;
+  background-color: #181f2c; }
+
 .header-outer, .header-inner, .logo-container, .header-nav-container, .login-container, .header-nav-list {
   height: 88px; }
 
@@ -5853,10 +5866,12 @@ img {
 .jumbotron a {
   text-decoration: none; }
 
+.hero {
+  margin-top: 10%; }
+
 .logo-container img {
   cursor: pointer;
-  position: relative;
-  z-index: 1; }
+  position: relative; }
 
 .login-container {
   width: 125px; }
@@ -5947,16 +5962,27 @@ section {
   font-size: 50px; }
 
 .latest-item-title {
+  position: relative;
   font-size: 34px;
   padding: 0 50px 0 50px; }
   .latest-item-title a {
+    visibility: hidden;
     text-decoration: none;
     color: #3adaba; }
 
+.latest-stuff-item:hover a {
+  visibility: visible; }
+
+.latest-stuff-item:hover span {
+  visibility: visible; }
+
 .latest-user-detail {
+  position: relative;
   padding-left: 20%;
   color: white;
   font-size: 17px; }
+  .latest-user-detail span {
+    visibility: hidden; }
 
 .latest-name {
   font-weight: bold;
@@ -5980,6 +6006,19 @@ section {
   background-size: 550px;
   height: 33.32vh;
   padding-top: 8%; }
+
+.latest-stuff-item::before {
+  visibility: hidden;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(23, 29, 43, 0.5); }
+
+.latest-stuff-item:hover::before {
+  visibility: visible; }
 
 .shuffle-content-wrapper {
   padding-top: 40%; }
@@ -6010,6 +6049,7 @@ section {
   position: absolute;
   top: 380px;
   right: -263px;
+  float: left;
   width: 391%;
   height: 75px;
   margin-top: 30px;

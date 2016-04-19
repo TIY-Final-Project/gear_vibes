@@ -19,26 +19,12 @@ var LatestModel = Backbone.Model.extend({
 
 var LatestCollection = Backbone.Collection.extend({
   model: LatestModel,
-  url: '/api/reviews/latest/',
-  // queryString: function(elementId){
-  //
-  //
-  //   switch (elementId){
-  //     case 'musicGear':
-  //       return (
-  //         'category=Music%20Gear'
-  //       );
-  //     case 'photography':
-  //       return (
-  //         'category=Photography'
-  //       );
-  //     case 'mobileTech':
-  //       return (
-  //         'category=Mobile%20Tech'
-  //       );
-  //
-  //   }
-  // },
+  url: function(){
+    console.log(this.category);
+    var categoryQS = this.category ? '?category=' + this.category : '';
+
+    return '/api/reviews/latest/' + categoryQS;
+  },
   parse: function(data){
     return data;
   }

@@ -128,8 +128,11 @@ var Interface = React.createClass({
       currentRoute = <DashboardEdit router={this.props.router}/>
     }
 
+
+
     return (
       <div className="row">
+        <Header router={this.props.router} currentUser={this.props.currentUser}/>
         {currentRoute}
       </div>
     )
