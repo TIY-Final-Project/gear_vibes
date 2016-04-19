@@ -1,3 +1,4 @@
+import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import TemplateView
 from django.http import JsonResponse
@@ -30,6 +31,7 @@ class ReviewListCreateAPIView(generics.ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         request.data['author'] = request.user.pk
+        request.data['video_url'] = convert_video_url(request.data['video_url'])
         submitted_tags = [tag.get('name') for tag in request.data.get('tags')]
         tag_ids = []
         for tag in submitted_tags:
@@ -133,3 +135,11 @@ class CategorySearchView(TemplateView):
         context['categories'] = categories
         context['tags_by_category'] = tags_by_category
         return context
+
+
+def convert_video_url(url):
+    if re.search(r'youtube.com', url):
+        qs = re.search(r'v=.+', url)
+        embed_url = 'https://youtube.com/embed/{}'.format(qs.group(0)[2:])
+        return embed_url
+    return None
