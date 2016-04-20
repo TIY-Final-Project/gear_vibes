@@ -1240,6 +1240,16 @@ var ReviewDetail = React.createClass({displayName: "ReviewDetail",
       paddingRight: 0,
     }
 
+    var averageLong = this.state.review.get('rating_average');
+
+    if(!averageLong){
+      return (
+        React.createElement("div", {className: "hidden"})
+      )
+    }
+
+
+
     return (
       React.createElement("div", null, 
         React.createElement(Jumbotron, {className: "detail-jumbotron", style: detailJumbotron}, 
@@ -1298,8 +1308,12 @@ var ReviewDetail = React.createClass({displayName: "ReviewDetail",
               )
             ), 
             React.createElement("div", {className: "rating-table-outer col-md-6"}, 
-              React.createElement("div", {className: "rating-table-wrapper"}, 
-                React.createElement("ul", {className: "rating-list"}, 
+              React.createElement("div", {className: "rating-table-wrapper row-fluid"}, 
+                React.createElement("div", {className: "average-wrapper col-md-5"}, 
+                  React.createElement("h1", {className: "text-center"}, averageLong.toFixed(1)), 
+                  React.createElement("h4", {className: "text-center"}, "Vibes Score")
+                ), 
+                React.createElement("ul", {className: "rating-list col-md-7"}, 
                   React.createElement(RatingTable, {review: this.state.review})
                 )
               )
@@ -1323,15 +1337,28 @@ var RatingTable = React.createClass({displayName: "RatingTable",
       return (React.createElement("div", {className: "hide"}));
     }
 
+    var hello = {
+      borderRadius: 0,
+      boxShadow: 'none'
+    }
+
     var ratingList = ratings.map(function(rating){
       console.log(rating);
       return (
         React.createElement("li", {key: rating.title}, 
-          React.createElement("div", null, React.createElement("span", null, rating.title), React.createElement("span", null, rating.value)), 
-          React.createElement(ProgressBar, {now: rating.value*10})
+          React.createElement("div", {className: "rating-title-container"}, 
+            React.createElement("span", {className: "rating-title"}, 
+              rating.title
+            ), 
+            React.createElement("span", {className: "rating-value"}, 
+              rating.value
+            )
+          ), 
+            React.createElement(ProgressBar, {now: rating.value*10, style: hello})
         )
       );
     });
+
 
     return (
       React.createElement("div", null, 
@@ -1486,7 +1513,6 @@ var LatestModel = Backbone.Model.extend({
 var LatestCollection = Backbone.Collection.extend({
   model: LatestModel,
   url: function(){
-    console.log(this.category);
     var categoryQS = this.category ? '?category=' + this.category : '';
 
     return '/api/reviews/latest/' + categoryQS;

@@ -6190,7 +6190,48 @@ footer {
 blockquote {
   color: #2ddbba;
   font-size: 20px;
-  border: none; }
+  border: none;
+  padding: 10px 60px; }
+
+.rating-table-outer {
+  padding-right: 0; }
+
+.average-wrapper {
+  background-color: #1a1d2c;
+  height: 220px; }
+  .average-wrapper h1 {
+    color: #eb6a6e;
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 100px; }
+  .average-wrapper h4 {
+    color: white;
+    text-transform: uppercase; }
+
+.rating-list {
+  list-style: none;
+  padding: 0; }
+
+.rating-title-container {
+  background-color: #e9e9e9;
+  height: 35px;
+  padding: 0 10px; }
+  .rating-title-container span {
+    line-height: 35px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #afafaf; }
+
+.rating-value {
+  float: right; }
+
+.progress {
+  background-color: #acd2c8;
+  margin: 0; }
+
+.progress-bar {
+  background-color: #57d1b0;
+  border-radius: none; }
 
 .login-form h1 {
   color: green; }

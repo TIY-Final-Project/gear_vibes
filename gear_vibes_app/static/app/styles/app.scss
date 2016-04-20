@@ -547,6 +547,61 @@ blockquote {
   color: rgba(45, 219, 186, 1);
   font-size: 20px;
   border: none;
+  padding: 10px 60px;
+}
+
+.rating-table-outer {
+  padding-right: 0;
+}
+
+.average-wrapper {
+  background-color: rgba(26, 29, 44, 1);
+  height: 220px;
+
+  h1 {
+    color: rgba(235, 106, 110, 1);
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 100px;
+  }
+
+  h4 {
+    color: white;
+    text-transform: uppercase;
+  }
+}
+
+.rating-list {
+  list-style: none;
+  padding: 0;
+}
+
+.rating-title-container {
+  background-color: rgba(233, 233, 233, 1);
+  height: 35px;
+  padding: 0 10px;
+
+  span {
+    line-height: 35px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: rgba(175, 175, 175, 1);
+  }
+}
+
+.rating-value {
+  float: right;
+}
+
+.progress {
+  background-color: rgba(172, 210, 200, 1);
+  margin: 0;
+}
+
+.progress-bar {
+  background-color: rgba(87, 209, 176, 1);
+  border-radius: none;
+
 }
 
 

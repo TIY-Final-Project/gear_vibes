@@ -20,7 +20,6 @@ var LatestModel = Backbone.Model.extend({
 var LatestCollection = Backbone.Collection.extend({
   model: LatestModel,
   url: function(){
-    console.log(this.category);
     var categoryQS = this.category ? '?category=' + this.category : '';
 
     return '/api/reviews/latest/' + categoryQS;
