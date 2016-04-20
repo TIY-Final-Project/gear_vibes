@@ -39,7 +39,7 @@ var ReviewDetail = React.createClass({
       backgroundImage: 'url(' + this.state.review.get('review_images') + ')',
       borderRadius: 0,
       paddingLeft: 0,
-      paddingRight: 0,
+      paddingRight: 0
     }
 
     var averageLong = this.state.review.get('rating_average');

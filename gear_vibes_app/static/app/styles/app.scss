@@ -83,7 +83,6 @@ img {
 .home-jumbotron {
   background: url('../images/jumbo-bg.png');
   background-size: cover;
-  // height: 100vh;
   margin-bottom: 0
 }
 
@@ -188,7 +187,7 @@ img {
 
 .featured-bq {
   line-height: 85px;
-  margin: 0 15% 0 15%;
+  padding-left: 15%;
   position: relative;
   z-index: 1;
   font-family: MonReg;
@@ -216,6 +215,27 @@ img {
 .featured-detail-date {
   position: relative;
   z-index: 1;
+}
+
+.featured-scroll {
+  transform: rotate(90deg);
+  position: relative;
+  top: 300px;
+  left: 120px;
+
+  span {
+    font-size: 16px;
+    color: white;
+  }
+}
+
+.featured-scroll-border {
+  display: inline-block;
+  margin-bottom: 3.2px;
+  margin-left: 15px;
+  width: 130px;
+  border: 1px solid rgba(45, 219, 186, 1);
+
 }
 
 // LATEST REVIEWS
@@ -374,15 +394,21 @@ section {
   height: 75px;
   margin-top: 30px;
   transform: rotate(90deg);
-  padding: 20px 0 0 200px;
+  padding: 0 0 0 200px;
 
   span{
-    font-size: 23px;
+    line-height: 75px;
+    font-size: 18px;
+    font-weight: 300;
   }
 }
 
 .side-cat-border {
-  width: 20%;
+  display: inline-block;
+  margin-bottom: 3.2px;
+  margin-left: 15px;
+  width: 130px;
+  border-top: 1px solid black;
 }
 
 // FOOTER
@@ -604,6 +630,9 @@ blockquote {
 
 }
 
+.form {
+  margin-top: 20vh;
+}
 
 
 // LOGIN FORM
