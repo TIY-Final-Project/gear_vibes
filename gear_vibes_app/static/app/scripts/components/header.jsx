@@ -16,17 +16,18 @@ var Menu = require('./menu.jsx');
 var HeaderComponent = React.createClass({
   getInitialState: function(){
     return {
-      toggleMenu: false,
-      toggleLogin: false
+      toggleMenu: false
     }
+  },
+  handleAccount: function(e){
+    e.preventDefault();
+    Backbone.history.navigate('dashboard', {trigger: true});
+    this.setState({toggleMenu: !this.state.toggleMenu});
   },
   toggleMenu: function(e){
     e.preventDefault();
     this.setState({toggleMenu: !this.state.toggleMenu});
 
-  },
-  toggleLogin: function(){
-    this.setState({toggleMenu: !this.state.toggleMenu});
   },
   render: function(){
     var loginLink = <span className="login-container">
@@ -39,7 +40,9 @@ var HeaderComponent = React.createClass({
         <div className="header-outer">
           <div className="header-inner row-fluid">
             <div className="logo-container col-md-3">
-              <img src="/static/dist/images/white-logo.png" alt=""/>
+              <a href="">
+                <img src="/static/dist/images/white-logo.png" alt=""/>
+              </a>
             </div>
             <div className="header-nav-container col-md-9">
               <ul className="header-nav-list">
@@ -55,7 +58,10 @@ var HeaderComponent = React.createClass({
             </div>
           </div>
         </div>
-        <Menu toggleMenu={this.state.toggleMenu}/>
+        <Menu
+          toggleMenu={this.state.toggleMenu}
+          handleAccount={this.handleAccount}
+        />
       </div>
 
     )

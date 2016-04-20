@@ -46,6 +46,34 @@ img {
   background-color: rgba(24, 31, 44, 1);
 }
 
+.menu-inner {
+  margin-top: 17%;
+}
+
+.menu-nav-list {
+
+}
+
+.menu-nav-item {
+  list-style: none;
+  margin: 0 0 3% 0;
+
+  a {
+    letter-spacing: 5px;
+    font-size: 65px;
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.menu-slogan-wrapper {
+
+  h1 {
+    font-size: 120px;
+    color: rgba(79, 221, 186, 1);
+  }
+}
+
 
 // HOMEPAGE
 %header-height {
@@ -391,8 +419,8 @@ footer {
   height: 70px;
 
   li {
-    float: right;
-    margin-left: 80px;
+    // float: right;
+    // margin-left: 80px;
   }
 }
 
@@ -402,7 +430,7 @@ footer {
   height: 70px;
 
   li {
-    margin-right: 40px;
+    // margin-right: 40px;
   }
 }
 
@@ -411,12 +439,18 @@ footer {
   line-height: 70px;
 
   a {
+    text-align: center;
     font-weight: 500;
     font-size: 18px;
     text-decoration: none;
     color: rgba(58, 218, 186, 1);
   }
 }
+
+
+// REVIEW DETAIL
+
+
 
 
 

@@ -39,7 +39,7 @@ var ReviewDetail = React.createClass({
         <Jumbotron>
           <p>{this.state.review.get('product_name')}</p>
           <h1>{this.state.review.get('title')}</h1>
-          <p>{this.state.review.get('category')}</p>
+          <p>{this.state.review.get('category_long_form')}</p>
         </Jumbotron>
 
         <div className="review-body row-fluid">
@@ -73,13 +73,13 @@ var RatingTable = React.createClass({
   mixins: [Backbone.React.Component.mixin],
   render: function(){
     var ratings = this.props.review.get('rating');
-
     // If no ratings then return an empty div
     if(!ratings){
       return (<div className="hide" />);
     }
 
     var ratingList = ratings.map(function(rating){
+      console.log(rating);
       return (
         <li key={rating.title}>
           {rating.title}

@@ -5845,6 +5845,22 @@ img {
   height: 100vh;
   background-color: #181f2c; }
 
+.menu-inner {
+  margin-top: 17%; }
+
+.menu-nav-item {
+  list-style: none;
+  margin: 0 0 3% 0; }
+  .menu-nav-item a {
+    letter-spacing: 5px;
+    font-size: 65px;
+    text-decoration: none;
+    color: white; }
+
+.menu-slogan-wrapper h1 {
+  font-size: 120px;
+  color: #4fddba; }
+
 .header-outer, .header-inner, .logo-container, .header-nav-container, .login-container, .header-nav-list {
   height: 88px; }
 
@@ -6088,21 +6104,17 @@ footer {
   list-style: none;
   padding: 0;
   height: 70px; }
-  .footer-social-nav li {
-    float: right;
-    margin-left: 80px; }
 
 .footer-cat-nav {
   list-style: none;
   padding: 0;
   height: 70px; }
-  .footer-cat-nav li {
-    margin-right: 40px; }
 
 .footer-nav-item {
   display: inline-block;
   line-height: 70px; }
   .footer-nav-item a {
+    text-align: center;
     font-weight: 500;
     font-size: 18px;
     text-decoration: none;

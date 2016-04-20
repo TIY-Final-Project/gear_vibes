@@ -116,7 +116,7 @@ var ReviewListComponent = React.createClass({
     var reviewListing = reviews.map(function(review){
       return (
         <li className="posts-list-item" key={review.get('id')}>
-          <span className="posts-list-catagory">{review.get('category')}</span>
+          <span className="posts-list-catagory">{review.get('category_long_form')}</span>
           <a href={"#dashboard/review/" + review.get('id') + "/edit"}>Edit</a>
           <div className="post-title-wrapper">
             <h3 className="post-item-title">
@@ -148,6 +148,7 @@ var ContributionComponent = React.createClass({
     }
 
     var contribuitionListing = contributions.map(function(data, index){
+      console.log(data);
       return (
         <li className="contributions-list-item" key={index}>
           <p>{data}</p>

@@ -493,7 +493,7 @@ var ReviewListComponent = React.createClass({displayName: "ReviewListComponent",
     var reviewListing = reviews.map(function(review){
       return (
         React.createElement("li", {className: "posts-list-item", key: review.get('id')}, 
-          React.createElement("span", {className: "posts-list-catagory"}, review.get('category')), 
+          React.createElement("span", {className: "posts-list-catagory"}, review.get('category_long_form')), 
           React.createElement("a", {href: "#dashboard/review/" + review.get('id') + "/edit"}, "Edit"), 
           React.createElement("div", {className: "post-title-wrapper"}, 
             React.createElement("h3", {className: "post-item-title"}, 
@@ -525,6 +525,7 @@ var ContributionComponent = React.createClass({displayName: "ContributionCompone
     }
 
     var contribuitionListing = contributions.map(function(data, index){
+      console.log(data);
       return (
         React.createElement("li", {className: "contributions-list-item", key: index}, 
           React.createElement("p", null, data)
@@ -651,17 +652,18 @@ var Menu = require('./menu.jsx');
 var HeaderComponent = React.createClass({displayName: "HeaderComponent",
   getInitialState: function(){
     return {
-      toggleMenu: false,
-      toggleLogin: false
+      toggleMenu: false
     }
+  },
+  handleAccount: function(e){
+    e.preventDefault();
+    Backbone.history.navigate('dashboard', {trigger: true});
+    this.setState({toggleMenu: !this.state.toggleMenu});
   },
   toggleMenu: function(e){
     e.preventDefault();
     this.setState({toggleMenu: !this.state.toggleMenu});
 
-  },
-  toggleLogin: function(){
-    this.setState({toggleMenu: !this.state.toggleMenu});
   },
   render: function(){
     var loginLink = React.createElement("span", {className: "login-container"}, 
@@ -674,7 +676,9 @@ var HeaderComponent = React.createClass({displayName: "HeaderComponent",
         React.createElement("div", {className: "header-outer"}, 
           React.createElement("div", {className: "header-inner row-fluid"}, 
             React.createElement("div", {className: "logo-container col-md-3"}, 
-              React.createElement("img", {src: "/static/dist/images/white-logo.png", alt: ""})
+              React.createElement("a", {href: ""}, 
+                React.createElement("img", {src: "/static/dist/images/white-logo.png", alt: ""})
+              )
             ), 
             React.createElement("div", {className: "header-nav-container col-md-9"}, 
               React.createElement("ul", {className: "header-nav-list"}, 
@@ -690,7 +694,10 @@ var HeaderComponent = React.createClass({displayName: "HeaderComponent",
             )
           )
         ), 
-        React.createElement(Menu, {toggleMenu: this.state.toggleMenu})
+        React.createElement(Menu, {
+          toggleMenu: this.state.toggleMenu, 
+          handleAccount: this.handleAccount}
+        )
       )
 
     )
@@ -728,19 +735,22 @@ var HomePage = React.createClass({displayName: "HomePage",
     return {
       featured: new collection.FeaturedCollection(),
       latestReviews: new latest.LatestCollection(),
+      category: '',
       background: 0
     }
   },
   componentWillMount: function(){
     var self = this;
     var featured = new collection.FeaturedCollection({id: self.props.router.reviewId});
-    var latestReviews = new latest.LatestCollection({id: self.props.router.reviewId});
+    self.latestReviews = new latest.LatestCollection({id: self.props.router.reviewId});
+
     featured.fetch().then(function(data){
       self.setState({featured: featured});
     });
-  
-    latestReviews.fetch().then(function(data){
-      self.setState({latestReviews: latestReviews});
+
+
+    self.latestReviews.fetch().then(function(data){
+      self.setState({latestReviews: self.latestReviews});
     });
 
     var interval = setInterval(this.changeBackground, 10000);
@@ -753,11 +763,19 @@ var HomePage = React.createClass({displayName: "HomePage",
     }
     this.setState({background: background});
   },
-  latestShuffle: function(){
+  latestShuffle: function(category, e){
+    e.preventDefault();
+    var self = this;
+
+    self.latestReviews.category = category;
+    self.latestReviews.fetch().then(function(data){
+      self.setState({latestReviews: self.latestReviews});
+    });
 
   },
   render: function(){
-    var latestReviews = this.state.latestReviews;
+    console.log('this.state.latestReviews', this.state.latestReviews);
+    var latestReviews = this.state.latestReviews || [];
     var featured = this.state.featured;
     var background = this.state.background;
 
@@ -823,16 +841,34 @@ var HomePage = React.createClass({displayName: "HomePage",
                     React.createElement("h2", null, "Reviews by people", React.createElement("br", null), "just like you.")
                   ), 
                   React.createElement("ul", {className: "shuffle-select"}, 
-                    React.createElement("li", {className: "shuffle-item"}, React.createElement("h2", null, React.createElement("span", null, "Show all"))), 
                     React.createElement("li", {className: "shuffle-item"}, 
                       React.createElement("h2", null, 
-                        React.createElement("span", {onClick: this.latestShuffle, id: "musicGear"}, 
+                        React.createElement("span", {onClick: this.latestShuffle.bind(this, '')}, 
+                          "Show all"
+                        )
+                      )
+                    ), 
+                    React.createElement("li", {className: "shuffle-item"}, 
+                      React.createElement("h2", null, 
+                        React.createElement("span", {onClick: this.latestShuffle.bind(this, 'mus')}, 
                           "Music Gear"
                         )
                       )
                     ), 
-                    React.createElement("li", {className: "shuffle-item"}, React.createElement("h2", null, React.createElement("span", null, "Photography"))), 
-                    React.createElement("li", {className: "shuffle-item"}, React.createElement("h2", null, React.createElement("span", null, "Mobile Tech")))
+                    React.createElement("li", {className: "shuffle-item"}, 
+                      React.createElement("h2", null, 
+                        React.createElement("span", {onClick: this.latestShuffle.bind(this, 'pho')}, 
+                          "Photography"
+                        )
+                      )
+                    ), 
+                    React.createElement("li", {className: "shuffle-item"}, 
+                      React.createElement("h2", null, 
+                        React.createElement("span", {onClick: this.latestShuffle.bind(this, 'mob')}, 
+                          "Mobile Tech"
+                        )
+                      )
+                    )
                   )
                 ), 
                 React.createElement("div", {className: "col-md-3"}, 
@@ -848,20 +884,44 @@ var HomePage = React.createClass({displayName: "HomePage",
         React.createElement("footer", null, 
           React.createElement("div", {className: "footer-bg-img row-fluid"}, 
             React.createElement("div", {className: "col-md-4"}, 
-              React.createElement("ul", {className: "footer-social-nav"}, 
-                React.createElement("li", {className: "footer-instagram footer-nav-item"}, React.createElement("a", {href: "#"}, "Instagram")), 
-                React.createElement("li", {className: "footer-twitter footer-nav-item"}, React.createElement("a", {href: "#"}, "Twitter")), 
-                React.createElement("li", {className: "footer-facebook footer-nav-item"}, React.createElement("a", {href: "#"}, "Facebook"))
+              React.createElement("ul", {className: "footer-social-nav row-fluid"}, 
+                React.createElement("li", {className: "footer-facebook footer-nav-item col-md-4"}, 
+                  React.createElement("a", {href: "#", className: "center-block"}, 
+                    "Facebook"
+                  )
+                ), 
+                React.createElement("li", {className: "footer-twitter footer-nav-item col-md-4"}, 
+                  React.createElement("a", {href: "#", className: "center-block"}, 
+                    "Twitter"
+                  )
+                ), 
+                React.createElement("li", {className: "footer-instagram footer-nav-item col-md-4"}, 
+                  React.createElement("a", {href: "#", className: "center-block"}, 
+                    "Instagram"
+                  )
+                )
               )
             ), 
             React.createElement("div", {className: "col-md-4"}, 
               React.createElement(ButtonInput, {className: "center-block", id: "account-create-btn", onClick: this.props.createAccount, value: "Create Account"})
             ), 
             React.createElement("div", {className: "col-md-4"}, 
-              React.createElement("ul", {className: "footer-cat-nav"}, 
-                React.createElement("li", {className: "cat-mus footer-nav-item"}, React.createElement("a", {href: "#"}, "Music Gear")), 
-                React.createElement("li", {className: "cat-phot footer-nav-item"}, React.createElement("a", {href: "#"}, "Photography")), 
-                React.createElement("li", {className: "cat-mob footer-nav-item"}, React.createElement("a", {href: "#"}, "Mobile Tech"))
+              React.createElement("ul", {className: "footer-cat-nav row-fluid"}, 
+                React.createElement("li", {className: "cat-mus footer-nav-item col-md-4"}, 
+                  React.createElement("a", {href: "#", className: "center-block"}, 
+                    "Music Gear"
+                  )
+                ), 
+                React.createElement("li", {className: "cat-phot footer-nav-item col-md-4"}, 
+                  React.createElement("a", {href: "#", className: "center-block"}, 
+                    "Photography"
+                  )
+                ), 
+                React.createElement("li", {className: "cat-mob footer-nav-item col-md-4"}, 
+                  React.createElement("a", {href: "#", className: "center-block"}, 
+                    "Mobile Tech"
+                  )
+                )
               )
             )
           )
@@ -1056,7 +1116,7 @@ var Interface = React.createClass({displayName: "Interface",
 
     return (
       React.createElement("div", {className: "row"}, 
-        React.createElement(Header, {router: this.props.router, currentUser: this.props.currentUser}), 
+        React.createElement(Header, null), 
         currentRoute
       )
     )
@@ -1085,14 +1145,33 @@ require('backbone-react-component');
 
 
 var MenuComponent = React.createClass({displayName: "MenuComponent",
-
   render: function(){
 
     if(this.props.toggleMenu){
       return (
         React.createElement("div", {className: "menu-outer"}, 
-          React.createElement("div", {className: "menu-inner row-fluid"}
-            
+          React.createElement("div", {className: "menu-inner row-fluid"}, 
+            React.createElement("div", {className: "menu-nav-wrapper col-md-5"}, 
+              React.createElement("ul", {className: "menu-nav-list"}, 
+                React.createElement("li", {className: "menu-nav-item"}, 
+                  React.createElement("a", {href: ""}, "Home")
+                ), 
+                React.createElement("li", {className: "menu-nav-item"}, 
+                  React.createElement("a", {href: "#", onClick: this.props.handleAccount}, "Account")
+                ), 
+                React.createElement("li", {className: "menu-nav-item"}, 
+                  React.createElement("a", {href: "#"}, "Reviews")
+                ), 
+                React.createElement("li", {className: "menu-nav-item"}, 
+                  React.createElement("a", {href: "#"}, "About")
+                )
+              )
+            ), 
+            React.createElement("div", {className: "menu-slogan-wrapper col-md-7"}, 
+              React.createElement("h1", null, "find it."), 
+              React.createElement("h1", null, "love it."), 
+              React.createElement("h1", null, "share it.")
+            )
           )
         )
       )
@@ -1155,7 +1234,7 @@ var ReviewDetail = React.createClass({displayName: "ReviewDetail",
         React.createElement(Jumbotron, null, 
           React.createElement("p", null, this.state.review.get('product_name')), 
           React.createElement("h1", null, this.state.review.get('title')), 
-          React.createElement("p", null, this.state.review.get('category'))
+          React.createElement("p", null, this.state.review.get('category_long_form'))
         ), 
 
         React.createElement("div", {className: "review-body row-fluid"}, 
@@ -1189,13 +1268,13 @@ var RatingTable = React.createClass({displayName: "RatingTable",
   mixins: [Backbone.React.Component.mixin],
   render: function(){
     var ratings = this.props.review.get('rating');
-
     // If no ratings then return an empty div
     if(!ratings){
       return (React.createElement("div", {className: "hide"}));
     }
 
     var ratingList = ratings.map(function(rating){
+      console.log(rating);
       return (
         React.createElement("li", {key: rating.title}, 
           rating.title, 
@@ -1563,7 +1642,7 @@ var Router = Backbone.Router.extend({
   requireLogin: function(){
     var currentUser = localStorage.getItem("username");
     var token = localStorage.getItem('token');
-      if (!currentUser && token) {
+      if (!currentUser && !token) {
         this.navigate('account', {trigger: true});
       }
   },

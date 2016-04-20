@@ -132,7 +132,7 @@ var Interface = React.createClass({
 
     return (
       <div className="row">
-        <Header router={this.props.router} currentUser={this.props.currentUser}/>
+        <Header />
         {currentRoute}
       </div>
     )

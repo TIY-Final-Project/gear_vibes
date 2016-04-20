@@ -23,19 +23,22 @@ var HomePage = React.createClass({
     return {
       featured: new collection.FeaturedCollection(),
       latestReviews: new latest.LatestCollection(),
+      category: '',
       background: 0
     }
   },
   componentWillMount: function(){
     var self = this;
     var featured = new collection.FeaturedCollection({id: self.props.router.reviewId});
-    var latestReviews = new latest.LatestCollection({id: self.props.router.reviewId});
+    self.latestReviews = new latest.LatestCollection({id: self.props.router.reviewId});
+
     featured.fetch().then(function(data){
       self.setState({featured: featured});
     });
-  
-    latestReviews.fetch().then(function(data){
-      self.setState({latestReviews: latestReviews});
+
+
+    self.latestReviews.fetch().then(function(data){
+      self.setState({latestReviews: self.latestReviews});
     });
 
     var interval = setInterval(this.changeBackground, 10000);
@@ -48,11 +51,19 @@ var HomePage = React.createClass({
     }
     this.setState({background: background});
   },
-  latestShuffle: function(){
+  latestShuffle: function(category, e){
+    e.preventDefault();
+    var self = this;
+
+    self.latestReviews.category = category;
+    self.latestReviews.fetch().then(function(data){
+      self.setState({latestReviews: self.latestReviews});
+    });
 
   },
   render: function(){
-    var latestReviews = this.state.latestReviews;
+    console.log('this.state.latestReviews', this.state.latestReviews);
+    var latestReviews = this.state.latestReviews || [];
     var featured = this.state.featured;
     var background = this.state.background;
 
@@ -118,16 +129,34 @@ var HomePage = React.createClass({
                     <h2>Reviews by people<br/>just like you.</h2>
                   </div>
                   <ul className="shuffle-select">
-                    <li className="shuffle-item"><h2><span>Show all</span></h2></li>
                     <li className="shuffle-item">
                       <h2>
-                        <span onClick={this.latestShuffle} id="musicGear">
+                        <span onClick={this.latestShuffle.bind(this, '')}>
+                          Show all
+                        </span>
+                      </h2>
+                    </li>
+                    <li className="shuffle-item">
+                      <h2>
+                        <span onClick={this.latestShuffle.bind(this, 'mus')}>
                           Music Gear
                         </span>
                       </h2>
                     </li>
-                    <li className="shuffle-item"><h2><span>Photography</span></h2></li>
-                    <li className="shuffle-item"><h2><span>Mobile Tech</span></h2></li>
+                    <li className="shuffle-item">
+                      <h2>
+                        <span onClick={this.latestShuffle.bind(this, 'pho')}>
+                          Photography
+                        </span>
+                      </h2>
+                    </li>
+                    <li className="shuffle-item">
+                      <h2>
+                        <span onClick={this.latestShuffle.bind(this, 'mob')}>
+                          Mobile Tech
+                        </span>
+                      </h2>
+                    </li>
                   </ul>
                 </div>
                 <div className="col-md-3">
@@ -143,20 +172,44 @@ var HomePage = React.createClass({
         <footer>
           <div className="footer-bg-img row-fluid">
             <div className="col-md-4">
-              <ul className="footer-social-nav">
-                <li className="footer-instagram footer-nav-item"><a href="#">Instagram</a></li>
-                <li className="footer-twitter footer-nav-item"><a href="#">Twitter</a></li>
-                <li className="footer-facebook footer-nav-item"><a href="#">Facebook</a></li>
+              <ul className="footer-social-nav row-fluid">
+                <li className="footer-facebook footer-nav-item col-md-4">
+                  <a href="#" className="center-block">
+                    Facebook
+                  </a>
+                </li>
+                <li className="footer-twitter footer-nav-item col-md-4">
+                  <a href="#" className="center-block">
+                    Twitter
+                  </a>
+                </li>
+                <li className="footer-instagram footer-nav-item col-md-4">
+                  <a href="#" className="center-block">
+                    Instagram
+                  </a>
+                </li>
               </ul>
             </div>
             <div className="col-md-4">
               <ButtonInput className="center-block" id="account-create-btn" onClick={this.props.createAccount} value="Create Account"/>
             </div>
             <div className="col-md-4">
-              <ul className="footer-cat-nav">
-                <li className="cat-mus footer-nav-item"><a href="#">Music Gear</a></li>
-                <li className="cat-phot footer-nav-item"><a href="#">Photography</a></li>
-                <li className="cat-mob footer-nav-item"><a href="#">Mobile Tech</a></li>
+              <ul className="footer-cat-nav row-fluid">
+                <li className="cat-mus footer-nav-item col-md-4">
+                  <a href="#" className="center-block">
+                    Music Gear
+                  </a>
+                </li>
+                <li className="cat-phot footer-nav-item col-md-4">
+                  <a href="#" className="center-block">
+                    Photography
+                  </a>
+                </li>
+                <li className="cat-mob footer-nav-item col-md-4">
+                  <a href="#" className="center-block">
+                    Mobile Tech
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
