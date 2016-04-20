@@ -25,10 +25,12 @@ class UserProfileTestCase(TestCase):
         user_profile = UserProfile.objects.get()
         data = {
             'title': 'New Product Review',
+            'intro': 'Let me tell you about this product',
             'body': 'This was a great product',
             'author': User.objects.get(),
             'block_quote': 'This is a blockquote',
             'category': 'pho',
+            'video_url': 'www.youtube.com',
             'rating': [
                 {'title': 'quality', 'value': 5.0},
                 {'title': 'takes pics', 'value': 9.5},
@@ -53,6 +55,7 @@ class ReviewTestCase(TestCase):
             author=user,
             block_quote='This is a blockquote',
             category='pho',
+            video_url='www.youtube.com',
             rating=[
                 {'title': 'quality', 'value': 5.0},
                 {'title': 'takes pics', 'value': 9.5},
@@ -124,30 +127,36 @@ class TokenAuthTestCase(APITestCase):
         review1 = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
+                'intro': 'Let me tell you about this product',
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'pho',
+                'video_url': 'www.youtube.com',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
         review2 = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
+                'intro': 'Let me tell you about this product',
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'mus',
+                'video_url': 'www.youtube.com',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
         review3 = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
+                'intro': 'Let me tell you about this product',
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'mob',
+                'video_url': 'www.youtube.com',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
@@ -162,10 +171,12 @@ class TokenAuthTestCase(APITestCase):
         data = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
+                'intro': 'Let me tell you about this product',
                 'body': 'This was an ok product',
                 'author': self.user.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'pho',
+                'video_url': 'www.youtube.com',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test tag'}, {'name': 'another_tag'}]
         }
@@ -180,10 +191,12 @@ class TokenAuthTestCase(APITestCase):
         data = {
                 'product_name': 'iPad 2',
                 'title': 'Test Review',
+                'intro': 'Let me tell you about this product',
                 'body': 'This was an ok product',
                 'author': author.pk,
                 'block_quote': 'My sweet quote',
                 'category': 'pho',
+                'video_url': 'www.youtube.com',
                 'rating': [{'title': 'point1', 'value': 5}, {'title': 'point2', 'value': 5}],
                 'tags': [{'name': 'test'}]
         }
