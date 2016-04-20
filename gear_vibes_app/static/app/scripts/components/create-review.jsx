@@ -23,6 +23,7 @@ var CreateReview = React.createClass({
     return {
       product_name: '',
       title: '',
+      intro: '',
       body: '',
       author: 1,
       block_quote: '',
@@ -45,6 +46,7 @@ var CreateReview = React.createClass({
       self.setState({
         product_name: review.product_name,
         title: review.title,
+        intro: review.intro,
         body: review.body,
         author: review.author,
         block_quote: review.block_quote,
@@ -146,8 +148,9 @@ var CreateReview = React.createClass({
           <Input ref="featuredImage" className="center-block" type="file" help="Upload your Featured Image" />
           <Input type="text" placeholder="Product Name" valueLink={this.linkState('product_name')}/>
           <Input type="text" placeholder="Title" valueLink={this.linkState('title')}/>
-          <Input type="textarea" placeholder="Body" valueLink={this.linkState('body')}/>
+          <Input type="textarea" placeholder="Intro" valueLink={this.linkState('intro')}/>
           <Input type="textarea" placeholder="Block Quote" valueLink={this.linkState('block_quote')}/>
+          <Input type="textarea" placeholder="Body" valueLink={this.linkState('body')}/>
           <Input type="select" defaultValue="Category" placeholder="category" valueLink={this.linkState('category')}>
             <option disabled value="Category">Category</option>
             <option value="mus">Music Gear</option>
