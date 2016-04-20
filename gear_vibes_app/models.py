@@ -38,6 +38,7 @@ class Review(models.Model):
     )
     product_name = models.CharField(max_length=40)
     title = models.CharField(max_length=60)
+    intro = models.TextField()
     body = models.TextField()
     author = models.ForeignKey(User)
     block_quote = models.CharField(max_length=100)
