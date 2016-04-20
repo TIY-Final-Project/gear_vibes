@@ -130,6 +130,7 @@ class CategorySearchView(TemplateView):
 def convert_video_url(url):
     if re.search(r'youtube.com', url):
         qs = re.search(r'v=\w+', url)
-        embed_url = 'https://youtube.com/embed/{}'.format(qs.group(0)[2:])
-        return embed_url
+        if qs:
+            embed_url = 'https://youtube.com/embed/{}'.format(qs.group(0)[2:])
+            return embed_url
     return None
