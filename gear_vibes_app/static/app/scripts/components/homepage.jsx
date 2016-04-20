@@ -62,7 +62,6 @@ var HomePage = React.createClass({
 
   },
   render: function(){
-    console.log('this.state.latestReviews', this.state.latestReviews);
     var latestReviews = this.state.latestReviews || [];
     var featured = this.state.featured;
     var background = this.state.background;

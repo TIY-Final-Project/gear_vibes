@@ -91,6 +91,7 @@ var CreateReview = React.createClass({
       "product_name": this.state.product_name,
       "title": this.state.title,
       "body": this.state.body,
+      "intro": this.state.intro,
       "author": this.state.author,
       "block_quote": this.state.block_quote,
       "video_url": this.state.video_url,
@@ -143,7 +144,7 @@ var CreateReview = React.createClass({
 
 
     return (
-      <div className="col-xs-6 col-xs-offset-3 text-center">
+      <div className="form col-xs-6 col-xs-offset-3 text-center">
         <form onSubmit={this.handleSubmit}>
           <Input ref="featuredImage" className="center-block" type="file" help="Upload your Featured Image" />
           <Input type="text" placeholder="Product Name" valueLink={this.linkState('product_name')}/>

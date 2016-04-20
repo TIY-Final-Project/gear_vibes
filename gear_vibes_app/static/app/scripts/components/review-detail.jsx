@@ -29,42 +29,87 @@ var ReviewDetail = React.createClass({
   componentWillMount: function(){
     var self = this;
     var review = new models.ReviewsModel({id: this.props.router.reviewId});
-    console.log('first review:', review);
     review.fetch().then(function(data){
       self.setState({review: review});
     });
   },
   render: function(){
-    console.log(this.state.review);
+
+    var detailJumbotron = {
+      backgroundImage: 'url(' + this.state.review.get('review_images') + ')',
+      borderRadius: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+    }
+
     return (
       <div>
-        <Jumbotron>
-          <p>{this.state.review.get('product_name')}</p>
-          <h1>{this.state.review.get('title')}</h1>
-          <p>{this.state.review.get('category_long_form')}</p>
+        <Jumbotron className="detail-jumbotron" style={detailJumbotron}>
+          <div className="detail-jumbotron-inner row-fluid">
+            <div className="detail-title col-md-9">
+              <h1>{this.state.review.get('title')}</h1>
+              <p className="detail-author-wrapper">
+                <span className="detail-by">by </span>
+                <span className="detail-author">
+                  {this.state.review.get('author_name')}
+                </span>
+                <span className="detail-date">
+                  {this.state.review.get('created_at')}
+                </span>
+              </p>
+            </div>
+            <div className="detail-scroll-wrapper col-md-3">
+              <div className="detail-scroll">
+                <span className="">Scroll to read</span>
+                <span className="detail-scroll-border"></span>
+              </div>
+            </div>
+          </div>
         </Jumbotron>
-
-        <div className="review-body row-fluid">
-          <div className="review-text-outer col-xs-7">
-            <p className="review-text-content">
-              {this.state.review.get('body')}
-            </p>
+        <section className="detail-body-section container">
+          <div className="detail-body row">
+            <div className="detail-text-outer col-xs-6">
+              <div className="detail-intro-header">
+                <span className="detail-cat">
+                  {this.state.review.get('category_long_form')}
+                </span>
+              </div>
+              <p className="review-text-content">
+                {this.state.review.get('intro')}
+              </p>
+            </div>
+            <div className="review-sidebar col-xs-6">
+              <div className="review-video-wrapper">
+                <iframe className="video embed-responsive-item" src={this.state.review.get('video_url')}></iframe>
+              </div>
+            </div>
           </div>
-          <div className="review-sidebar col-xs-5">
+          <div className="bq-outer row">
             <div className="bq-wrapper">
-              <blockquote>{this.state.review.get('block_quote')}</blockquote>
-            </div>
-            <div className="review-video-wrapper">
-              <iframe className="embed-responsive-item" src={this.state.review.get('video_url')}></iframe>
-            </div>
-            <div className="rating-table-wrapper">
-              <ul className="rating-list">
-                <RatingTable review={this.state.review}/>
-              </ul>
+              <blockquote>
+                <h1>
+                  "{this.state.review.get('block_quote')}"
+                </h1>
+              </blockquote>
             </div>
           </div>
-        </div>
+          <div className="detail-second-wrapper row-fluid">
+            <div className="second-text-outer col-md-6">
+              <p className="second-text-content">
+                {this.state.review.get('body')}
+              </p>
+            </div>
+            <div className="rating-table-outer col-md-6">
+              <div className="rating-table-wrapper">
+                <ul className="rating-list">
+                  <RatingTable review={this.state.review}/>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
+
     )
   }
 });

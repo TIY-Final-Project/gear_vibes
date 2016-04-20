@@ -218,6 +218,7 @@ var CreateReview = React.createClass({displayName: "CreateReview",
       "product_name": this.state.product_name,
       "title": this.state.title,
       "body": this.state.body,
+      "intro": this.state.intro,
       "author": this.state.author,
       "block_quote": this.state.block_quote,
       "video_url": this.state.video_url,
@@ -270,7 +271,7 @@ var CreateReview = React.createClass({displayName: "CreateReview",
 
 
     return (
-      React.createElement("div", {className: "col-xs-6 col-xs-offset-3 text-center"}, 
+      React.createElement("div", {className: "form col-xs-6 col-xs-offset-3 text-center"}, 
         React.createElement("form", {onSubmit: this.handleSubmit}, 
           React.createElement(Input, {ref: "featuredImage", className: "center-block", type: "file", help: "Upload your Featured Image"}), 
           React.createElement(Input, {type: "text", placeholder: "Product Name", valueLink: this.linkState('product_name')}), 
@@ -777,7 +778,6 @@ var HomePage = React.createClass({displayName: "HomePage",
 
   },
   render: function(){
-    console.log('this.state.latestReviews', this.state.latestReviews);
     var latestReviews = this.state.latestReviews || [];
     var featured = this.state.featured;
     var background = this.state.background;
@@ -1227,42 +1227,87 @@ var ReviewDetail = React.createClass({displayName: "ReviewDetail",
   componentWillMount: function(){
     var self = this;
     var review = new models.ReviewsModel({id: this.props.router.reviewId});
-    console.log('first review:', review);
     review.fetch().then(function(data){
       self.setState({review: review});
     });
   },
   render: function(){
-    console.log(this.state.review);
+
+    var detailJumbotron = {
+      backgroundImage: 'url(' + this.state.review.get('review_images') + ')',
+      borderRadius: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+    }
+
     return (
       React.createElement("div", null, 
-        React.createElement(Jumbotron, null, 
-          React.createElement("p", null, this.state.review.get('product_name')), 
-          React.createElement("h1", null, this.state.review.get('title')), 
-          React.createElement("p", null, this.state.review.get('category_long_form'))
+        React.createElement(Jumbotron, {className: "detail-jumbotron", style: detailJumbotron}, 
+          React.createElement("div", {className: "detail-jumbotron-inner row-fluid"}, 
+            React.createElement("div", {className: "detail-title col-md-9"}, 
+              React.createElement("h1", null, this.state.review.get('title')), 
+              React.createElement("p", {className: "detail-author-wrapper"}, 
+                React.createElement("span", {className: "detail-by"}, "by "), 
+                React.createElement("span", {className: "detail-author"}, 
+                  this.state.review.get('author_name')
+                ), 
+                React.createElement("span", {className: "detail-date"}, 
+                  this.state.review.get('created_at')
+                )
+              )
+            ), 
+            React.createElement("div", {className: "detail-scroll-wrapper col-md-3"}, 
+              React.createElement("div", {className: "detail-scroll"}, 
+                React.createElement("span", {className: ""}, "Scroll to read"), 
+                React.createElement("span", {className: "detail-scroll-border"})
+              )
+            )
+          )
         ), 
-
-        React.createElement("div", {className: "review-body row-fluid"}, 
-          React.createElement("div", {className: "review-text-outer col-xs-7"}, 
-            React.createElement("p", {className: "review-text-content"}, 
-              this.state.review.get('body')
+        React.createElement("section", {className: "detail-body-section container"}, 
+          React.createElement("div", {className: "detail-body row"}, 
+            React.createElement("div", {className: "detail-text-outer col-xs-6"}, 
+              React.createElement("div", {className: "detail-intro-header"}, 
+                React.createElement("span", {className: "detail-cat"}, 
+                  this.state.review.get('category_long_form')
+                )
+              ), 
+              React.createElement("p", {className: "review-text-content"}, 
+                this.state.review.get('intro')
+              )
+            ), 
+            React.createElement("div", {className: "review-sidebar col-xs-6"}, 
+              React.createElement("div", {className: "review-video-wrapper"}, 
+                React.createElement("iframe", {className: "video embed-responsive-item", src: this.state.review.get('video_url')})
+              )
             )
           ), 
-          React.createElement("div", {className: "review-sidebar col-xs-5"}, 
+          React.createElement("div", {className: "bq-outer row"}, 
             React.createElement("div", {className: "bq-wrapper"}, 
-              React.createElement("blockquote", null, this.state.review.get('block_quote'))
+              React.createElement("blockquote", null, 
+                React.createElement("h1", null, 
+                  "\"", this.state.review.get('block_quote'), "\""
+                )
+              )
+            )
+          ), 
+          React.createElement("div", {className: "detail-second-wrapper row-fluid"}, 
+            React.createElement("div", {className: "second-text-outer col-md-6"}, 
+              React.createElement("p", {className: "second-text-content"}, 
+                this.state.review.get('body')
+              )
             ), 
-            React.createElement("div", {className: "review-video-wrapper"}, 
-              React.createElement("iframe", {className: "embed-responsive-item", src: this.state.review.get('video_url')})
-            ), 
-            React.createElement("div", {className: "rating-table-wrapper"}, 
-              React.createElement("ul", {className: "rating-list"}, 
-                React.createElement(RatingTable, {review: this.state.review})
+            React.createElement("div", {className: "rating-table-outer col-md-6"}, 
+              React.createElement("div", {className: "rating-table-wrapper"}, 
+                React.createElement("ul", {className: "rating-list"}, 
+                  React.createElement(RatingTable, {review: this.state.review})
+                )
               )
             )
           )
         )
       )
+
     )
   }
 });

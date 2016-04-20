@@ -41,7 +41,7 @@ class Review(models.Model):
     intro = models.TextField()
     body = models.TextField()
     author = models.ForeignKey(User)
-    block_quote = models.CharField(max_length=100)
+    block_quote = models.CharField(max_length=200)
     video_url = models.TextField(blank=True, null=True)
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     rating = JSONField()
