@@ -122,24 +122,14 @@ class CategorySearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        categories = ['mus', 'pho', 'mob']
-        tags = Tag.objects.all()
-        tags_by_category = {}
-        for category in categories:
-            tag_set = []
-            for review in Review.objects.filter(category=category):
-                for tag in tags:
-                    if tag in review.tags.all() and tag not in tag_set:
-                        tag_set.append(tag)
-            tags_by_category[category] = tag_set
-        context['categories'] = categories
-        context['tags_by_category'] = tags_by_category
+        reviews = Review.objects.filter(product_name=self.request.GET.get('product'))
+        context['reviews'] = reviews
         return context
 
 
 def convert_video_url(url):
     if re.search(r'youtube.com', url):
-        qs = re.search(r'v=.+', url)
+        qs = re.search(r'v=\w+', url)
         embed_url = 'https://youtube.com/embed/{}'.format(qs.group(0)[2:])
         return embed_url
     return None

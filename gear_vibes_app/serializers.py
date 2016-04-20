@@ -39,7 +39,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_contributed_to(self, obj):
         reviews = Review.objects.filter(author=obj.user)
-        contributed_to = list({review.category for review in reviews})
+        contributed_to = list({review.category.get_category_display() for review in reviews})
         return contributed_to
 
     def get_username(self, obj):
