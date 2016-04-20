@@ -122,7 +122,11 @@ class CategorySearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        reviews = Review.objects.filter(product_name=self.request.GET.get('product'))
+        if not self.request.GET.get('search'):
+            context['search_message'] = 'What are you looking for?'
+            print(context)
+            return context
+        reviews = Review.objects.filter(body__icontains=self.request.GET.get('search'))
         context['reviews'] = reviews
         return context
 
