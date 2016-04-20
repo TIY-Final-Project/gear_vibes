@@ -3,6 +3,14 @@
   <div className="login-border"></div>
 </span>
 
-if(this.props.currentUser != null){
-  $('.login-container').addClass('hidden');
-}
+
+
+<p>{this.state.review.get('product_name')}</p>
+
+<p>{this.state.review.get('category_long_form')}</p>
+
+
+
+<div className="bq-wrapper">
+  <blockquote>"{this.state.review.get('block_quote')}"</blockquote>
+</div>

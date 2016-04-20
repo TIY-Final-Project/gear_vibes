@@ -448,10 +448,106 @@ footer {
 }
 
 
-// REVIEW DETAIL
+// DETAIL
 
+.detail-jumbotron {
+  background-size: cover;
+  height: 100vh;
 
+}
 
+.detail-jumbotron-inner {
+  margin-top: 59vh;
+
+  h1 {
+    color: rgba(45, 219, 186, 1);
+    padding-left: 11.2vw;
+  }
+}
+
+.detail-author-wrapper {
+  margin-top: 4vh;
+  padding-left: 12vw;
+
+  span {
+    font-weight: 400;
+    color: white;
+  }
+}
+
+.detail-author {
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.detail-date {
+  padding-left: 10px;
+  border-left: 2px solid white;
+}
+
+.detail-scroll-wrapper {
+
+}
+
+.detail-scroll {
+  transform: rotate(90deg);
+  position: relative;
+  bottom: 15px;
+  left: 120px;
+
+  span {
+    font-size: 16px;
+    color: white;
+  }
+}
+
+.detail-scroll-border {
+  display: inline-block;
+  margin-bottom: 3.2px;
+  margin-left: 25px;
+  width: 130px;
+  border: 1px solid rgba(45, 219, 186, 1);
+
+}
+
+// detail body
+
+.detail-intro-header {
+  border-bottom: 8px solid rgba(26, 29, 44, 1);
+}
+
+.detail-cat {
+  background-color: rgba(26, 29, 44, 1);
+  text-align: center;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  width: 200px;
+  color: rgba(45, 219, 186, 1);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+
+.review-video-wrapper {
+  width: 100%;
+}
+
+.video {
+  width: 100%;
+  height: 33.4vh;
+  border: none;
+}
+
+.review-text-content {
+  padding-top: 20px;
+}
+
+blockquote {
+  color: rgba(45, 219, 186, 1);
+  font-size: 20px;
+  border: none;
+}
 
 
 
