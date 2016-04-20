@@ -16,6 +16,7 @@ var DashboardEdit = require('./dashboardEdit.jsx');
 var HomePage = require('./homepage.jsx');
 var CreateReview = require('./create-review.jsx');
 var ReviewDetail = require('./review-detail.jsx');
+var Footer = require('./footer.jsx');
 var Header = require('./header.jsx');
 
 
@@ -105,7 +106,6 @@ var Interface = React.createClass({
     if (routing.current == 'home'){
       currentRoute = <HomePage
                         router={this.props.router}
-                        createAccount={this.createAccount}
                       />
     }else if (routing.current == 'account'){
       currentRoute = <AccountComponent
@@ -134,6 +134,7 @@ var Interface = React.createClass({
       <div className="row">
         <Header />
         {currentRoute}
+        <Footer createAccount={this.createAccount}/>
       </div>
     )
   }

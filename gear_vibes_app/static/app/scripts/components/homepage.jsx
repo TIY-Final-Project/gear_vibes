@@ -75,7 +75,9 @@ var HomePage = React.createClass({
     var jumbotron = {
       backgroundImage: 'url(' + currentFeaturedReview.get("review_images")[0] + ')',
       borderRadius: 0,
-      height: '100vh'
+      height: '100vh',
+      paddingLeft: 0,
+      paddingRight: 0
     }
 
 
@@ -87,22 +89,31 @@ var HomePage = React.createClass({
             <div className="hero">
 
               <div className="featured-content row-fluid">
-                <div className="featured-title-wrapper">
-                  <h3 className="featured-title">{currentFeaturedReview.get('title')}</h3>
+                <div className="col-md-9">
+                  <div className="featured-title-wrapper">
+                    <h3 className="featured-title">{currentFeaturedReview.get('title')}</h3>
+                  </div>
+                  <div className="featured-bq-wrapper row-fluid">
+                    <h1 className="featured-bq">
+                      "{currentFeaturedReview.get('block_quote')}"
+                    </h1>
+                  </div>
+                  <div className="featured-detail-wrapper">
+                    <p>
+                      <span className="featured-detail-pre">Read the
+                        <a className="featured-full-review" href={"#dashboard/reviews/" + currentFeaturedReview.get('id')}> full review
+                        </a> by </span>
+                      <span className="featured-detail-author">{currentFeaturedReview.get('author_name')}
+                      </span>
+                      <span className="featured-detail-date"> {currentFeaturedReview.get('created_at')}</span>
+                    </p>
+                  </div>
                 </div>
-                <div className="featured-bq-wrapper row-fluid">
-                  <h1 className="featured-bq"> {currentFeaturedReview.get('block_quote')}
-                  </h1>
-                </div>
-                <div className="featured-detail-wrapper">
-                  <p>
-                    <span className="featured-detail-pre">Read the
-                      <a className="featured-full-review" href={"#dashboard/reviews/" + currentFeaturedReview.get('id')}> full review
-                      </a> by </span>
-                    <span className="featured-detail-author">{currentFeaturedReview.get('author_name')}
-                    </span>
-                    <span className="featured-detail-date"> {currentFeaturedReview.get('created_at')}</span>
-                  </p>
+                <div className="featured-scroll-wrapper col-md-3">
+                  <div className="featured-scroll">
+                    <span className="">Scroll to discover</span>
+                    <span className="featured-scroll-border"></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -160,7 +171,7 @@ var HomePage = React.createClass({
                 </div>
                 <div className="col-md-3">
                   <div className="catagory-trans-wrapper">
-                    <span>Categories</span>
+                    <span>Categories</span>                    
                     <span className="side-cat-border"></span>
                   </div>
                 </div>
@@ -168,51 +179,7 @@ var HomePage = React.createClass({
             </div>
           </div>
         </section>
-        <footer>
-          <div className="footer-bg-img row-fluid">
-            <div className="col-md-4">
-              <ul className="footer-social-nav row-fluid">
-                <li className="footer-facebook footer-nav-item col-md-4">
-                  <a href="#" className="center-block">
-                    Facebook
-                  </a>
-                </li>
-                <li className="footer-twitter footer-nav-item col-md-4">
-                  <a href="#" className="center-block">
-                    Twitter
-                  </a>
-                </li>
-                <li className="footer-instagram footer-nav-item col-md-4">
-                  <a href="#" className="center-block">
-                    Instagram
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="col-md-4">
-              <ButtonInput className="center-block" id="account-create-btn" onClick={this.props.createAccount} value="Create Account"/>
-            </div>
-            <div className="col-md-4">
-              <ul className="footer-cat-nav row-fluid">
-                <li className="cat-mus footer-nav-item col-md-4">
-                  <a href="#" className="center-block">
-                    Music Gear
-                  </a>
-                </li>
-                <li className="cat-phot footer-nav-item col-md-4">
-                  <a href="#" className="center-block">
-                    Photography
-                  </a>
-                </li>
-                <li className="cat-mob footer-nav-item col-md-4">
-                  <a href="#" className="center-block">
-                    Mobile Tech
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </footer>
+
 
       </div>
     )

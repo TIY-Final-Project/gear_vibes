@@ -83,7 +83,6 @@ img {
 .home-jumbotron {
   background: url('../images/jumbo-bg.png');
   background-size: cover;
-  // height: 100vh;
   margin-bottom: 0
 }
 
@@ -188,7 +187,7 @@ img {
 
 .featured-bq {
   line-height: 85px;
-  margin: 0 15% 0 15%;
+  padding-left: 15%;
   position: relative;
   z-index: 1;
   font-family: MonReg;
@@ -216,6 +215,27 @@ img {
 .featured-detail-date {
   position: relative;
   z-index: 1;
+}
+
+.featured-scroll {
+  transform: rotate(90deg);
+  position: relative;
+  top: 300px;
+  left: 120px;
+
+  span {
+    font-size: 16px;
+    color: white;
+  }
+}
+
+.featured-scroll-border {
+  display: inline-block;
+  margin-bottom: 3.2px;
+  margin-left: 15px;
+  width: 130px;
+  border: 1px solid rgba(45, 219, 186, 1);
+
 }
 
 // LATEST REVIEWS
@@ -370,19 +390,25 @@ section {
   top: 380px;
   right: -263px;
   float: left;
-  width: 391%;
+  width: 66.3vh;
   height: 75px;
   margin-top: 30px;
   transform: rotate(90deg);
-  padding: 20px 0 0 200px;
+  padding: 0 0 0 200px;
 
   span{
-    font-size: 23px;
+    line-height: 75px;
+    font-size: 18px;
+    font-weight: 300;
   }
 }
 
 .side-cat-border {
-  width: 20%;
+  display: inline-block;
+  margin-bottom: 3.2px;
+  margin-left: 15px;
+  width: 130px;
+  border-top: 1px solid black;
 }
 
 // FOOTER
@@ -547,8 +573,66 @@ blockquote {
   color: rgba(45, 219, 186, 1);
   font-size: 20px;
   border: none;
+  padding: 10px 60px;
 }
 
+.rating-table-outer {
+  padding-right: 0;
+}
+
+.average-wrapper {
+  background-color: rgba(26, 29, 44, 1);
+  height: 220px;
+
+  h1 {
+    color: rgba(235, 106, 110, 1);
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 100px;
+  }
+
+  h4 {
+    color: white;
+    text-transform: uppercase;
+  }
+}
+
+.rating-list {
+  list-style: none;
+  padding: 0;
+}
+
+.rating-title-container {
+  background-color: rgba(233, 233, 233, 1);
+  height: 35px;
+  padding: 0 10px;
+
+  span {
+    line-height: 35px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: rgba(175, 175, 175, 1);
+  }
+}
+
+.rating-value {
+  float: right;
+}
+
+.progress {
+  background-color: rgba(172, 210, 200, 1);
+  margin: 0;
+}
+
+.progress-bar {
+  background-color: rgba(87, 209, 176, 1);
+  border-radius: none;
+
+}
+
+.form {
+  margin-top: 20vh;
+}
 
 
 // LOGIN FORM

@@ -39,8 +39,18 @@ var ReviewDetail = React.createClass({
       backgroundImage: 'url(' + this.state.review.get('review_images') + ')',
       borderRadius: 0,
       paddingLeft: 0,
-      paddingRight: 0,
+      paddingRight: 0
     }
+
+    var averageLong = this.state.review.get('rating_average');
+
+    if(!averageLong){
+      return (
+        <div className="hidden"></div>
+      )
+    }
+
+
 
     return (
       <div>
@@ -100,8 +110,12 @@ var ReviewDetail = React.createClass({
               </p>
             </div>
             <div className="rating-table-outer col-md-6">
-              <div className="rating-table-wrapper">
-                <ul className="rating-list">
+              <div className="rating-table-wrapper row-fluid">
+                <div className="average-wrapper col-md-5">
+                  <h1 className="text-center">{averageLong.toFixed(1)}</h1>
+                  <h4 className="text-center">Vibes Score</h4>
+                </div>
+                <ul className="rating-list col-md-7">
                   <RatingTable review={this.state.review}/>
                 </ul>
               </div>
@@ -125,15 +139,28 @@ var RatingTable = React.createClass({
       return (<div className="hide" />);
     }
 
+    var hello = {
+      borderRadius: 0,
+      boxShadow: 'none'
+    }
+
     var ratingList = ratings.map(function(rating){
       console.log(rating);
       return (
         <li key={rating.title}>
-          <div><span>{rating.title}</span><span>{rating.value}</span></div>
-          <ProgressBar now={rating.value*10} />
+          <div className="rating-title-container">
+            <span className="rating-title">
+              {rating.title}
+            </span>
+            <span className="rating-value">
+              {rating.value}
+            </span>
+          </div>
+            <ProgressBar now={rating.value*10} style={hello} />
         </li>
       );
     });
+
 
     return (
       <div>
