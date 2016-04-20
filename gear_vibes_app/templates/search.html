@@ -4,24 +4,28 @@
   <div class="container-fluid">
     Search
 
+    <div class="row">
+      <div class="col-lg-6">
+        <form action='' method='get'>
+          <div class="input-group">
+            <input type="search" name="product" id="product" class="form-control" placeholder="Search for a product!">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Go!</button>
+              </span>
+          </div><!-- /input-group -->
+        </form>
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+
     <br>
 
-    {% for category in categories %}
-    <div>{{ category }}</div>
-    {% endfor %}
-
-    <br>
-
-    {% for category, tags in tags_by_category.items %}
-      <div>
-        {{category}}:
-        {% for tag in tags %}
-          <li>
-            {{tag}}
-          </li>
-          {%endfor%}
-      </div>
-    {% endfor %}
+    <div>
+      {% for review in reviews %}
+        {{ review.product_name }}
+      {% empty %}
+        <div><p>Oops! Looks like there's nothing here!</p></div>
+      {% endfor %}
+    </div>
 
 
   </div>
