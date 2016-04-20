@@ -1,9 +1,33 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block search %}
   <div class="container-fluid">
-    Search
-
+    <div class="header-outer" data-reactid=".0.0.0">
+      <div class="header-inner row-fluid" data-reactid=".0.0.0.0">
+        <div class="logo-container col-md-3" data-reactid=".0.0.0.0.0">
+          <a href="" data-reactid=".0.0.0.0.0.0">
+            <img src="/static/dist/images/white-logo.png" alt="" data-reactid=".0.0.0.0.0.0.0">
+          </a>
+        </div>
+        <div class="header-nav-container col-md-9" data-reactid=".0.0.0.0.1">
+          <ul class="header-nav-list" data-reactid=".0.0.0.0.1.0">
+            <li class="header-nav-item" id="login-nav-item" data-reactid=".0.0.0.0.1.0.0">
+              <span class="login-container" data-reactid=".0.0.0.0.1.0.0.0">
+                <div class="login-link" data-reactid=".0.0.0.0.1.0.0.0.0">
+                  <span class="login-text" data-reactid=".0.0.0.0.1.0.0.0.0.0">Login</span>
+                </div>
+                <div class="login-border" data-reactid=".0.0.0.0.1.0.0.0.1"></div>
+              </span>
+            </li>
+            <li class="header-nav-item" data-reactid=".0.0.0.0.1.0.1">
+              <span class="hamburg-container" data-reactid=".0.0.0.0.1.0.1.0">
+                <img src="/static/dist/images/hamburgMenu.png" alt="" data-reactid=".0.0.0.0.1.0.1.0.0">
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-lg-6">
         <form action='' method='get'>
@@ -23,11 +47,20 @@
       {{ search_message }}
     </div>
     <div>
-      {% for review in reviews %}
-      <div><a href='/#dashboard/reviews/{{ review.pk }}'>{{ review.product_name }}</div>
-      {% empty %}
-        <div><p>Oops! Looks like there's nothing here!</p></div>
-      {% endfor %}
+      {% if not search_message %}
+        {% for review in reviews %}
+        <div>
+          <a href='/#dashboard/reviews/{{ review.pk }}'>
+            {{ review.title }} -<span> {{ review.author.userprofile }}</span>
+          </a>
+        </div>
+        {% empty %}
+          <div>
+            <p>Oops! Looks like there's nothing here!</p>
+            <p>Why not <a href='/#dashboard/reviews/create'>create</a> a review for this item?<p>
+          </div>
+        {% endfor %}
+      {% endif %}
     </div>
 
 

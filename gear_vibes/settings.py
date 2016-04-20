@@ -92,6 +92,8 @@ REST_FRAMEWORK = {
     )
 }
 
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
+
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
 
@@ -114,6 +116,19 @@ WSGI_APPLICATION = 'gear_vibes.wsgi.application'
 #     }
 # }
 
+
+if 'RDS_HOSTNAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -122,8 +137,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -164,6 +177,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = '/#dashboard'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/api/login/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/api/login/'
+SOCIAL_AUTH_LOGIN_URL = '/api/login/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
