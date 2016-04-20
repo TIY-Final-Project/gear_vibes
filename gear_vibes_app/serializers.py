@@ -55,12 +55,22 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
 
+    def update(self, instance, validated_data):
+        from gear_vibes_app import views
+        for key, value in validated_data.items():
+            if key == 'video_url':
+                instance.video_url = views.convert_video_url(value)
+            else:
+                setattr(instance, key, value)
+        instance.save()
+        return instance
+
     def get_rating_average(self, obj):
         if obj.rating:
             rating_values = [float(rating.get('value')) for rating in obj.rating]
             rating_total = sum(rating_values)
             if len(rating_values) > 0:
-                return rating_total/len(rating_values)
+                return round(rating_total/len(rating_values), 1)
         return 0
 
     def get_author_name(self, obj):
