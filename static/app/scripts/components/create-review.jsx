@@ -23,6 +23,7 @@ var CreateReview = React.createClass({
     return {
       product_name: '',
       title: '',
+      intro: '',
       body: '',
       author: 1,
       block_quote: '',
@@ -31,6 +32,34 @@ var CreateReview = React.createClass({
       rating: [],
       tags: []
     }
+  },
+  componentWillMount: function(){
+    var self = this;
+    var getData = new reviews.ReviewsModel({id: self.props.router.reviewId});
+
+    if (!self.props.router.reviewId){
+      return;
+    }
+
+
+    getData.fetch().then(function(review){
+      self.setState({
+        product_name: review.product_name,
+        title: review.title,
+        intro: review.intro,
+        body: review.body,
+        author: review.author,
+        block_quote: review.block_quote,
+        video_url: review.video_url,
+        category: review.category,
+        rating: review.rating,
+        tags: review.tags
+      });
+    });
+
+    console.log(getData);
+
+
   },
   addTag: function(newTag){
     var tag = this.state.tags;
@@ -46,15 +75,23 @@ var CreateReview = React.createClass({
     e.preventDefault();
     console.log(this.state.tags);
     var self = this;
-    var review = new reviews.ReviewsModel();
+
     var galleryImages = new gallery.GalleryModel();
     var reviewTags = new tags.TagsModel();
+    var review;
+
+    if (self.props.router.reviewId){
+      review = new reviews.ReviewsModel({id: self.props.router.reviewId});
+    }else{
+      review = new reviews.ReviewsModel();
+    }
 
 
     review.set({
       "product_name": this.state.product_name,
       "title": this.state.title,
       "body": this.state.body,
+      "intro": this.state.intro,
       "author": this.state.author,
       "block_quote": this.state.block_quote,
       "video_url": this.state.video_url,
@@ -95,30 +132,31 @@ var CreateReview = React.createClass({
     var i = -1;
     var rating = this.state.rating.map(function(rating, index){
       i++;
-      return (<RatingTableFormset ref={"formset"} key={index} addRating={this.addRating} type="render" model={rating} />)
+      return (<RatingTableFormset key={index} addRating={this.addRating} type="render" model={rating} />)
     }.bind(this));
 
 
     var tagList = this.state.tags.map(function(tagList, index){
-      return (<TagsFormset ref={"formset"} key={index} addTag={this.addTag} model={tagList}/>)
+      return (<TagsFormset key={index} addTag={this.addTag} model={tagList}/>)
     }.bind(this));
 
 
 
 
     return (
-      <div className="col-xs-6 col-xs-offset-3 text-center">
+      <div className="form col-xs-6 col-xs-offset-3 text-center">
         <form onSubmit={this.handleSubmit}>
           <Input ref="featuredImage" className="center-block" type="file" help="Upload your Featured Image" />
           <Input type="text" placeholder="Product Name" valueLink={this.linkState('product_name')}/>
           <Input type="text" placeholder="Title" valueLink={this.linkState('title')}/>
-          <Input type="textarea" placeholder="Body" valueLink={this.linkState('body')}/>
+          <Input type="textarea" placeholder="Intro" valueLink={this.linkState('intro')}/>
           <Input type="textarea" placeholder="Block Quote" valueLink={this.linkState('block_quote')}/>
+          <Input type="textarea" placeholder="Body" valueLink={this.linkState('body')}/>
           <Input type="select" defaultValue="Category" placeholder="category" valueLink={this.linkState('category')}>
             <option disabled value="Category">Category</option>
-            <option value="Music Gear">Music Gear</option>
-            <option value="Photography">Photography</option>
-            <option value="Mobile Tech">Mobile Tech</option>
+            <option value="mus">Music Gear</option>
+            <option value="pho">Photography</option>
+            <option value="mob">Mobile Tech</option>
           </Input>
 
             {tagList}
@@ -178,7 +216,7 @@ var RatingTableFormset = React.createClass({
   getInitialState: function(){
     return {
       ratingType: '',
-      ratingValue: '',
+      ratingValue: 5,
       type: this.props.type
     }
   },
@@ -192,19 +230,7 @@ var RatingTableFormset = React.createClass({
       return (
         <div>
           <Input ref={"title"} type="text" valueLink={this.linkState('ratingType')} placeholder="Rating Type"/>
-          <Input ref={"value"} type="select" valueLink={this.linkState('ratingValue')} defaultValue="Value" placeholder="Rating Value">
-            <option disabled value="Value">Value</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </Input>
+          <Input id="slider" type="range" min="0" max="10" step=".1" valueLink={this.linkState('ratingValue')} />
           <ButtonInput onClick={this.handleSubmit} value="Add Rating"/>
         </div>
       )

@@ -7,6 +7,8 @@ var Backbone = require('backbone');
 var Input = require('react-bootstrap/lib/Input');
 var ButtonInput = require('react-bootstrap/lib/ButtonInput');
 var Button = require('react-bootstrap/lib/Button');
+var ProgressBar = require('react-bootstrap/lib/ProgressBar');
+var ResponsiveEmbed = require('react-bootstrap/lib/ResponsiveEmbed');
 var Jumbotron = require('react-bootstrap/lib/Jumbotron');
 var LinkedStateMixin = require('react/lib/LinkedStateMixin');
 require('backbone-react-component');
@@ -19,7 +21,6 @@ var models = require('../models/review-model.js');
 
 
 var ReviewDetail = React.createClass({
-  mixins: [Backbone.React.Component.mixin, LinkedStateMixin],
   getInitialState: function(){
     return {
       review: new models.ReviewsModel()
@@ -28,42 +29,101 @@ var ReviewDetail = React.createClass({
   componentWillMount: function(){
     var self = this;
     var review = new models.ReviewsModel({id: this.props.router.reviewId});
-    console.log('first review:', review);
     review.fetch().then(function(data){
       self.setState({review: review});
     });
   },
   render: function(){
-    console.log(this.state);
+
+    var detailJumbotron = {
+      backgroundImage: 'url(' + this.state.review.get('review_images') + ')',
+      borderRadius: 0,
+      paddingLeft: 0,
+      paddingRight: 0
+    }
+
+    var averageLong = this.state.review.get('rating_average');
+
+    if(!averageLong){
+      return (
+        <div className="hidden"></div>
+      )
+    }
+
+
+
     return (
       <div>
-        <Jumbotron>
-          <p>{this.state.review.get('product_name')}</p>
-          <h1>{this.state.review.get('title')}</h1>
-          <p>{this.state.review.get('category')}</p>
+        <Jumbotron className="detail-jumbotron" style={detailJumbotron}>
+          <div className="detail-jumbotron-inner row-fluid">
+            <div className="detail-title col-md-9">
+              <h1>{this.state.review.get('title')}</h1>
+              <p className="detail-author-wrapper">
+                <span className="detail-by">by </span>
+                <span className="detail-author">
+                  {this.state.review.get('author_name')}
+                </span>
+                <span className="detail-date">
+                  {this.state.review.get('created_at')}
+                </span>
+              </p>
+            </div>
+            <div className="detail-scroll-wrapper col-md-3">
+              <div className="detail-scroll">
+                <span className="">Scroll to read</span>
+                <span className="detail-scroll-border"></span>
+              </div>
+            </div>
+          </div>
         </Jumbotron>
-
-        <div className="review-body row-fluid">
-          <div className="review-text-outer col-xs-7">
-            <p className="review-text-content">
-              {this.state.review.get('body')}
-            </p>
+        <section className="detail-body-section container">
+          <div className="detail-body row">
+            <div className="detail-text-outer col-xs-6">
+              <div className="detail-intro-header">
+                <span className="detail-cat">
+                  {this.state.review.get('category_long_form')}
+                </span>
+              </div>
+              <p className="review-text-content">
+                {this.state.review.get('intro')}
+              </p>
+            </div>
+            <div className="review-sidebar col-xs-6">
+              <div className="review-video-wrapper">
+                <iframe className="video embed-responsive-item" src={this.state.review.get('video_url')}></iframe>
+              </div>
+            </div>
           </div>
-          <div className="review-sidebar col-xs-5">
+          <div className="bq-outer row">
             <div className="bq-wrapper">
-              <blockquote>{this.state.review.get('block_quote')}</blockquote>
-            </div>
-            <div className="review-video-wrapper">
-              <img src="https://unsplash.it/435/300/?random"/>
-            </div>
-            <div className="rating-table-wrapper">
-              <ul className="rating-list">
-                <RatingTable review={this.state.review}/>
-              </ul>
+              <blockquote>
+                <h1>
+                  "{this.state.review.get('block_quote')}"
+                </h1>
+              </blockquote>
             </div>
           </div>
-        </div>
+          <div className="detail-second-wrapper row-fluid">
+            <div className="second-text-outer col-md-6">
+              <p className="second-text-content">
+                {this.state.review.get('body')}
+              </p>
+            </div>
+            <div className="rating-table-outer col-md-6">
+              <div className="rating-table-wrapper row-fluid">
+                <div className="average-wrapper col-md-5">
+                  <h1 className="text-center">{averageLong.toFixed(1)}</h1>
+                  <h4 className="text-center">Vibes Score</h4>
+                </div>
+                <ul className="rating-list col-md-7">
+                  <RatingTable review={this.state.review}/>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
+
     )
   }
 });
@@ -73,9 +133,38 @@ var ReviewDetail = React.createClass({
 var RatingTable = React.createClass({
   mixins: [Backbone.React.Component.mixin],
   render: function(){
+    var ratings = this.props.review.get('rating');
+    // If no ratings then return an empty div
+    if(!ratings){
+      return (<div className="hide" />);
+    }
+
+    var hello = {
+      borderRadius: 0,
+      boxShadow: 'none'
+    }
+
+    var ratingList = ratings.map(function(rating){
+      console.log(rating);
+      return (
+        <li key={rating.title}>
+          <div className="rating-title-container">
+            <span className="rating-title">
+              {rating.title}
+            </span>
+            <span className="rating-value">
+              {rating.value}
+            </span>
+          </div>
+            <ProgressBar now={rating.value*10} style={hello} />
+        </li>
+      );
+    });
+
+
     return (
       <div>
-
+        {ratingList}
       </div>
     )
   }

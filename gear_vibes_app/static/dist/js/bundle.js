@@ -436,10 +436,10 @@ var Dashboard = React.createClass({displayName: "Dashboard",
 
         React.createElement("div", {className: "profile-header row-fluid"}, 
 
-          React.createElement("div", {className: "avatar-wrapper col-xs-3 col-lg-3"}, 
+          React.createElement("div", {className: "avatar-wrapper col-md-5 col-lg-5"}, 
             React.createElement(Image, {id: "avatar", src: profile.get('profile_photo'), responsive: true})
           ), 
-          React.createElement("div", {className: "header-content col-xs-9 col-lg-9"}, 
+          React.createElement("div", {className: "header-content col-md-7 col-lg-7"}, 
             React.createElement("p", null, profile.get('username')), 
             React.createElement("h1", null, profile.get('first_name'), " ", profile.get('last_name')), 
             React.createElement("p", null, "Vibing since ", profile.get('joined'))
@@ -602,7 +602,7 @@ var DashboardEdit = React.createClass({displayName: "DashboardEdit",
       type: 'PUT',
       success: function(data){
         console.log(data);
-
+        Backbone.history.navigate('dashboard', {trigger: true});
       },
       error: function(data){
         alert('no upload');
@@ -1113,18 +1113,15 @@ var Interface = React.createClass({displayName: "Interface",
   },
   signUp: function(e){
     e.preventDefault();
-    var user = this.props.user;
+    var self = this;
+    var user = self.props.user;
     var email = $('#signup-email').val();
     var username = $('#signup-username').val();
     var password = $('#signup-password').val();
     user.set("email", email);
     user.set("username", username);
     user.set("password", password);
-    user.save().then(function(data){
-      if (data.success){
-        user.set(data.user);
-      };
-    });
+    user.save();
     console.log(user);
   },
   render: function(){

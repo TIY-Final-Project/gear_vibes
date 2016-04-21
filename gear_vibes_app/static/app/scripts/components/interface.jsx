@@ -86,18 +86,15 @@ var Interface = React.createClass({
   },
   signUp: function(e){
     e.preventDefault();
-    var user = this.props.user;
+    var self = this;
+    var user = self.props.user;
     var email = $('#signup-email').val();
     var username = $('#signup-username').val();
     var password = $('#signup-password').val();
     user.set("email", email);
     user.set("username", username);
     user.set("password", password);
-    user.save().then(function(data){
-      if (data.success){
-        user.set(data.user);
-      };
-    });
+    user.save();
     console.log(user);
   },
   render: function(){

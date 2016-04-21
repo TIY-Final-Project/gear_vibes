@@ -14,12 +14,15 @@ var Router = Backbone.Router.extend({
     '': 'home',
     'account': 'account',
     'dashboard': 'dashboard',
-    'dashboard/reviews/create': 'createreview',
+    'dashboard/edit': 'dashboardEdit',
+    'dashboard/reviews/create': 'createReview',
+    'dashboard/review/:id/edit': 'createReview',
     'dashboard/reviews/:id': 'reviewDetail'
   },
   requireLogin: function(){
     var currentUser = localStorage.getItem("username");
-      if (!currentUser) {
+    var token = localStorage.getItem('token');
+      if (!currentUser && !token) {
         this.navigate('account', {trigger: true});
       }
   },
@@ -29,7 +32,8 @@ var Router = Backbone.Router.extend({
   account: function(){
     this.current = 'account';
     var currentUser = localStorage.getItem("username");
-      if (currentUser) {
+    var token = localStorage.getItem('token');
+      if (currentUser && token) {
         this.navigate('dashboard', {trigger: true});
       }
   },
@@ -37,8 +41,14 @@ var Router = Backbone.Router.extend({
     this.current = 'dashboard';
     this.requireLogin();
   },
-  createreview: function(){
-    this.current = 'createreview';
+  dashboardEdit: function(){
+    this.current = 'dashboardEdit';
+    this.requireLogin();
+
+  },
+  createReview: function(id){
+    this.current = 'createReview';
+    this.reviewId = id;
     this.requireLogin();
   },
   reviewDetail: function(id){

@@ -55,10 +55,10 @@ var Dashboard = React.createClass({
 
         <div className="profile-header row-fluid">
 
-          <div className="avatar-wrapper col-xs-3 col-lg-3">
+          <div className="avatar-wrapper col-md-5 col-lg-5">
             <Image id="avatar" src={profile.get('profile_photo')} responsive />
           </div>
-          <div className="header-content col-xs-9 col-lg-9">
+          <div className="header-content col-md-7 col-lg-7">
             <p>{profile.get('username')}</p>
             <h1>{profile.get('first_name')} {profile.get('last_name')}</h1>
             <p>Vibing since {profile.get('joined')}</p>

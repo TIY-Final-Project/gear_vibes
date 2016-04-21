@@ -3,7 +3,7 @@
 
 // extends
 %dash-header-height {
-  height: 270px;
+  height: 80vh;
 }
 
 %content-height {
@@ -15,6 +15,19 @@
 
 .profile-header {
   @extend %dash-header-height;
+  background-color: rgba(23, 31, 44, 1);
+}
+
+.profile-header::before {
+  content: "";
+  position: absolute;
+  width: 41%;
+  height: 80vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 218, 186, 0.87);
 }
 
 .header-content {
@@ -22,7 +35,8 @@
 }
 
 #avatar {
-  max-height: 270px;
+  margin-top: 20vh;
+  max-height: 542.9px;
 }
 
 
