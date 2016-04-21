@@ -117,7 +117,7 @@ WSGI_APPLICATION = 'gear_vibes.wsgi.application'
 # }
 
 
-if 'RDS_HOSTNAME' in os.environ:
+if 'RDS_HOSTNAME' in os.environ.keys():
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -125,7 +125,6 @@ if 'RDS_HOSTNAME' in os.environ:
             'USER': os.environ['RDS_USERNAME'],
             'PASSWORD': os.environ['RDS_PASSWORD'],
             'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
         }
     }
 else:
@@ -180,7 +179,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 LOGIN_REDIRECT_URL = '/#dashboard'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/api/login/'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/api/login/'
-SOCIAL_AUTH_LOGIN_URL = '/api/login/'
+SOCIAL_AUTH_LOGIN_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
