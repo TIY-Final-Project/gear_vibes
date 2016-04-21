@@ -184,18 +184,3 @@ SOCIAL_AUTH_LOGIN_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-AWS_STORAGE_BUCKET_NAME = 'gear-vibes'
-AWS_ACCESS_KEY_ID = 'AKIAJX4FVGF2AUKVKTEQ'
-AWS_SECRET_ACCESS_KEY = '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'
-
-# Tell django-storages that when coming up with the URL for an item in S3 storage, keep
-# it simple - just use this domain plus the path. (If this isn't set, things get complicated).
-# This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
-# We also use it in the next setting.
-
-AWS_QUERYSTRING_AUTH = False
-
-# Static Files Config
-STATICFILES_LOCATION = 'static'
-MEDIAFILES_LOCATION = 'media'

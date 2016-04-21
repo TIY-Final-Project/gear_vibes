@@ -426,7 +426,9 @@ var Dashboard = React.createClass({displayName: "Dashboard",
       return (React.createElement("div", {className: "hide"}));
     }
 
-
+    var dashButton = {
+      borderRadius: 'none'
+    }
 
 
 
@@ -440,49 +442,57 @@ var Dashboard = React.createClass({displayName: "Dashboard",
             React.createElement(Image, {id: "avatar", src: profile.get('profile_photo'), responsive: true})
           ), 
           React.createElement("div", {className: "header-content col-md-7 col-lg-7"}, 
-            React.createElement("p", null, profile.get('username')), 
+            React.createElement("p", {className: "dash-username"}, profile.get('username')), 
             React.createElement("h1", null, profile.get('first_name'), " ", profile.get('last_name')), 
-            React.createElement("p", null, "Vibing since ", profile.get('joined'))
+            React.createElement("p", {className: "vibing-date"}, "Vibing since ", profile.get('joined'))
           )
         ), 
 
           React.createElement("div", {className: "dash-content row-fluid"}, 
-            React.createElement("div", {className: "dash-sidebar-wrapper col-xs-3 col-lg-3"}, 
+            React.createElement("div", {className: "dash-sidebar-wrapper col-xs-2 col-lg-2"}, 
               React.createElement("div", {className: "total-posts"}, 
                 React.createElement("h3", null, profile.get('total_posts')), 
                 React.createElement("p", null, "posts")
               ), 
               React.createElement("div", {className: "bio"}, 
-                React.createElement("h3", null, "About ", React.createElement("span", null, profile.get('first_name'))), 
+                React.createElement("h3", {className: "bio-about"}, "About ", React.createElement("span", {className: "bio-name"}, profile.get('first_name'))), 
                 React.createElement("p", null, 
                   profile.get('bio')
                 )
               ), 
               React.createElement("div", {className: "profile-catagories"}, 
-                React.createElement("h3", null, "Contributed to"), 
+                React.createElement("h3", null, 
+                  React.createElement("span", {className: "contributed"}, "Contributed"), 
+                  React.createElement("span", {className: "contributed-to"}, " to")
+                ), 
                 React.createElement("ul", {className: "contributions-list"}, 
                   React.createElement(ContributionComponent, {profile: profile})
                 )
               )
             ), 
-            React.createElement("div", {className: "posts-content col-xs-9 col-lg-9"}, 
-              React.createElement("h1", null, "Reviews"), 
+            React.createElement("div", {className: "posts-content col-xs-6 col-lg-6"}, 
+              React.createElement("h1", {className: "dash-reviews"}, "Reviews:"), 
               React.createElement("ul", {className: "posts-list"}, 
                 React.createElement(ReviewListComponent, {reviews: reviews})
+              )
+            ), 
+            React.createElement("div", {className: "col-md-4"}, 
+              React.createElement("div", {className: "dash-button-wrapper"}, 
+                React.createElement("div", {className: "create-wrapper"}, 
+                  React.createElement(ButtonInput, {className: "center-block", id: "dash-button", onClick: this.props.createReview, value: "Create Review", style: dashButton})
+                ), 
+                React.createElement("div", {className: "logout-wrapper"}, 
+                  React.createElement(ButtonInput, {className: "center-block", id: "dash-button", onClick: this.props.logout, value: "Logout", style: dashButton})
+                ), 
+                React.createElement("div", {className: "edit-wrapper"}, 
+                  React.createElement(ButtonInput, {className: "center-block", id: "dash-button", onClick: this.props.editDash, value: "Account Edit", style: dashButton})
+                )
               )
             )
           ), 
 
-          React.createElement("div", {className: "row-fluid"}, 
-            React.createElement("div", {className: "create-wrapper col-xs-4"}, 
-              React.createElement(ButtonInput, {onClick: this.props.createReview, value: "Create Review"})
-            ), 
-            React.createElement("div", {className: "logout-wrapper col-xs-4"}, 
-              React.createElement(ButtonInput, {onClick: this.props.logout, value: "Logout"})
-            ), 
-            React.createElement("div", {className: "edit-wrapper col-xs-4"}, 
-              React.createElement(ButtonInput, {onClick: this.props.editDash, value: "Edit"})
-            )
+          React.createElement("div", {className: "row-fluid"}
+
           )
       )
     )
@@ -498,7 +508,7 @@ var ReviewListComponent = React.createClass({displayName: "ReviewListComponent",
       return (
         React.createElement("li", {className: "posts-list-item", key: review.get('id')}, 
           React.createElement("span", {className: "posts-list-catagory"}, review.get('category_long_form')), 
-          React.createElement("a", {href: "#dashboard/review/" + review.get('id') + "/edit"}, "Edit"), 
+          React.createElement("a", {className: "edit-link", href: "#dashboard/review/" + review.get('id') + "/edit"}, "Edit"), 
           React.createElement("div", {className: "post-title-wrapper"}, 
             React.createElement("h3", {className: "post-item-title"}, 
               React.createElement("a", {href: "#dashboard/reviews/" + review.get('id')}, review.get('title'))
@@ -659,17 +669,17 @@ var FooterComponent = React.createClass({displayName: "FooterComponent",
           React.createElement("div", {className: "col-md-4"}, 
             React.createElement("ul", {className: "footer-social-nav row-fluid"}, 
               React.createElement("li", {className: "footer-facebook footer-nav-item col-md-4"}, 
-                React.createElement("a", {href: "#", className: "center-block"}, 
+                React.createElement("a", {href: "https://www.facebook.com/Brandon.Emerson77", className: "center-block"}, 
                   "Facebook"
                 )
               ), 
               React.createElement("li", {className: "footer-twitter footer-nav-item col-md-4"}, 
-                React.createElement("a", {href: "#", className: "center-block"}, 
+                React.createElement("a", {href: "https://twitter.com/?lang=en", className: "center-block"}, 
                   "Twitter"
                 )
               ), 
               React.createElement("li", {className: "footer-instagram footer-nav-item col-md-4"}, 
-                React.createElement("a", {href: "#", className: "center-block"}, 
+                React.createElement("a", {href: "https://www.instagram.com/izzbrancuh/", className: "center-block"}, 
                   "Instagram"
                 )
               )
@@ -1201,7 +1211,7 @@ var MenuComponent = React.createClass({displayName: "MenuComponent",
                   React.createElement("a", {href: "#", onClick: this.props.handleAccount}, "Account")
                 ), 
                 React.createElement("li", {className: "menu-nav-item"}, 
-                  React.createElement("a", {href: "search/"}, "Reviews")
+                  React.createElement("a", {href: "search/"}, "Search")
                 ), 
                 React.createElement("li", {className: "menu-nav-item"}, 
                   React.createElement("a", {href: "#"}, "About")
@@ -1451,6 +1461,11 @@ var user = new userModel.UserModel();
 
 var currentUser = localStorage.getItem('username');
 
+$('.django-hamburg-img').click(function(){
+  $('.django-menu-outer').toggle(0.1, function(){
+    $('.django-menu-outer').removeClass('hidden');
+  });
+});
 
 
 Backbone.history.start();
