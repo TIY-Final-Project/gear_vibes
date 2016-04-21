@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from gear_vibes.custom_storages import MediaStorage
 
 
 class UserProfile(models.Model):
@@ -11,7 +12,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=40, blank=True, null=True)
     bio = models.TextField(blank=True)
-    profile_photo = models.ImageField(blank=True, null=True, upload_to='profile_images')
+    profile_photo = models.ImageField(blank=True, null=True, upload_to='profile_images', storage=MediaStorage())
     joined = models.DateTimeField(auto_now_add=True)
     facebook_link = models.CharField(max_length=50, null=True, blank=True)
     twitter_link = models.CharField(max_length=50, null=True, blank=True)
@@ -57,7 +58,7 @@ class Review(models.Model):
 
 class GalleryImage(models.Model):
     review = models.ForeignKey(Review)
-    image = models.ImageField(blank=True, null=True, upload_to='review_images')
+    image = models.ImageField(blank=True, null=True, upload_to='review_images', storage=MediaStorage())
     caption = models.CharField(max_length=30, blank=True, null=True)
     featured = models.BooleanField(default=False)
 
