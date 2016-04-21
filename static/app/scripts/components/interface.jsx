@@ -12,28 +12,19 @@ require('backbone-react-component');
 // components
 var AccountComponent = require('./account.jsx');
 var Dashboard = require('./dashboard.jsx');
+var DashboardEdit = require('./dashboardEdit.jsx');
 var HomePage = require('./homepage.jsx');
 var CreateReview = require('./create-review.jsx');
 var ReviewDetail = require('./review-detail.jsx');
+var Footer = require('./footer.jsx');
+var Header = require('./header.jsx');
+
 
 // models
 var models = require('../models/user-model.js');
 
 
-// CSRFtoken
-var csrftoken = $("input[name='csrfmiddlewaretoken']").val();
 
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
 
 
 
@@ -54,6 +45,10 @@ var Interface = React.createClass({
   componentWillUnmount: function(){
     this.state.router.off('route', this.callback);
   },
+  editDash: function(e){
+    e.preventDefault();
+    Backbone.history.navigate('dashboard/edit', {trigger: true});
+  },
   createReview: function(e){
     e.preventDefault();
     Backbone.history.navigate('dashboard/reviews/create', {trigger: true});
@@ -65,6 +60,7 @@ var Interface = React.createClass({
   logout:function(e){
     e.preventDefault();
     localStorage.removeItem("username");
+    localStorage.removeItem('token');
     Backbone.history.navigate('', {trigger: true});
   },
   login: function(e){
@@ -79,8 +75,8 @@ var Interface = React.createClass({
       if (data.token){
         user.set("token", data.token);
         user.auth();
-        localStorage.setItem("username", username)
-
+        localStorage.setItem("username", username);
+        localStorage.setItem("token", data.token);
         Backbone.history.navigate('dashboard', {trigger: true});
       }else{
         console.log('failed');
@@ -90,18 +86,15 @@ var Interface = React.createClass({
   },
   signUp: function(e){
     e.preventDefault();
-    var user = this.props.user;
+    var self = this;
+    var user = self.props.user;
     var email = $('#signup-email').val();
     var username = $('#signup-username').val();
     var password = $('#signup-password').val();
     user.set("email", email);
     user.set("username", username);
     user.set("password", password);
-    user.save().then(function(data){
-      if (data.success){
-        user.set(data.user);
-      };
-    });
+    user.save();
     console.log(user);
   },
   render: function(){
@@ -110,25 +103,35 @@ var Interface = React.createClass({
     if (routing.current == 'home'){
       currentRoute = <HomePage
                         router={this.props.router}
-                        createAccount={this.createAccount}
                       />
-    } else if (routing.current == 'account'){
+    }else if (routing.current == 'account'){
       currentRoute = <AccountComponent
                         login={this.login}
                         signUp={this.signUp}
                         router={this.props.router}
                       />
-    } else if (routing.current == 'dashboard'){
-      currentRoute = <Dashboard createReview={this.createReview} logout={this.logout}/>
-    } else if (routing.current == 'createreview'){
+    }else if (routing.current == 'dashboard'){
+      currentRoute = <Dashboard
+                        createReview={this.createReview}
+                        editDash={this.editDash}
+                        logout={this.logout}
+                        user={this.props.user}
+                      />
+    }else if (routing.current == 'createReview'){
       currentRoute = <CreateReview router={this.props.router}/>
     }else if (routing.current == 'reviewDetail'){
       currentRoute = <ReviewDetail router={this.props.router}/>
+    }else if (routing.current == 'dashboardEdit'){
+      currentRoute = <DashboardEdit router={this.props.router}/>
     }
+
+
 
     return (
       <div className="row">
+        <Header />
         {currentRoute}
+        <Footer createAccount={this.createAccount}/>
       </div>
     )
   }

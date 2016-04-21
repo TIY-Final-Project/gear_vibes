@@ -48,7 +48,7 @@ var DashboardEdit = React.createClass({
       type: 'PUT',
       success: function(data){
         console.log(data);
-
+        Backbone.history.navigate('dashboard', {trigger: true});
       },
       error: function(data){
         alert('no upload');
