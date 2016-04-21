@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block search %}
-  <div class="container-fluid">
+  <div class="container-fluid search">
     <div class="header-outer" data-reactid=".0.0.0">
       <div class="header-inner row-fluid" data-reactid=".0.0.0.0">
         <div class="logo-container col-md-3" data-reactid=".0.0.0.0.0">
-          <a href="" data-reactid=".0.0.0.0.0.0">
+          <a href="/" data-reactid=".0.0.0.0.0.0">
             <img src="/static/dist/images/white-logo.png" alt="" data-reactid=".0.0.0.0.0.0.0">
           </a>
         </div>
@@ -28,6 +28,16 @@
         </div>
       </div>
     </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <div class="row">
       <div class="col-lg-6">
         <form action='' method='get'>
@@ -41,13 +51,10 @@
       </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
 
-    <br>
-
     <div>
-      {{ search_message }}
-    </div>
-    <div>
-      {% if not search_message %}
+      {% if search_message %}
+        {{ search_message }}
+      {% else %}
         {% for review in reviews %}
         <div>
           <a href='/#dashboard/reviews/{{ review.pk }}'>
