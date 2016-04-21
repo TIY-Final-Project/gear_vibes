@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gear_vibes.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gear_vibes.prod_settings")
 
 application = get_wsgi_application()
