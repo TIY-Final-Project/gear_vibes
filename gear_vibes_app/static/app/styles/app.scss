@@ -66,6 +66,13 @@ img {
   }
 }
 
+.menu-nav-item:hover {
+  a {
+    color: rgba(55, 66, 95, 1);
+    text-decoration: line-through;
+  }
+}
+
 .menu-slogan-wrapper {
 
   h1 {
@@ -384,6 +391,12 @@ section {
   }
 }
 
+.shuffle-item:hover {
+  h2{
+    text-decoration: line-through;
+  }
+}
+
 .catagory-trans-wrapper {
   background-color: rgba(58, 218, 186, 1);
   position: absolute;
@@ -439,25 +452,20 @@ footer {
   height: 70px;
 }
 
+#account-create-btn:hover {
+  background: rgba(255, 119, 115, 1);
+}
+
 .footer-social-nav {
   list-style: none;
   padding: 0;
   height: 70px;
-
-  li {
-    // float: right;
-    // margin-left: 80px;
-  }
 }
 
 .footer-cat-nav {
   list-style: none;
   padding: 0;
   height: 70px;
-
-  li {
-    // margin-right: 40px;
-  }
 }
 
 .footer-nav-item {

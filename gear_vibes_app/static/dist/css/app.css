@@ -1,12 +1,27 @@
 @charset "UTF-8";
 .profile-header, .header-content {
-  height: 270px; }
+  height: 80vh; }
 
 .dash-content, .dash-sidebar-wrapper {
   height: 500px; }
 
+.profile-header {
+  background-color: #171f2c; }
+
+.profile-header::before {
+  content: "";
+  position: absolute;
+  width: 41%;
+  height: 80vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 218, 186, 0.87); }
+
 #avatar {
-  max-height: 270px; }
+  margin-top: 20vh;
+  max-height: 542.9px; }
 
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
@@ -5857,6 +5872,10 @@ img {
     text-decoration: none;
     color: white; }
 
+.menu-nav-item:hover a {
+  color: #37425f;
+  text-decoration: line-through; }
+
 .menu-slogan-wrapper h1 {
   font-size: 120px;
   color: #4fddba; }
@@ -6076,6 +6095,9 @@ section {
     color: #181d2b;
     cursor: pointer; }
 
+.shuffle-item:hover h2 {
+  text-decoration: line-through; }
+
 .catagory-trans-wrapper {
   background-color: #3adaba;
   position: absolute;
@@ -6097,7 +6119,7 @@ section {
   margin-bottom: 3.2px;
   margin-left: 15px;
   width: 130px;
-  border-top: 0.5px solid black; }
+  border-top: 1px solid black; }
 
 footer {
   height: 410px;
@@ -6121,6 +6143,9 @@ footer {
   border-radius: 0;
   width: 250px;
   height: 70px; }
+
+#account-create-btn:hover {
+  background: #ff7773; }
 
 .footer-social-nav {
   list-style: none;
