@@ -1,76 +1,105 @@
 {% extends 'base.html' %}
 
 {% block search %}
-  <div class="container-fluid search">
-    <div class="header-outer" data-reactid=".0.0.0">
-      <div class="header-inner row-fluid" data-reactid=".0.0.0.0">
-        <div class="logo-container col-md-3" data-reactid=".0.0.0.0.0">
-          <a href="/" data-reactid=".0.0.0.0.0.0">
-            <img src="/static/dist/images/white-logo.png" alt="" data-reactid=".0.0.0.0.0.0.0">
-          </a>
-        </div>
-        <div class="header-nav-container col-md-9" data-reactid=".0.0.0.0.1">
-          <ul class="header-nav-list" data-reactid=".0.0.0.0.1.0">
-            <li class="header-nav-item" id="login-nav-item" data-reactid=".0.0.0.0.1.0.0">
-              <span class="login-container" data-reactid=".0.0.0.0.1.0.0.0">
-                <div class="login-link" data-reactid=".0.0.0.0.1.0.0.0.0">
-                  <span class="login-text" data-reactid=".0.0.0.0.1.0.0.0.0.0">Login</span>
-                </div>
-                <div class="login-border" data-reactid=".0.0.0.0.1.0.0.0.1"></div>
-              </span>
-            </li>
-            <li class="header-nav-item" data-reactid=".0.0.0.0.1.0.1">
-              <span class="hamburg-container" data-reactid=".0.0.0.0.1.0.1.0">
-                <img src="/static/dist/images/hamburgMenu.png" alt="" data-reactid=".0.0.0.0.1.0.1.0.0">
-              </span>
-            </li>
-          </ul>
-        </div>
+
+
+  <div class="header-outer" data-reactid=".0.0.0">
+    <div class="header-inner row-fluid" data-reactid=".0.0.0.0">
+      <div class="logo-container col-md-3" data-reactid=".0.0.0.0.0">
+        <a href="/" data-reactid=".0.0.0.0.0.0">
+          <img src="/static/dist/images/white-logo.png" alt="" data-reactid=".0.0.0.0.0.0.0">
+        </a>
+      </div>
+      <div class="header-nav-container col-md-9" data-reactid=".0.0.0.0.1">
+        <ul class="header-nav-list" data-reactid=".0.0.0.0.1.0">
+          <li class="header-nav-item" id="login-nav-item" data-reactid=".0.0.0.0.1.0.0">
+            <span class="login-container" data-reactid=".0.0.0.0.1.0.0.0">
+              <div class="login-link" data-reactid=".0.0.0.0.1.0.0.0.0">
+                <span class="login-text" data-reactid=".0.0.0.0.1.0.0.0.0.0">Login</span>
+              </div>
+              <div class="login-border" data-reactid=".0.0.0.0.1.0.0.0.1"></div>
+            </span>
+          </li>
+          <li class="header-nav-item" data-reactid=".0.0.0.0.1.0.1">
+            <span class="django-hamburg-container" data-reactid=".0.0.0.0.1.0.1.0">
+              <img class="django-hamburg-img" src="/static/dist/images/hamburgMenu.png" alt="" data-reactid=".0.0.0.0.1.0.1.0.0">
+            </span>
+          </li>
+        </ul>
       </div>
     </div>
+  </div>
+  <div class="django-menu-outer hidden">
+    <div class="menu-inner row-fluid">
+      <div class="menu-nav-wrapper col-md-5">
+        <ul class="menu-nav-list">
+          <li class="menu-nav-item">
+            <a href="/">Home</a>
+          </li>
+          <li class="menu-nav-item">
+            <a href="/#dashboard" onClick={this.props.handleAccount}>Account</a>
+          </li>
+          <li class="menu-nav-item">
+            <a href="/search/">Search</a>
+          </li>
+          <li class="menu-nav-item">
+            <a href="#">About</a>
+          </li>
+        </ul>
+      </div>
+      <div class="menu-slogan-wrapper col-md-7">
+        <h1>find it.</h1>
+        <h1>love it.</h1>
+        <h1>share it.</h1>
+      </div>
+    </div>
+  </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="row">
-      <div class="col-lg-6">
+  <div class="search container-fluid">
+    <div class="row-fluid">
+      <div class="search-form-wrapper col-lg-6 col-md-offset-3">
         <form action='' method='get'>
           <div class="input-group">
-            <input type="search" name="search" id="search" class="form-control" placeholder="Search for...">
+            <input type="search" name="search" id="search-input" class="form-control" placeholder="Search for...">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="submit">Go!</button>
+                <button class="btn btn-default" id="search-button" type="submit">Go!</button>
               </span>
           </div><!-- /input-group -->
         </form>
       </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
+  </div>
 
-    <div>
-      {% if search_message %}
-        {{ search_message }}
-      {% else %}
+  <div class="container-fluid">
+    <div class="row-fluid">
+
+      <ul class="result-list col-md-6 col-md-offset-3">
+        {% if search_message %}
+        <h1 class="search-message">
+          {{ search_message }}
+        </h1>
+        {% else %}
         {% for review in reviews %}
-        <div>
-          <a href='/#dashboard/reviews/{{ review.pk }}'>
-            {{ review.title }} -<span> {{ review.author.userprofile }}</span>
-          </a>
-        </div>
+        <li class="result-list-item">
+          <span class="result-list-category">{{review.get_category_display}}</span>
+          <div class="result-title-wrapper">
+            <h3 class="result-item-title">
+              <a href="/#dashboard/reviews/{{ review.pk }}">{{review.title}}</a>
+            </h3>
+          </div>
+          <span class="result-item-author">
+            by {{review.author.userprofile.first_name}} {{review.author.userprofile.last_name}}
+          </span>
+        </li>
         {% empty %}
           <div>
-            <p>Oops! Looks like there's nothing here!</p>
-            <p>Why not <a href='/#dashboard/reviews/create'>create</a> a review for this item?<p>
+            <p class="oops-message">Oops! Looks like there's nothing here!</p>
+            <p class="create-message">Why not <a href='/#dashboard/reviews/create'>create</a> a review for this item?<p>
           </div>
         {% endfor %}
+      </ul>
       {% endif %}
     </div>
-
-
   </div>
 
   {% csrf_token %}

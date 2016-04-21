@@ -36,6 +36,11 @@ var user = new userModel.UserModel();
 
 var currentUser = localStorage.getItem('username');
 
+$('.django-hamburg-img').click(function(){
+  $('.django-menu-outer').toggle(0.1, function(){
+    $('.django-menu-outer').removeClass('hidden');
+  });
+});
 
 
 Backbone.history.start();

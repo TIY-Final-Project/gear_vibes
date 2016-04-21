@@ -28,7 +28,7 @@ var MenuComponent = React.createClass({
                   <a href="#" onClick={this.props.handleAccount}>Account</a>
                 </li>
                 <li className="menu-nav-item">
-                  <a href="search/">Reviews</a>
+                  <a href="search/">Search</a>
                 </li>
                 <li className="menu-nav-item">
                   <a href="#">About</a>
