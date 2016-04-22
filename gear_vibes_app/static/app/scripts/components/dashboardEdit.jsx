@@ -61,17 +61,24 @@ var DashboardEdit = React.createClass({
   },
   render: function(){
     return (
-      <div className="col-xs-6 col-xs-offset-3 text-center">
-        <form onSubmit={this.handleSubmit} method="PUT">
-          <Input type="file" ref="profilePhoto" help="Upload Profile Picture" />
-          <Input type="text" placeholder="First name" valueLink={this.linkState('first_name')}/>
-          <Input type="text" placeholder="Last name" valueLink={this.linkState('last_name')}/>
-          <Input type="textarea" placeholder="Bio" valueLink={this.linkState('bio')}/>
-          <Input type="text" placeholder="Facebook" valueLink={this.linkState('facebook_link')}/>
-          <Input type="text" placeholder="Twitter" valueLink={this.linkState('twitter_link')}/>
-          <Input type="text" placeholder="Instagram" valueLink={this.linkState('instagram_link')}/>
-          <ButtonInput type="submit" value="Update Profile" />
-        </form>
+      <div>
+        <div className="create-header row-fluid">
+
+        </div>
+        <div className="account-edit-form row-fluid">
+          <div className="col-xs-6 col-xs-offset-3 text-center">
+            <form onSubmit={this.handleSubmit} method="PUT">
+              <Input type="file" ref="profilePhoto" help="Upload Profile Picture" />
+              <Input type="text" placeholder="First name" valueLink={this.linkState('first_name')}/>
+              <Input type="text" placeholder="Last name" valueLink={this.linkState('last_name')}/>
+              <Input type="textarea" placeholder="Bio" valueLink={this.linkState('bio')}/>
+              <Input type="text" placeholder="Facebook" valueLink={this.linkState('facebook_link')}/>
+              <Input type="text" placeholder="Twitter" valueLink={this.linkState('twitter_link')}/>
+              <Input type="text" placeholder="Instagram" valueLink={this.linkState('instagram_link')}/>
+              <ButtonInput type="submit" value="Update Profile" />
+            </form>
+          </div>
+        </div>
       </div>
     )
   }

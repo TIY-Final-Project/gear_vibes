@@ -1,0 +1,61 @@
+// account
+
+.account-header {
+  background-color: rgba(23, 31, 44, 1);
+  height: 200px;
+}
+
+
+.account-header::before {
+  content: "";
+  position: absolute;
+  width: 41%;
+  height: 200px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 218, 186, 0.87);
+}
+
+.log-body {
+  height: 710px;
+  padding-top: 100px;
+}
+
+.other-signup-container {
+  margin-bottom: 20px;
+  a {
+    text-decoration: none;
+    color: darkblue;
+
+    &:hover {
+      text-decoration: none;
+      color: darkblue;
+    }
+  }
+  button {
+    height: 40px;
+  }
+}
+
+.or-container {
+  margin-bottom: 20px;
+}
+
+
+.other-login-container {
+  margin-bottom: 20px;
+  a {
+    text-decoration: none;
+    color: darkblue;
+
+    &:hover {
+      text-decoration: none;
+      color: darkblue;
+    }
+  }
+  button {
+    height: 40px;
+  }
+}

@@ -2,6 +2,8 @@
 @import "home";
 @import "search";
 @import "create";
+@import "dashEdit";
+@import "account";
 
 // Bootstrap Variables
 $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
@@ -218,6 +220,7 @@ img {
 }
 
 .featured-detail-author {
+  font-weight: bold;
   position: relative;
   z-index: 1;
 }

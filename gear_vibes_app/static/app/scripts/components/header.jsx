@@ -10,6 +10,7 @@ require('backbone-react-component');
 
 // local
 var Menu = require('./menu.jsx');
+var LogLink = require('./loginOut.jsx');
 
 
 
@@ -30,10 +31,7 @@ var HeaderComponent = React.createClass({
 
   },
   render: function(){
-    var loginLink = <span className="login-container">
-      <div className="login-link"><span className="login-text">Login</span></div>
-      <div className="login-border"></div>
-    </span>
+
 
     return (
       <div>
@@ -47,7 +45,7 @@ var HeaderComponent = React.createClass({
             <div className="header-nav-container col-md-9">
               <ul className="header-nav-list">
                 <li className="header-nav-item" id="login-nav-item">
-                  {loginLink}
+                  <LogLink user={this.props.user}/>
                 </li>
                 <li className="header-nav-item">
                   <span onClick={this.toggleMenu} className="hamburg-container">

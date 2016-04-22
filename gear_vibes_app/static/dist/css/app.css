@@ -368,6 +368,53 @@
   .tag-wrapper span {
     font-size: 18px; }
 
+.account-edit-form {
+  height: 620px; }
+
+.account-header {
+  background-color: #171f2c;
+  height: 200px; }
+
+.account-header::before {
+  content: "";
+  position: absolute;
+  width: 41%;
+  height: 200px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 218, 186, 0.87); }
+
+.log-body {
+  height: 710px;
+  padding-top: 100px; }
+
+.other-signup-container {
+  margin-bottom: 20px; }
+  .other-signup-container a {
+    text-decoration: none;
+    color: darkblue; }
+    .other-signup-container a:hover {
+      text-decoration: none;
+      color: darkblue; }
+  .other-signup-container button {
+    height: 40px; }
+
+.or-container {
+  margin-bottom: 20px; }
+
+.other-login-container {
+  margin-bottom: 20px; }
+  .other-login-container a {
+    text-decoration: none;
+    color: darkblue; }
+    .other-login-container a:hover {
+      text-decoration: none;
+      color: darkblue; }
+  .other-login-container button {
+    height: 40px; }
+
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -6314,6 +6361,7 @@ img {
   cursor: pointer; }
 
 .featured-detail-author {
+  font-weight: bold;
   position: relative;
   z-index: 1; }
 
