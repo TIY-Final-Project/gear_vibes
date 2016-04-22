@@ -19,17 +19,17 @@ var FooterComponent = React.createClass({
           <div className="col-md-4">
             <ul className="footer-social-nav row-fluid">
               <li className="footer-facebook footer-nav-item col-md-4">
-                <a href="#" className="center-block">
+                <a href="https://www.facebook.com/Brandon.Emerson77" className="center-block">
                   Facebook
                 </a>
               </li>
               <li className="footer-twitter footer-nav-item col-md-4">
-                <a href="#" className="center-block">
+                <a href="https://twitter.com/?lang=en" className="center-block">
                   Twitter
                 </a>
               </li>
               <li className="footer-instagram footer-nav-item col-md-4">
-                <a href="#" className="center-block">
+                <a href="https://www.instagram.com/izzbrancuh/" className="center-block">
                   Instagram
                 </a>
               </li>
