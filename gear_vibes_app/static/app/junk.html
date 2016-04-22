@@ -14,3 +14,37 @@
 <div className="bq-wrapper">
   <blockquote>"{this.state.review.get('block_quote')}"</blockquote>
 </div>
+
+
+
+
+<div className="form-body col-xs-6 col-xs-offset-3 text-center">
+  <form onSubmit={this.handleSubmit}>
+    <Input ref="featuredImage" className="center-block" type="file" help="Upload your Featured Image" />
+    <Input type="text" placeholder="Product Name" valueLink={this.linkState('product_name')}/>
+    <Input type="text" placeholder="Title" valueLink={this.linkState('title')}/>
+    <Input type="textarea" placeholder="Intro" valueLink={this.linkState('intro')}/>
+    <Input type="textarea" placeholder="Block Quote" valueLink={this.linkState('block_quote')}/>
+    <Input type="textarea" placeholder="Body" valueLink={this.linkState('body')}/>
+    <Input type="select" defaultValue="Category" placeholder="category" valueLink={this.linkState('category')}>
+      <option disabled value="Category">Category</option>
+      <option value="mus">Music Gear</option>
+      <option value="pho">Photography</option>
+      <option value="mob">Mobile Tech</option>
+    </Input>
+
+      {tagList}
+
+      <TagsFormset ref={"formset"} key={tagList.id} addTag={this.addTag} type="edit" />
+
+    <h3>Rating Table</h3>
+
+      {rating}
+
+      <RatingTableFormset ref={"formset"} key={i} index={i} addRating={this.addRating} type="edit" />
+    {/*<ButtonInput value="Add Rating" />*/}
+    <Input type="text" placeholder="Video URL" valueLink={this.linkState('video_url')}/>
+    <Input className="center-block" type="file" help="Upload to Gallery" />
+    <ButtonInput type="submit" value="Publish Review" />
+  </form>
+</div>

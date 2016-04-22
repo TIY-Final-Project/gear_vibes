@@ -260,6 +260,114 @@
   font-weight: bold;
   color: #151f2c; }
 
+.create-header {
+  background-color: #171f2c;
+  height: 300px; }
+
+.create-header::before {
+  content: "";
+  position: absolute;
+  width: 41%;
+  height: 300px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 218, 186, 0.87); }
+
+#featured-image {
+  height: 175px;
+  width: 300px;
+  background-color: #f1f1f1;
+  padding: 70px; }
+
+.create-title {
+  text-align: center;
+  font-size: 100px;
+  color: #181f2c; }
+
+.form-body {
+  height: 1700px; }
+
+.form-body-wrapper {
+  margin-top: 30px; }
+
+.review-text-inner {
+  text-transform: uppercase;
+  color: rgba(59, 218, 186, 0.87); }
+
+.publish-wrapper {
+  text-align: center;
+  color: rgba(59, 218, 186, 0.87);
+  margin-top: 50px; }
+  .publish-wrapper h3 {
+    margin-bottom: 50px; }
+
+.fader-numbers {
+  color: #171f2c; }
+
+.ten {
+  float: right; }
+
+#fader {
+  height: 14px; }
+
+#add-tag {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  background-color: #f06d6d;
+  border: none;
+  border-radius: 0; }
+  #add-tag:hover {
+    background: #ff7773; }
+
+#add-rating {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  background-color: #f06d6d;
+  border: none;
+  border-radius: 0; }
+  #add-rating:hover {
+    background: #ff7773; }
+
+#publish-button {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  background-color: #f06d6d;
+  border: none;
+  border-radius: 0;
+  width: 250px;
+  height: 70px; }
+  #publish-button:hover {
+    background: #ff7773; }
+
+.create-rating-wrapper {
+  background-color: #f1f1f1;
+  margin-bottom: 3px;
+  height: 30px;
+  padding: 0 10px;
+  text-transform: uppercase;
+  color: #181f2c; }
+  .create-rating-wrapper span {
+    font-size: 18px; }
+
+.create-rating-value {
+  float: right; }
+
+.tag-wrapper {
+  background-color: #f1f1f1;
+  margin-bottom: 3px;
+  height: 30px;
+  padding: 0 10px;
+  text-transform: uppercase;
+  color: #181f2c; }
+  .tag-wrapper span {
+    font-size: 18px; }
+
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -6531,7 +6639,7 @@ blockquote {
   font-weight: bold;
   color: #aeaeae; }
 
-#slider {
-  height: 14px; }
+#form-body {
+  height: 100vh; }
 
 /*# sourceMappingURL=app.css.map */

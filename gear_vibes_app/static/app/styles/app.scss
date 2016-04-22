@@ -1,6 +1,7 @@
 @import "dash";
 @import "home";
 @import "search";
+@import "create";
 
 // Bootstrap Variables
 $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
@@ -661,6 +662,6 @@ blockquote {
   color: rgba(174, 174, 174, 1);
 }
 
-#slider {
-  height: 14px;
+#form-body {
+  height: 100vh;
 }

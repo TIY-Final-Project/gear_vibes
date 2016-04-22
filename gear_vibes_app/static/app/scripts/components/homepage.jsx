@@ -41,7 +41,15 @@ var HomePage = React.createClass({
       self.setState({latestReviews: self.latestReviews});
     });
 
-    var interval = setInterval(this.changeBackground, 10000);
+
+  },
+  componentDidMount: function(){
+    var self = this;
+    self.interval = setInterval(self.changeBackground, 10000);
+  },
+  componentWillUnmount: function(){
+    var self = this;
+    clearInterval(self.interval);
   },
   changeBackground: function(){
     var background = this.state.background;
@@ -171,7 +179,7 @@ var HomePage = React.createClass({
                 </div>
                 <div className="col-md-3">
                   <div className="catagory-trans-wrapper">
-                    <span>Categories</span>                    
+                    <span>Categories</span>
                     <span className="side-cat-border"></span>
                   </div>
                 </div>

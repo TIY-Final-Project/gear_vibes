@@ -268,37 +268,99 @@ var CreateReview = React.createClass({displayName: "CreateReview",
     }.bind(this));
 
 
+    var mainInput = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '60px',
+      fontSize: '20px'
+    }
+
+    var textArea = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '150px',
+    }
+
+    var blockQuote = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+    }
+
+    var publishButton = {
+      borderRadius: 0
+    }
 
 
     return (
-      React.createElement("div", {className: "form col-xs-6 col-xs-offset-3 text-center"}, 
-        React.createElement("form", {onSubmit: this.handleSubmit}, 
-          React.createElement(Input, {ref: "featuredImage", className: "center-block", type: "file", help: "Upload your Featured Image"}), 
-          React.createElement(Input, {type: "text", placeholder: "Product Name", valueLink: this.linkState('product_name')}), 
-          React.createElement(Input, {type: "text", placeholder: "Title", valueLink: this.linkState('title')}), 
-          React.createElement(Input, {type: "textarea", placeholder: "Intro", valueLink: this.linkState('intro')}), 
-          React.createElement(Input, {type: "textarea", placeholder: "Block Quote", valueLink: this.linkState('block_quote')}), 
-          React.createElement(Input, {type: "textarea", placeholder: "Body", valueLink: this.linkState('body')}), 
-          React.createElement(Input, {type: "select", defaultValue: "Category", placeholder: "category", valueLink: this.linkState('category')}, 
-            React.createElement("option", {disabled: true, value: "Category"}, "Category"), 
-            React.createElement("option", {value: "mus"}, "Music Gear"), 
-            React.createElement("option", {value: "pho"}, "Photography"), 
-            React.createElement("option", {value: "mob"}, "Mobile Tech")
-          ), 
+      React.createElement("div", {className: "create-page"}, 
+        React.createElement("div", {className: "create-header row-fluid"}
 
-            tagList, 
+        ), 
+        React.createElement("div", {className: "form-body container"}, 
+          React.createElement("h1", {className: "create-title"}, "Create a review..."), 
+          React.createElement("form", {className: "form-body-wrapper", onSubmit: this.handleSubmit}, 
+            React.createElement(Input, {ref: "featuredImage", id: "featured-image", className: "center-block", type: "file"}), 
+            React.createElement("div", {className: "name-title-wrapper row"}, 
+              React.createElement("div", {className: "name-title-inner col-md-6 col-md-offset-3"}, 
+                React.createElement(Input, {className: "create-input", type: "text", placeholder: "Product Name", valueLink: this.linkState('product_name'), style: mainInput}), 
+                React.createElement(Input, {className: "create-input", type: "text", placeholder: "Title", valueLink: this.linkState('title'), style: mainInput})
+              )
+            ), 
+            React.createElement("div", {className: "review-text-wrapper row"}, 
+              React.createElement("div", {className: "review-text-inner col-md-6 col-md-offset-3"}, 
+                React.createElement("h3", null, "Intro"), 
+                React.createElement(Input, {className: "create-input", type: "textarea", valueLink: this.linkState('intro'), style: textArea}), 
+                React.createElement(Input, {className: "create-input", type: "textarea", placeholder: "Block Quote", valueLink: this.linkState('block_quote'), style: blockQuote}), 
+                React.createElement("h3", null, "Body"), 
+                React.createElement(Input, {className: "create-input", type: "textarea", valueLink: this.linkState('body'), style: textArea})
+              )
+            ), 
+            React.createElement("div", {className: "review-cat-wrapper row"}, 
+              React.createElement("div", {className: "review-cat-inner col-md-6 col-md-offset-3"}, 
+                React.createElement("div", {className: "row"}, 
+                  React.createElement("div", {className: "col-md-3"}, 
+                    React.createElement(Input, {style: mainInput, className: "create-input", type: "select", defaultValue: "Category", placeholder: "category", valueLink: this.linkState('category')}, 
+                      React.createElement("option", {disabled: true, value: "Category"}, "Category"), 
+                      React.createElement("option", {value: "mus"}, "Music Gear"), 
+                      React.createElement("option", {value: "pho"}, "Photography"), 
+                      React.createElement("option", {value: "mob"}, "Mobile Tech")
+                    )
+                  ), 
+                  React.createElement("div", {className: "col-md-9"}, 
+                    React.createElement(Input, {className: "create-input", type: "text", placeholder: "Video URL", valueLink: this.linkState('video_url'), style: mainInput})
+                  )
+                )
+              )
+            ), 
+            React.createElement("div", {className: "tag-rating-wrapper row"}, 
+              React.createElement("div", {className: "tag-rating-inner col-md-6 col-md-offset-3"}, 
+                React.createElement("div", {className: "row"}, 
+                  React.createElement("div", {className: "col-md-3"}, 
+                    tagList, 
 
-            React.createElement(TagsFormset, {ref: "formset", key: tagList.id, addTag: this.addTag, type: "edit"}), 
+                    React.createElement(TagsFormset, {ref: "formset", key: tagList.id, addTag: this.addTag, type: "edit"})
+                  ), 
+                  React.createElement("div", {className: "col-md-9"}, 
+                    rating, 
 
-          React.createElement("h3", null, "Rating Table"), 
-
-            rating, 
-
-            React.createElement(RatingTableFormset, {ref: "formset", key: i, index: i, addRating: this.addRating, type: "edit"}), 
-          /*<ButtonInput value="Add Rating" />*/
-          React.createElement(Input, {type: "text", placeholder: "Video URL", valueLink: this.linkState('video_url')}), 
-          React.createElement(Input, {className: "center-block", type: "file", help: "Upload to Gallery"}), 
-          React.createElement(ButtonInput, {type: "submit", value: "Publish Review"})
+                    React.createElement(RatingTableFormset, {ref: "formset", key: i, index: i, addRating: this.addRating, type: "edit"})
+                  )
+                )
+              )
+            ), 
+            React.createElement("div", {className: "publish-wrapper row"}, 
+              React.createElement("h3", null, "Ready for the world to see your review?"), 
+              React.createElement("div", {className: "publish-inner col-md-6 col-md-offset-3"}, 
+                React.createElement(ButtonInput, {className: "publish-button center-block", id: "publish-button", type: "submit", value: "Publish Review", style: publishButton})
+              )
+            )
+          )
         )
       )
     )
@@ -320,17 +382,30 @@ var TagsFormset = React.createClass({displayName: "TagsFormset",
     this.setState({tag: ''});
   },
   render: function(){
+
+    var mainInput = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '60px',
+    }
+
+    var tagAdd = {
+      borderRadius: 0
+    }
+
     if (this.state.type == "edit"){
       return (
         React.createElement("div", null, 
-          React.createElement(Input, {ref: "tag", type: "text", placeholder: "Tags", valueLink: this.linkState('tag')}), 
-          React.createElement(ButtonInput, {value: "Add Tag", onClick: this.handleSubmit})
+          React.createElement(Input, {className: "create-input", ref: "tag", type: "text", placeholder: "Tags", valueLink: this.linkState('tag'), style: mainInput}), 
+          React.createElement(ButtonInput, {value: "Add Tag", onClick: this.handleSubmit, id: "add-tag", style: tagAdd})
         )
       )
     }else{
       return (
-        React.createElement("div", null, 
-          React.createElement("span", null, this.props.model.name)
+        React.createElement("div", {className: "tag-wrapper"}, 
+          React.createElement("span", {className: "tag-name"}, this.props.model.name)
         )
       )
     }
@@ -353,19 +428,40 @@ var RatingTableFormset = React.createClass({displayName: "RatingTableFormset",
     this.setState({ratingType: '', ratingValue: ''});
   },
   render: function(){
+
+    var mainInput = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '60px',
+    }
+
+    var reviewAdd = {
+      borderRadius: 0
+    }
+
+    var fader = {
+      borderRadius: 0
+    }
+
     if(this.state.type == "edit"){
       return (
         React.createElement("div", null, 
-          React.createElement(Input, {ref: "title", type: "text", valueLink: this.linkState('ratingType'), placeholder: "Rating Type"}), 
-          React.createElement(Input, {id: "slider", type: "range", min: "0", max: "10", step: ".1", valueLink: this.linkState('ratingValue')}), 
-          React.createElement(ButtonInput, {onClick: this.handleSubmit, value: "Add Rating"})
+          React.createElement(Input, {className: "create-input", ref: "title", type: "text", valueLink: this.linkState('ratingType'), placeholder: "Rating Type", style: mainInput}), 
+          React.createElement("h5", {className: "fader-numbers"}, 
+            React.createElement("span", {className: "one"}, "1"), 
+            React.createElement("span", {className: "ten"}, "10")
+          ), 
+          React.createElement(Input, {className: "create-input", id: "fader", type: "range", min: "0", max: "10", step: ".1", valueLink: this.linkState('ratingValue'), style: fader}), 
+          React.createElement(ButtonInput, {onClick: this.handleSubmit, value: "Add Rating", className: "center-block", id: "add-rating", style: reviewAdd})
         )
       )
     }else{
       return (
-        React.createElement("div", null, 
-          React.createElement("span", null, this.props.model.title), 
-          React.createElement("span", null, this.props.model.value)
+        React.createElement("div", {className: "create-rating-wrapper"}, 
+          React.createElement("span", {className: "create-rating-title"}, this.props.model.title), 
+          React.createElement("span", {className: "create-rating-value"}, this.props.model.value)
         )
       )
     }
@@ -840,7 +936,15 @@ var HomePage = React.createClass({displayName: "HomePage",
       self.setState({latestReviews: self.latestReviews});
     });
 
-    var interval = setInterval(this.changeBackground, 10000);
+
+  },
+  componentDidMount: function(){
+    var self = this;
+    self.interval = setInterval(self.changeBackground, 10000);
+  },
+  componentWillUnmount: function(){
+    var self = this;
+    clearInterval(self.interval);
   },
   changeBackground: function(){
     var background = this.state.background;
