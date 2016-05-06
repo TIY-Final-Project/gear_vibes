@@ -141,38 +141,100 @@ var CreateReview = React.createClass({
     }.bind(this));
 
 
+    var mainInput = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '60px',
+      fontSize: '20px'
+    }
+
+    var textArea = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '150px',
+    }
+
+    var blockQuote = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+    }
+
+    var publishButton = {
+      borderRadius: 0
+    }
 
 
     return (
-      <div className="form col-xs-6 col-xs-offset-3 text-center">
-        <form onSubmit={this.handleSubmit}>
-          <Input ref="featuredImage" className="center-block" type="file" help="Upload your Featured Image" />
-          <Input type="text" placeholder="Product Name" valueLink={this.linkState('product_name')}/>
-          <Input type="text" placeholder="Title" valueLink={this.linkState('title')}/>
-          <Input type="textarea" placeholder="Intro" valueLink={this.linkState('intro')}/>
-          <Input type="textarea" placeholder="Block Quote" valueLink={this.linkState('block_quote')}/>
-          <Input type="textarea" placeholder="Body" valueLink={this.linkState('body')}/>
-          <Input type="select" defaultValue="Category" placeholder="category" valueLink={this.linkState('category')}>
-            <option disabled value="Category">Category</option>
-            <option value="mus">Music Gear</option>
-            <option value="pho">Photography</option>
-            <option value="mob">Mobile Tech</option>
-          </Input>
+      <div className="create-page">
+        <div className="create-header row-fluid">
 
-            {tagList}
+        </div>
+        <div className="form-body container">
+          <h1 className="create-title">Create a review...</h1>
+          <form className="form-body-wrapper" onSubmit={this.handleSubmit}>
+            <Input ref="featuredImage" id="featured-image" className="center-block" type="file"  />
+            <div className="name-title-wrapper row">
+              <div className="name-title-inner col-md-6 col-md-offset-3">
+                <Input className="create-input" type="text" placeholder="Product Name" valueLink={this.linkState('product_name')} style={mainInput}/>
+                <Input className="create-input" type="text" placeholder="Title" valueLink={this.linkState('title')} style={mainInput}/>
+              </div>
+            </div>
+            <div className="review-text-wrapper row">
+              <div className="review-text-inner col-md-6 col-md-offset-3">
+                <h3>Intro</h3>
+                <Input className="create-input" type="textarea" valueLink={this.linkState('intro')} style={textArea}/>
+                <Input className="create-input" type="textarea" placeholder="Block Quote" valueLink={this.linkState('block_quote')} style={blockQuote}/>
+                <h3>Body</h3>
+                <Input className="create-input" type="textarea" valueLink={this.linkState('body')} style={textArea}/>
+              </div>
+            </div>
+            <div className="review-cat-wrapper row">
+              <div className="review-cat-inner col-md-6 col-md-offset-3">
+                <div className="row">
+                  <div className="col-md-3">
+                    <Input style={mainInput} className="create-input" type="select" defaultValue="Category" placeholder="category" valueLink={this.linkState('category')}>
+                      <option disabled value="Category">Category</option>
+                      <option value="mus">Music Gear</option>
+                      <option value="pho">Photography</option>
+                      <option value="mob">Mobile Tech</option>
+                    </Input>
+                  </div>
+                  <div className="col-md-9">
+                    <Input className="create-input" type="text" placeholder="Video URL" valueLink={this.linkState('video_url')} style={mainInput}/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tag-rating-wrapper row">
+              <div className="tag-rating-inner col-md-6 col-md-offset-3">
+                <div className="row">
+                  <div className="col-md-3">
+                    {tagList}
 
-            <TagsFormset ref={"formset"} key={tagList.id} addTag={this.addTag} type="edit" />
+                    <TagsFormset ref={"formset"} key={tagList.id} addTag={this.addTag} type="edit" />
+                  </div>
+                  <div className="col-md-9">
+                    {rating}
 
-          <h3>Rating Table</h3>
-
-            {rating}
-
-            <RatingTableFormset ref={"formset"} key={i} index={i} addRating={this.addRating} type="edit" />
-          {/*<ButtonInput value="Add Rating" />*/}
-          <Input type="text" placeholder="Video URL" valueLink={this.linkState('video_url')}/>
-          <Input className="center-block" type="file" help="Upload to Gallery" />
-          <ButtonInput type="submit" value="Publish Review" />
-        </form>
+                    <RatingTableFormset ref={"formset"} key={i} index={i} addRating={this.addRating} type="edit" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="publish-wrapper row">
+              <h3>Ready for the world to see your review?</h3>
+              <div className="publish-inner col-md-6 col-md-offset-3">
+                <ButtonInput className="publish-button center-block" id="publish-button" type="submit" value="Publish Review" style={publishButton}/>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     )
   }
@@ -193,17 +255,30 @@ var TagsFormset = React.createClass({
     this.setState({tag: ''});
   },
   render: function(){
+
+    var mainInput = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '60px',
+    }
+
+    var tagAdd = {
+      borderRadius: 0
+    }
+
     if (this.state.type == "edit"){
       return (
         <div>
-          <Input ref={"tag"} type="text" placeholder="Tags" valueLink={this.linkState('tag')}/>
-          <ButtonInput value="Add Tag" onClick={this.handleSubmit}/>
+          <Input className="create-input" ref={"tag"} type="text" placeholder="Tags" valueLink={this.linkState('tag')} style={mainInput}/>
+          <ButtonInput value="Add Tag" onClick={this.handleSubmit} id="add-tag" style={tagAdd}/>
         </div>
       )
     }else{
       return (
-        <div>
-          <span>{this.props.model.name}</span>
+        <div className="tag-wrapper">
+          <span className="tag-name">{this.props.model.name}</span>
         </div>
       )
     }
@@ -226,19 +301,40 @@ var RatingTableFormset = React.createClass({
     this.setState({ratingType: '', ratingValue: ''});
   },
   render: function(){
+
+    var mainInput = {
+      borderRadius: 0,
+      border: 'none',
+      boxShadow: 'none',
+      backgroundColor: 'rgba(241, 241, 241, 1)',
+      height: '60px',
+    }
+
+    var reviewAdd = {
+      borderRadius: 0
+    }
+
+    var fader = {
+      borderRadius: 0
+    }
+
     if(this.state.type == "edit"){
       return (
         <div>
-          <Input ref={"title"} type="text" valueLink={this.linkState('ratingType')} placeholder="Rating Type"/>
-          <Input id="slider" type="range" min="0" max="10" step=".1" valueLink={this.linkState('ratingValue')} />
-          <ButtonInput onClick={this.handleSubmit} value="Add Rating"/>
+          <Input className="create-input" ref={"title"} type="text" valueLink={this.linkState('ratingType')} placeholder="Rating Type" style={mainInput}/>
+          <h5 className="fader-numbers">
+            <span className="one">1</span>
+            <span className="ten">10</span>
+          </h5>
+          <Input className="create-input" id="fader" type="range" min="0" max="10" step=".1" valueLink={this.linkState('ratingValue')} style={fader}/>
+          <ButtonInput onClick={this.handleSubmit} value="Add Rating" className="center-block" id="add-rating" style={reviewAdd}/>
         </div>
       )
     }else{
       return (
-        <div>
-          <span>{this.props.model.title}</span>
-          <span>{this.props.model.value}</span>
+        <div className="create-rating-wrapper">
+          <span className="create-rating-title">{this.props.model.title}</span>
+          <span className="create-rating-value">{this.props.model.value}</span>
         </div>
       )
     }

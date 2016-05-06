@@ -32,7 +32,7 @@ var Dashboard = React.createClass({
     reviews.fetch().then(function(data){
       self.setState({reviews: reviews});
     });
-
+    
   },
   render: function(){
     var profile = this.state.profile;

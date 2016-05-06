@@ -25,10 +25,6 @@ var models = require('../models/user-model.js');
 
 
 
-
-
-
-
 var Interface = React.createClass({
   mixins: [Backbone.React.Component.mixin],
   getInitialState: function(){
@@ -129,7 +125,7 @@ var Interface = React.createClass({
 
     return (
       <div className="row">
-        <Header />
+        <Header user={this.props.currentUser}/>
         {currentRoute}
         <Footer createAccount={this.createAccount}/>
       </div>
