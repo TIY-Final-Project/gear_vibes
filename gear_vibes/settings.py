@@ -188,9 +188,9 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY')
 AWS_STORAGE_BUCKET_NAME = 'gear-vibes'
 AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
 AWS_QUERYSTRING_AUTH = False
+MEDIA_FILES_LOCATION = 'media'
 
 if 'RDS_HOSTNAME' in os.environ.keys():
-    MEDIA_FILES_LOCATION = 'media'
     MEDIA_URL = "https://{}/{}/".format(AWS_S3_CUSTOM_DOMAIN, MEDIA_FILES_LOCATION)
     DEFAULT_FILE_STORAGE = 'gear_vibes.custom_storages.MediaStorage'
 else:
