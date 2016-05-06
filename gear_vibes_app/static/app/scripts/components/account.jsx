@@ -37,7 +37,7 @@ var AccountComponent = React.createClass({
               <div className="account-header"></div>
               <div className="log-body row">
                 <div className="login-form-container col-xs-4 col-xs-offset-4">
-                
+
                   <form onSubmit={this.props.login} className="login-form">
                     <Input type="username" placeholder="Username" id="login-username" valueLink={this.linkState('username')}/>
                     <Input type="password" placeholder="Password" id="login-password" valueLink={this.linkState('password')}/>

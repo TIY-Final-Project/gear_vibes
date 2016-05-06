@@ -39,7 +39,7 @@ var AccountComponent = React.createClass({displayName: "AccountComponent",
               React.createElement("div", {className: "account-header"}), 
               React.createElement("div", {className: "log-body row"}, 
                 React.createElement("div", {className: "login-form-container col-xs-4 col-xs-offset-4"}, 
-                
+
                   React.createElement("form", {onSubmit: this.props.login, className: "login-form"}, 
                     React.createElement(Input, {type: "username", placeholder: "Username", id: "login-username", valueLink: this.linkState('username')}), 
                     React.createElement(Input, {type: "password", placeholder: "Password", id: "login-password", valueLink: this.linkState('password')}), 
@@ -865,7 +865,7 @@ var HeaderComponent = React.createClass({displayName: "HeaderComponent",
 
 
     return (
-      React.createElement("div", null, 
+      React.createElement("div", {className: ""}, 
         React.createElement("div", {className: "header-outer"}, 
           React.createElement("div", {className: "header-inner row-fluid"}, 
             React.createElement("div", {className: "logo-container col-md-3"}, 

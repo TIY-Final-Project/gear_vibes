@@ -34,7 +34,7 @@ var HeaderComponent = React.createClass({
 
 
     return (
-      <div>
+      <div className="">
         <div className="header-outer">
           <div className="header-inner row-fluid">
             <div className="logo-container col-md-3">
