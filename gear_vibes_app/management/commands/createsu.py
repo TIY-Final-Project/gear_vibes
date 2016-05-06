@@ -3,5 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Command(BaseCommand):
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create('admin', 'admin@admin.com', 'safepass')
+
+    def handle(self, *args, **options):
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser('admin', 'admin@admin.com', 'safepass')
