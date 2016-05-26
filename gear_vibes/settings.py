@@ -195,4 +195,5 @@ if 'RDS_HOSTNAME' in os.environ.keys():
     DEFAULT_FILE_STORAGE = 'gear_vibes.custom_storages.MediaStorage'
 else:
     MEDIA_URL = '/media/'
+    DEFAULT_FILE_STORAGE = 'gear_vibes.custom_storages.DefaultStorage'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
