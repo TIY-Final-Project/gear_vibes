@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=40, blank=True, null=True)
     bio = models.TextField(blank=True)
-    profile_photo = ResizedImageField(size=[100, 100], blank=True, null=True, upload_to='profile_images', storage=get_storage_class())
+    profile_photo = ResizedImageField(size=[1920, 1080], blank=True, null=True, upload_to='profile_images', storage=get_storage_class())
     joined = models.DateTimeField(auto_now_add=True)
     facebook_link = models.CharField(max_length=50, null=True, blank=True)
     twitter_link = models.CharField(max_length=50, null=True, blank=True)
@@ -66,7 +66,7 @@ class Review(models.Model):
 
 class GalleryImage(models.Model):
     review = models.ForeignKey(Review)
-    image = models.ImageField(blank=True, null=True, upload_to='review_images', storage=get_storage_class())
+    image = ResizedImageField(size=[1920, 1080], blank=True, null=True, upload_to='review_images', storage=get_storage_class())
     caption = models.CharField(max_length=30, blank=True, null=True)
     featured = models.BooleanField(default=False)
 
