@@ -60,7 +60,6 @@
   "browserify": {
     "transform": [
       "browserify-shim",
-
       "reactify",
       "strictify"
     ]

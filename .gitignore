@@ -5,6 +5,7 @@ __pycache__/
 node_modules
 .tmp
 .sass-cache
+.idea/
 .DS_Store
 .gear_vibesenv/
 static/admin/fonts/LICENSE.txt
